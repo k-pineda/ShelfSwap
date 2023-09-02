@@ -6,8 +6,15 @@ const categorySchema = new Schema({
   name: {
     type: String,
     required: true,
-    trim: true
-  }
+    trim: true,
+    unique: true
+  },
+  books: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Book',
+    },
+  ],
 });
 
 const Category = mongoose.model('Category', categorySchema);
