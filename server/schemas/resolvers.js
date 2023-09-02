@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Product, Category, Order } = require('../models');
+const { User, Book, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
@@ -8,28 +8,28 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    products: async (parent, { category, name }) => {
+    books: async (parent, { category, title }) => {
       const params = {};
 
       if (category) {
         params.category = category;
       }
 
-      if (name) {
-        params.name = {
-          $regex: name
+      if (title) {
+        params.title = {
+          $regex: title
         };
       }
 
-      return await Product.find(params).populate('category');
+      return await Book.find(params).populate('category');
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
+    book: async (parent, { _id }) => {
+      return await Book.findById(_id).populate('category');
     },
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
+          path: 'orders.books',
           populate: 'category'
         });
 
@@ -43,7 +43,7 @@ const resolvers = {
     order: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
+          path: 'orders.books',
           populate: 'category'
         });
 
@@ -54,25 +54,27 @@ const resolvers = {
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      await new Order({ products: args.products });
+      await new Order({ books: args.books });
       // eslint-disable-next-line camelcase
       const line_items = [];
 
       // eslint-disable-next-line no-restricted-syntax
-      for (const product of args.products) {
-        line_items.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${url}/images/${product.image}`]
-            },
-            unit_amount: product.price * 100,
-          },
-          quantity: product.purchaseQuantity,
-        });
-      }
+      
+      // *NOT SURE IF WE NEED THIS*
+      // for (const book of args.books) {
+      //   line_items.push({
+      //     price_data: {
+      //       currency: 'usd',
+      //       book_data: {
+      //         title: book.title,
+      //         description: book.description,
+      //         images: [`${url}/images/${book.image}`]
+      //       },
+      //       unit_amount: book.price * 100,
+      //     },
+      //     quantity: book.purchaseQuantity,
+      //   });
+      // }
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -92,10 +94,10 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { products }, context) => {
+    addOrder: async (parent, { books }, context) => {
       console.log(context);
       if (context.user) {
-        const order = new Order({ products });
+        const order = new Order({ books });
 
         await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
 
@@ -111,10 +113,10 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    updateProduct: async (parent, { _id, quantity }) => {
+    updateBook: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
 
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+      return await Book.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
