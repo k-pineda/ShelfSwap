@@ -4,6 +4,7 @@ const typeDefs = gql`
   type Category {
     _id: ID
     name: String
+    books: [Book]
   }
 
   type Book {
@@ -16,22 +17,12 @@ const typeDefs = gql`
     category: Category
   }
 
-  type Order {
-    _id: ID
-    purchaseDate: String
-    books: [Book]
-  }
-
   type User {
     _id: ID
     firstName: String
     lastName: String
     email: String
-    orders: [Order]
-  }
-
-  type Checkout {
-    session: ID
+    books: [Book]
   }
 
   type Auth {
@@ -40,13 +31,12 @@ const typeDefs = gql`
   }
 
   input BookInput {
-    _id: ID
     title: String
-    # author: String
-    # description: String
-    # condition: String
-    # ^^^^ not sure if these need to be added here please check
+    author: String
+    description: String
+    condition: String
     image: String
+    categoryId: ID
   }
 
   type Query {
@@ -54,15 +44,13 @@ const typeDefs = gql`
     books(category: ID, title: String): [Book]
     book(_id: ID!): Book
     user: User
-    order(_id: ID!): Order
-    checkout(books: [BookInput]): Checkout
   }
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(books: [ID]!): Order
+    addBook(bookInput: BookInput!): Book
     updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateBook(_id: ID!): Book
+    updateBook(_id: ID!, quantity: Int): Book
     login(email: String!, password: String!): Auth
   }
 `;

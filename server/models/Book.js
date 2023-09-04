@@ -6,7 +6,8 @@ const bookSchema = new Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    maxlength: 255,
   },
   author: {
     type: String
@@ -27,6 +28,8 @@ const bookSchema = new Schema({
     required: true
   }
 });
+
+bookSchema.index({ title: 'text' });
 
 const Book = mongoose.model('Book', bookSchema);
 
