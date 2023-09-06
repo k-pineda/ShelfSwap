@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
 
 const userSchema = new Schema({
   firstName: {
@@ -25,7 +23,18 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
+  // Define the 'orders' field directly in the schema without referencing an external schema
+  orders: [
+    {
+      // Define the structure of each order item here
+      // For example:
+      date: {
+        type: Date,
+        default: Date.now
+      },
+      // Add other properties of an order here
+    }
+  ]
 });
 
 // set up pre-save middleware to create password
