@@ -3,7 +3,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/client';
 import { QUERY_CHECKOUT } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
-import CartItem from '../CartItem';
 import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/GlobalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
@@ -12,7 +11,7 @@ import './style.css';
 // stripePromise returns a promise with the stripe object as soon as the Stripe package loads
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
-const Cart = () => {
+const Donate = () => {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
@@ -80,9 +79,9 @@ const Cart = () => {
       <h2>Shopping Cart</h2>
       {state.cart.length ? (
         <div>
-          {state.cart.map((item) => (
+          {/* {state.cart.map((item) => (
             <CartItem key={item._id} item={item} />
-          ))}
+          ))} */}
 
           <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
@@ -107,4 +106,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Donate;
