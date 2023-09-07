@@ -8,19 +8,23 @@ const resolvers = {
       return await Category.find();
     },
     books: async (parent, { category, title }) => {
-      const params = {};
+      try {
+        const params = {};
 
-      if (category) {
-        params.category = category;
+        if (category) {
+          params.category = category;
+        }
+
+        if (title) {
+          // Use MongoDB text index to perform a text search
+          const books = await Book.find({ $text: { $search: title } }).populate('category');
+          return books;
+        }
+
+        return await Book.find(params).populate('category');
+      } catch (error) {
+        throw new Error(`Error searching for books: ${error.message}`);
       }
-
-      if (title) {
-        params.title = {
-          $regex: title
-        };
-      }
-
-      return await Book.find(params).populate('category');
     },
     book: async (parent, { _id }) => {
       return await Book.findById(_id).populate('category');
