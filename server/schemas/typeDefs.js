@@ -40,12 +40,12 @@ const typeDefs = gql`
   }
 
   type Chat {
-  _id: ID
-  sender: User
-  receiver: User
-  message: String
-  timestamp: String
-}
+    _id: ID
+    sender: User
+    receiver: User
+    message: String
+    timestamp: String
+  }
 
   type Query {
     categories: [Category]
@@ -60,6 +60,8 @@ const typeDefs = gql`
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     updateBook(_id: ID!, quantity: Int): Book
     login(email: String!, password: String!): Auth
+    createChat(sender: ID!, receiver: ID!, message: String!): Chat
+    sendMessage(chatId: ID!, message: String!): Chat
   }
 `;
 
