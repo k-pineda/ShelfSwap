@@ -39,6 +39,14 @@ const typeDefs = gql`
     categoryId: ID
   }
 
+  type Chat {
+  _id: ID
+  sender: User
+  receiver: User
+  message: String
+  timestamp: String
+}
+
   type Query {
     categories: [Category]
     books(category: ID, title: String): [Book]
