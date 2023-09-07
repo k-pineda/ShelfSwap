@@ -78,7 +78,30 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-    }
+    },
+    createChat: async (parent, { sender, receiver, message }) => {
+      const chat = await Chat.create({
+        sender,
+        receiver,
+        message,
+      });
+      return chat;
+    },
+    sendMessage: async (parent, { chatId, message }) => {
+      const chat = await Chat.findByIdAndUpdate(
+        chatId,
+        {
+          $push: {
+            message: {
+              sender: context.user._id,
+              text: message,
+            },
+          },
+        },
+        { new: true }
+      );
+      return chat;
+    },
   }
 };
 
