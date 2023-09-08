@@ -15,13 +15,14 @@ const typeDefs = gql`
     condition: String
     image: String
     category: Category
+    owner: User
   }
 
   type User {
     _id: ID
     username: String
     email: String
-    books: [Book]
+    ownedBooks: [Book]
   }
 
   type Auth {
@@ -51,6 +52,7 @@ const typeDefs = gql`
     books(category: ID, title: String): [Book]
     book(_id: ID!): Book
     user: User
+    userBooks(userId: ID!): [Book]
   }
 
   type Mutation {
@@ -58,6 +60,7 @@ const typeDefs = gql`
     addBook(bookInput: BookInput!): Book
     updateUser(username: String, email: String, password: String): User
     updateBook(_id: ID!, quantity: Int): Book
+    deleteBook(_id: ID!): String
     login(email: String!, password: String!): Auth
     createChat(sender: ID!, receiver: ID!, message: String!): Chat
     sendMessage(chatId: ID!, message: String!): Chat

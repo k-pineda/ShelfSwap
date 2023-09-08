@@ -18,6 +18,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
+  ownedBooks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Book',
+    },
+  ],
 });
 
 // set up pre-save middleware to create password

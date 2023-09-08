@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Book, Category } = require('../models');
+const { User, Book, Category, Chat } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -16,27 +16,28 @@ const resolvers = {
         }
 
         if (title) {
-          // Use MongoDB text index to perform a text search
           const books = await Book.find({ $text: { $search: title } }).populate('category');
           return books;
         }
 
-        return await Book.find(params).populate('category');
+        return await Book.find(params).populate('category').populate('owner');
       } catch (error) {
         throw new Error(`Error searching for books: ${error.message}`);
       }
     },
     book: async (parent, { _id }) => {
-      return await Book.findById(_id).populate('category');
+      return await Book.findById(_id).populate('category').populate('owner');
     },
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id);
-
         return user;
       }
 
       throw new AuthenticationError('Not logged in');
+    },
+    userBooks: async (parent, { userId }) => {
+      return await Book.find({ owner: userId });
     },
   },
   Mutation: {
@@ -46,8 +47,19 @@ const resolvers = {
 
       return { token, user };
     },
-    addBook: async (parent, args) => {
-      const book = await Book.create(args);
+    addBook: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      const book = await Book.create({
+        ...args.bookInput,
+        owner: context.user._id,
+      });
+      await User.findByIdAndUpdate(
+        context.user._id,
+        { $push: { ownedBooks: book._id } },
+        { new: true }
+      );
       return book;
     },
     updateUser: async (parent, args, context) => {
@@ -57,10 +69,32 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    updateBook: async (parent, { _id, quantity }) => {
+    updateBook: async (parent, { _id, quantity }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      const book = await Book.findOne({ _id, owner: context.user._id });
+      if (!book) {
+        throw new AuthenticationError('The book with the provided ID either does not exist or you are not authorized to modify it.');
+      }
       const decrement = Math.abs(quantity) * -1;
-
       return await Book.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+    },
+    deleteBook: async (parent, { _id }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      const book = await Book.findOne({ _id, owner: context.user._id });
+      if (!book) {
+        throw new AuthenticationError('The book with the provided ID either does not exist or you are not authorized to delete it.');
+      }
+      await User.findByIdAndUpdate(
+        context.user._id,
+        { $pull: { ownedBooks: _id } },
+        { new: true }
+      );
+      await Book.findByIdAndDelete(_id);
+      return 'Book deleted successfully';
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -87,7 +121,7 @@ const resolvers = {
       });
       return chat;
     },
-    sendMessage: async (parent, { chatId, message }) => {
+    sendMessage: async (parent, { chatId, message }, context) => {
       const chat = await Chat.findByIdAndUpdate(
         chatId,
         {

@@ -1,73 +1,75 @@
 const db = require('./connection');
-const { User, Book, Category } = require('../models'); // Make sure to import the Book model
+const { User, Book, Category } = require('../models');
 
 db.once('open', async () => {
-  await Category.deleteMany();
+  try {
+    // Clear existing data
+    await Category.deleteMany();
+    await Book.deleteMany();
+    await User.deleteMany();
 
-  const categories = await Category.insertMany([
-    { name: 'Fiction' },
-    { name: 'Non-Fiction' },
-    { name: 'Mystery' },
-    { name: 'Science Fiction' },
-    // Add more categories as needed
-  ]);
+    // Seed categories
+    const categories = await Category.insertMany([
+      { name: 'Fiction' },
+      { name: 'Non-Fiction' },
+      { name: 'Mystery' },
+      { name: 'Science Fiction' },
+    ]);
 
-  console.log('Categories seeded');
-
-  await Book.deleteMany();
-
-  const books = await Book.insertMany([
-    {
-      title: 'The Great Gatsby',
-      author: 'F. Scott Fitzgerald',
-      description: 'A classic novel about the American Dream.',
-      condition: 'New',
-      image: 'The Great Gatsby.jpg',
-      category: categories[0]._id,
-    },
-    {
-      title: 'To Kill a Mockingbird',
-      author: 'Harper Lee',
-      description: 'A story of racial injustice in the American South.',
-      condition: 'Used',
-      image: 'Mockingbird.jpg',
-      category: categories[3]._id,
-    },
-    {
-      title: 'The Hobbit',
-      author: 'J.R.R. Tolkien',
-      description: 'An epic fantasy adventure.',
-      condition: 'Like New',
-      image: 'Hobbit.jpg',
-      category: categories[0]._id,
-    },
-    // Add more book data as needed
-  ]);
-
-  console.log('Books seeded');
-
-  await User.deleteMany();
-
-  await User.create({
-    firstName: 'Pamela',
-    lastName: 'Washington',
-    email: 'pamela@testmail.com',
-    password: 'password12345',
-    orders: [
+    // Seed random users with usernames
+    const users = await User.create([
       {
-        products: [books[0]._id, books[0]._id, books[1]._id] // Update this with book IDs
-      }
-    ]
-  });
+        username: 'user1', // Provide a username
+        email: 'user1@example.com',
+        password: 'password12345',
+      },
+      {
+        username: 'user2', // Provide a username
+        email: 'user2@example.com',
+        password: 'password67890',
+      },
+      {
+        username: 'user3', // Provide a username
+        email: 'user3@example.com',
+        password: 'passwordabcd',
+      },
+    ]);
 
-  await User.create({
-    firstName: 'Elijah',
-    lastName: 'Holt',
-    email: 'eholt@testmail.com',
-    password: 'password12345'
-  });
+    // Seed random books with valid owner IDs
+    const books = await Book.insertMany([
+      {
+        title: 'The Catcher in the Rye',
+        author: 'J.D. Salinger',
+        description: 'A novel about teenage angst.',
+        condition: 'Used',
+        image: 'catcher.jpg',
+        category: categories[0]._id,
+        owner: users[0]._id,
+      },
+      {
+        title: 'The Lord of the Rings',
+        author: 'J.R.R. Tolkien',
+        description: 'An epic fantasy trilogy.',
+        condition: 'New',
+        image: 'lotr.jpg',
+        category: categories[0]._id,
+        owner: users[1]._id,
+      },
+      {
+        title: 'Crime and Punishment',
+        author: 'Fyodor Dostoevsky',
+        description: 'A classic novel about morality and punishment.',
+        condition: 'Like New',
+        image: 'crime.jpg',
+        category: categories[2]._id,
+        owner: users[2]._id,
+      },
+    ]);
 
-  console.log('Users seeded');
-
-  process.exit();
+    console.log('Database seeded successfully');
+  } catch (error) {
+    console.error('Error seeding the database:', error);
+  } finally {
+    process.exit();
+  }
 });
