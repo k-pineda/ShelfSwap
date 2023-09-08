@@ -15,7 +15,6 @@ const bookSchema = new Schema({
   description: {
     type: String
   },
-  //condition of book
   condition: {
     type: String
   },
@@ -26,7 +25,12 @@ const bookSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true
-  }
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 bookSchema.index({ title: 'text' });
