@@ -1,61 +1,101 @@
-import {
-  Container,
-  Card,
-  Button,
-  Row,
-  Col
-} from 'react-bootstrap';
-import React from 'react';
+import React, { useState } from 'react';
+import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import Auth from '../utils/auth';
-
+import { DELETE_BOOK, UPDATE_BOOK } from '../utils/mutations'; // Import the mutations
 
 function Profile() {
+  // Define the useMutation hooks for deleteBook and updateBook
+  const [deleteBook] = useMutation(DELETE_BOOK);
+  const [updateBook] = useMutation(UPDATE_BOOK);
   const { loading, data } = useQuery(QUERY_USER);
+  const [newQuantity, setNewQuantity] = useState(0); // Define newQuantity state
   let user;
 
   if (data) {
     user = data.user;
   }
+
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
+  const savedBooks = user ? user.ownedBooks : [];
+
+
+  // Define a function to handle updating the book quantity
+  const handleUpdateBook = async (_id) => {
+    try {
+      await updateBook({
+        variables: { _id, quantity: newQuantity },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Define a function to handle deleting a book
+  const handleDeleteBook = async (_id) => {
+    try {
+      await deleteBook({
+        variables: { _id },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
-            <div fluid className="text-light bg-dark p-5">
+      <div fluid="true" className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
       </div>
-      {/* <Container>
-        <h2 className='pt-5'>
-          {user.savedBooks?.length
-            ? `Viewing ${user.savedBooks.length} saved ${user.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You have no saved books!'}
-        </h2>
+
+      <Container className="my-5">
+        <h2>Your Saved Books</h2>
         <Row>
-          {user.savedBooks?.map((book) => {
-            return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
-                  {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
-                  <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
-                      Delete this Book!
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+          {savedBooks.map((book) => (
+            <Col key={book._id} md="4">
+              <Card>
+                <Card.Img src={book.image} alt={book.title} />
+                <Card.Body>
+                  <Card.Title>{book.title}</Card.Title>
+                  <Card.Subtitle>{book.author}</Card.Subtitle>
+                  <Card.Text>{book.description}</Card.Text>
+                  <Button
+                    as={Link}
+                    to={`/books/${book._id}`}
+                    variant="primary"
+                  >
+                    View Details
+                  </Button>
+                  {/* Input field for updating the book quantity */}
+                  <input
+                    type="number"
+                    value={newQuantity}
+                    onChange={(e) => setNewQuantity(e.target.value)}
+                  />
+                  <Button
+                    variant="primary"
+                    onClick={() => handleUpdateBook(book._id)}
+                  >
+                    Update Quantity
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteBook(book._id)}
+                  >
+                    Delete
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
         </Row>
-      </Container> */}
+      </Container>
     </>
   );
 }

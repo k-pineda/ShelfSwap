@@ -1,20 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
-      _id
-      name
-      description
-      price
-      quantity
-      image
-      category {
-        _id
-      }
-    }
-  }
-`;
 
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ProductInput]) {
@@ -24,19 +9,26 @@ export const QUERY_CHECKOUT = gql`
   }
 `;
 
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
+export const QUERY_USERS_BOOKS = gql`
+query getUserOwnedBooks($userId: ID!) {
+  userBooks(userId: $userId) {
+    _id
+    title
+    author
+    description
+    condition
+    image
+    category {
       _id
       name
-      description
-      price
-      quantity
-      category {
-        name
-      }
+    }
+    owner {
+      _id
+      username
     }
   }
+}
+
 `;
 
 export const QUERY_CATEGORIES = gql`
@@ -51,19 +43,16 @@ export const QUERY_CATEGORIES = gql`
 export const QUERY_USER = gql`
   {
     user {
-      username
-      orders {
+      _id
+    username
+    email
+    ownedBooks {
         _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
-        }
+        title
+        author
+        description
+        image
+      }
       }
     }
-  }
 `;
