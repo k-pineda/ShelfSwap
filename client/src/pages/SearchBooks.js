@@ -14,7 +14,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import CategoryMenu from "../components/CategoryMenu";
 import Donate from "../components/Donate";
 
-import { QUERY_USERS_BOOKS} from '../utils/queries';
+import { QUERY_USERS_BOOKS, QUERY_USER} from '../utils/queries';
 
 import { SAVE_BOOK } from '../utils/mutations';
 
@@ -31,6 +31,8 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+  const { loading, data } = useQuery(QUERY_USER);
+  const savedBooks = data?.user  ? data.user.ownedBooks : [];
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
@@ -46,7 +48,7 @@ const SearchBooks = () => {
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
-  });
+  },[savedBookIds]);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -104,6 +106,7 @@ const SearchBooks = () => {
     if (data && data.addBook) {
       // Update the user's owned books data with the newly saved book
       const updatedUserBooks = [...userBooksData.userBooks, data.addBook];
+      setSavedBookIds([...savedBookIds, bookToSave.bookId]); // Update savedBookIds
       // Optionally, you can update the local state with the new data
       setSearchedBooks(updatedUserBooks);
       // Inform the user that the book was successfully saved
@@ -170,14 +173,18 @@ const SearchBooks = () => {
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
                     {/* Add the Save Book button here */}
-                    {userBooksData && userBooksData.userBooks.some((book) => book._id === book.bookId) ? (
+                    {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
                       <Button variant='info' disabled>
                         Book Saved
                       </Button>
                     ) : (
-                      <Button variant='info' onClick={() => handleSaveBook(book.bookId)} disabled={buttonLabel === 'Book is Saved'}>
-                        Save Book
-                      </Button>
+                      <Button
+                      variant='info'
+                      onClick={() => handleSaveBook(book.bookId)}
+                      disabled={buttonLabel === 'Book is Saved'}
+                    >
+                      {buttonLabel}
+                    </Button>
                     )}
                   </Card.Body>
                 </Card>
