@@ -30,14 +30,14 @@ const typeDefs = gql`
     user: User
   }
 
-  input BookInput {
-    title: String
-    author: String
-    description: String
-    condition: String
-    image: String
-    categoryId: ID
-  }
+input BookInput {
+  bookId: String!
+  authors: [String!]!
+  title: String!
+  description: String!
+  image: String
+  category: ID
+}
 
   type Chat {
     _id: ID
