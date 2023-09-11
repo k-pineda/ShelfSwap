@@ -18,6 +18,7 @@ query getUserOwnedBooks($userId: ID!) {
     description
     condition
     image
+    bookId
     category {
       _id
       name
@@ -52,6 +53,7 @@ export const QUERY_USER = gql`
         author
         description
         image
+        bookId
       }
       }
     }

@@ -21,6 +21,10 @@ const bookSchema = new Schema({
   image: {
     type: String
   },
+  bookId: {
+    type: String,
+    required:true
+  },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
