@@ -14,8 +14,15 @@ const AppNavbar = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            🛍️ Shelf-Swap
+          <Navbar.Brand as={Link} to='/' >
+          {/* <img
+              src='/public/src/Shelf_Swap_logo.png' // Replace with the path to your logo image
+              alt='Shelf-Swap_logo'
+              width='30' // Adjust the width as needed
+              height='30' // Adjust the height as needed
+              className='d-inline-block align-top'
+            /> */}
+          Shelf-Swap 
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
 
