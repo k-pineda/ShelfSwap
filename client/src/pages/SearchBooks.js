@@ -31,7 +31,7 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
-  const { loading, data } = useQuery(QUERY_USER);
+  const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user  ? data.user.ownedBooks : [];
 
   // create state to hold saved bookId values
@@ -108,14 +108,14 @@ const SearchBooks = () => {
       const updatedUserBooks = [...userBooksData.userBooks, data.addBook];
       setSavedBookIds([...savedBookIds, bookToSave.bookId]); // Update savedBookIds
       // Optionally, you can update the local state with the new data
-      setSearchedBooks(updatedUserBooks);
+      setSavedBookIds(updatedUserBooks);
       // Inform the user that the book was successfully saved
       console.log('Book is saved:', bookToSave.title);
 
       // Change the button label and disable it after saving
       setButtonLabel('Book is Saved');
       // Use navigate to redirect to the user's profile
-      navigate('/profile');
+      refetch();
       
 }
   } catch (err) {
