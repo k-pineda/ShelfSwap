@@ -28,11 +28,10 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [addBook, { error }] = useMutation(SAVE_BOOK);
   const navigate = useNavigate();
-  // const [buttonLabel, setButtonLabel] = useState('Save Book');
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-     saveBookIds(savedBookIds);
+    return () => saveBookIds(savedBookIds);
   },[savedBookIds]);
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -85,7 +84,6 @@ const SearchBooks = () => {
         // Inform the user that the book was successfully saved
         console.log('Book is saved:', bookToSave.title);
         // Change the button label and disable it after saving
-        // setButtonLabel('Book is Saved');
         // Use navigate to redirect to the user's profile
         refetch();
       }
@@ -140,17 +138,16 @@ const SearchBooks = () => {
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
                     {/* Add the Save Book button here */}
-                    {savedBooks.filter((savedBook) => savedBook.bookId === book.bookId).length ? (
-                      <Button key={`book-saved-${book.bookId}`} variant='info' disabled>
+                    {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
+                      <Button variant='info' disabled>
                         Book is Saved
                       </Button>
                     ) : (
-                      <Button key={`book-save-${book.bookId}`}
+                      <Button
                       variant='info'
                       onClick={() => handleSaveBook(book.bookId) }
-                     
                     >
-                      save book 
+                      Save Book
                     </Button>
                     )}
                   </Card.Body>
@@ -164,10 +161,3 @@ const SearchBooks = () => {
   );
 };
 export default SearchBooks;
-
-
-
-
-
-
-
