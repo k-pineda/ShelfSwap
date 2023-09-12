@@ -115,7 +115,7 @@ const SearchBooks = () => {
       // Change the button label and disable it after saving
       setButtonLabel('Book is Saved');
       // Use navigate to redirect to the user's profile
-      // navigate('/profile');
+      
 }
   } catch (err) {
     console.error(err);
@@ -180,7 +180,7 @@ const SearchBooks = () => {
                     ) : (
                       <Button
                       variant='info'
-                      onClick={() => handleSaveBook(book.bookId)}
+                      onClick={() => handleSaveBook(book.bookId) }
                       disabled={buttonLabel === 'Book is Saved'}
                     >
                       {buttonLabel}
