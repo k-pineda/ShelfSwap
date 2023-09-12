@@ -14,6 +14,7 @@ const typeDefs = gql`
     description: String
     condition: String
     image: String
+    bookId:String
     category: Category
     owner: User
   }
