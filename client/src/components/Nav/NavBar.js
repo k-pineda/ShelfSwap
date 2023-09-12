@@ -14,14 +14,21 @@ const AppNavbar = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            🛍️ Shelf-Swap
+          <Navbar.Brand as={Link} to='/' >
+          {/* <img
+              src='/public/src/Shelf_Swap_logo.png' // Replace with the path to your logo image
+              alt='Shelf-Swap_logo'
+              width='30' // Adjust the width as needed
+              height='30' // Adjust the height as needed
+              className='d-inline-block align-top'
+            /> */}
+          Shelf-Swap 
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
 
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
-            <Nav.Link as={Link} to='/'>
+            <Nav.Link as={Link} to='/swap'>
                 Books Available To Swap 
               </Nav.Link>
               {/* if user is logged in show saved books and logout */}
