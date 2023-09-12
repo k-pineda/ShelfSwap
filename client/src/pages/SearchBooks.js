@@ -28,11 +28,11 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [addBook, { error }] = useMutation(SAVE_BOOK);
   const navigate = useNavigate();
-  const [buttonLabel, setButtonLabel] = useState('Save Book');
+  // const [buttonLabel, setButtonLabel] = useState('Save Book');
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+     saveBookIds(savedBookIds);
   },[savedBookIds]);
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -85,7 +85,7 @@ const SearchBooks = () => {
         // Inform the user that the book was successfully saved
         console.log('Book is saved:', bookToSave.title);
         // Change the button label and disable it after saving
-        setButtonLabel('Book is Saved');
+        // setButtonLabel('Book is Saved');
         // Use navigate to redirect to the user's profile
         refetch();
       }
@@ -140,17 +140,17 @@ const SearchBooks = () => {
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
                     {/* Add the Save Book button here */}
-                    {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
-                      <Button variant='info' disabled>
+                    {savedBooks.filter((savedBook) => savedBook.bookId === book.bookId).length ? (
+                      <Button key={`book-saved-${book.bookId}`} variant='info' disabled>
                         Book is Saved
                       </Button>
                     ) : (
-                      <Button
+                      <Button key={`book-save-${book.bookId}`}
                       variant='info'
                       onClick={() => handleSaveBook(book.bookId) }
-                      disabled={buttonLabel === 'Book is Saved'}
+                     
                     >
-                      {buttonLabel}
+                      save book 
                     </Button>
                     )}
                   </Card.Body>
