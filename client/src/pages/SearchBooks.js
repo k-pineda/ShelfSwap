@@ -112,7 +112,7 @@ const SearchBooks = () => {
       // Change the button label and disable it after saving
       setButtonLabel('Book is Saved');
       // Use navigate to redirect to the user's profile
-      navigate('/profile');
+      // navigate('/profile');
 }
   } catch (err) {
     console.error(err);
@@ -170,7 +170,7 @@ const SearchBooks = () => {
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
                     {/* Add the Save Book button here */}
-                    {userBooksData && userBooksData.userBooks.some((book) => book._id === book.bookId) ? (
+                    {(userBooksData && userBooksData.userBooks.some((book) => book._id === book.bookId)) ? (
                       <Button variant='info' disabled>
                         Book Saved
                       </Button>
