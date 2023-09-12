@@ -110,7 +110,7 @@ const SearchBooks = () => {
       // Optionally, you can update the local state with the new data
       setSearchedBooks(updatedUserBooks);
       // Inform the user that the book was successfully saved
-      console.log('Book saved:', bookToSave.title);
+      console.log('Book is saved:', bookToSave.title);
 
       // Change the button label and disable it after saving
       setButtonLabel('Book is Saved');
@@ -175,7 +175,7 @@ const SearchBooks = () => {
                     {/* Add the Save Book button here */}
                     {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
                       <Button variant='info' disabled>
-                        Book Saved
+                        Book is Saved
                       </Button>
                     ) : (
                       <Button
