@@ -115,6 +115,7 @@ const SearchBooks = () => {
       // Change the button label and disable it after saving
       setButtonLabel('Book is Saved');
       // Use navigate to redirect to the user's profile
+      navigate('/profile');
       
 }
   } catch (err) {
