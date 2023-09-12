@@ -28,7 +28,6 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [addBook, { error }] = useMutation(SAVE_BOOK);
   const navigate = useNavigate();
-  const [buttonLabel, setButtonLabel] = useState('Save Book');
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -85,7 +84,6 @@ const SearchBooks = () => {
         // Inform the user that the book was successfully saved
         console.log('Book is saved:', bookToSave.title);
         // Change the button label and disable it after saving
-        setButtonLabel('Book is Saved');
         // Use navigate to redirect to the user's profile
         refetch();
       }
@@ -148,9 +146,9 @@ const SearchBooks = () => {
                       <Button
                       variant='info'
                       onClick={() => handleSaveBook(book.bookId) }
-                      disabled={buttonLabel === 'Book is Saved'}
+                     
                     >
-                      {buttonLabel}
+                      Save Book
                     </Button>
                     )}
                   </Card.Body>
