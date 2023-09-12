@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import './style.css'; 
+import './style.css';
 
-const stripePromise = loadStripe('pk_test_51Nns84Gbq8mRzxQQYXLeZMCWuqCtqz9x2stK1tKRobvHMf6NXqNfToq2mqc6g2Pp2NYYEeCVSfcB5I3RnsLVjIwK00vmmnQaq6');
+const stripePromise = loadStripe(
+  'pk_test_51Nns84Gbq8mRzxQQYXLeZMCWuqCtqz9x2stK1tKRobvHMf6NXqNfToq2mqc6g2Pp2NYYEeCVSfcB5I3RnsLVjIwK00vmmnQaq6'
+);
 
 const Donate = () => {
   const [paymentStatus, setPaymentStatus] = useState('');
-  const [amount, setAmount] = useState(0); 
+  const [amount, setAmount] = useState(0);
 
   const handleDonateClick = async () => {
     try {
@@ -17,7 +19,7 @@ const Donate = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: amount * 100, 
+          amount: amount * 100,
         }),
       });
 
@@ -38,17 +40,24 @@ const Donate = () => {
 
   return (
     <section className="donation-container">
-      <h2>Make a Donation</h2>
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        placeholder="Enter donation amount"
-      />
-      <button onClick={handleDonateClick} className="donate-button">
-        Donate Now
-      </button>
-      {paymentStatus && <p>{paymentStatus}</p>}
+      <div className="donation-header">
+        <h2>Give us your money!</h2>
+        <p>We need to hire people to make this better</p>
+      </div>
+      <div className="donation-form">
+        <label htmlFor="donation-amount">Enter donation amount:</label>
+        <input
+          type="number"
+          id="donation-amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Amount in USD"
+        />
+        <button onClick={handleDonateClick} className="donate-button">
+          Donate Now
+        </button>
+      </div>
+      {paymentStatus && <p className="payment-status">{paymentStatus}</p>}
     </section>
   );
 };
