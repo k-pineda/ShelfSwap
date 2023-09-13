@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
-import { QUERY_USER, QUERY_CHAT, SEND_MESSAGE, CHAT_SUBSCRIPTION } from '../utils/queries';
+import { QUERY_USER, QUERY_CHAT, CHAT_SUBSCRIPTION } from '../utils/queries';
+import { SEND_MESSAGE } from '../utils/mutations';
 
 function Chat() {
   const { chatId } = useParams();

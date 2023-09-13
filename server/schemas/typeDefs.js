@@ -61,6 +61,7 @@ const typeDefs = gql`
     book(_id: ID!): Book
     user: User
     userBooks(userId: ID!): [Book]
+    getChat(chatId: ID!): Chat
   }
 
   type Mutation {

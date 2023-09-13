@@ -1,14 +1,5 @@
 import { gql } from '@apollo/client';
 
-
-export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ProductInput]) {
-    checkout(products: $products) {
-      session
-    }
-  }
-`;
-
 export const QUERY_USERS_BOOKS = gql`
 query getUserOwnedBooks($userId: ID!) {
   userBooks(userId: $userId) {
@@ -80,7 +71,7 @@ export const QUERY_USER = gql`
     }
 `;
 
-export const GET_CHAT = gql`
+export const QUERY_CHAT = gql`
   query getChat($chatId: ID!) {
     getChat(chatId: $chatId) {
       _id
