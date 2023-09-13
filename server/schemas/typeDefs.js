@@ -73,6 +73,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createChat(sender: ID!, receiver: ID!, message: String!): Chat
     sendMessage(chatId: ID!, message: String!): Chat
+    Subscription: Subscription
   }
 
   type Subscription {

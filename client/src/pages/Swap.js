@@ -7,15 +7,12 @@ function Swap() {
   // Define the useMutation hooks for deleteBook and updateBook
   const { loading, data } = useQuery(QUERY_ALL_SAVED_BOOKS);
   
-  
- 
   if (loading) {
     return <h2>LOADING...</h2>;
   }
 
   const allSavedBooks = data.books || []
   
-
   return (
     <>
       <div fluid="true" className="text-light bg-dark p-5">
