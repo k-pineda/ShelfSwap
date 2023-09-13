@@ -79,3 +79,27 @@ export const QUERY_USER = gql`
       }
     }
 `;
+
+export const GET_CHAT = gql`
+  query getChat($chatId: ID!) {
+    getChat(chatId: $chatId) {
+      _id
+      sender {
+        _id
+        username
+      }
+      receiver {
+        _id
+        username
+      }
+      messages {
+        _id
+        sender {
+          _id
+          username
+        }
+        text
+      }
+    }
+  }
+`;

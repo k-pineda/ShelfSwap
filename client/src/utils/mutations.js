@@ -92,3 +92,27 @@ export const UPDATE_BOOK = gql`
     }
   }
 `;
+
+export const SEND_MESSAGE = gql`
+  mutation sendMessage($chatId: ID!, $message: String!) {
+    sendMessage(chatId: $chatId, message: $message) {
+      _id
+      sender {
+        _id
+        username
+      }
+      receiver {
+        _id
+        username
+      }
+      messages {
+        _id
+        sender {
+          _id
+          username
+        }
+        text
+      }
+    }
+  }
+`;
