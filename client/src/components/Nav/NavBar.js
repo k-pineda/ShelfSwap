@@ -31,6 +31,9 @@ const AppNavbar = () => {
             <Nav.Link as={Link} to='/swap'>
                 Books Available To Swap 
               </Nav.Link>
+              <Nav.Link as={Link} to='/chat'>
+                Chat
+              </Nav.Link>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
