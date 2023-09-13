@@ -9,8 +9,8 @@ const bookSchema = new Schema({
     trim: true,
     maxlength: 255,
   },
-  author: {
-    type: String
+  authors: {
+    type: [String]
   },
   description: {
     type: String

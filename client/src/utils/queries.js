@@ -14,7 +14,7 @@ query getUserOwnedBooks($userId: ID!) {
   userBooks(userId: $userId) {
     _id
     title
-    author
+    authors
     description
     condition
     image
@@ -46,7 +46,7 @@ export const QUERY_ALL_SAVED_BOOKS = gql`
   books{
     _id
   title
-  author
+  authors
   description
   image
   bookId
@@ -71,7 +71,7 @@ export const QUERY_USER = gql`
     ownedBooks {
         _id
         title
-        author
+        authors
         description
         image
         bookId
