@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+import { QUERY_ALL_SAVED_BOOKS } from '../utils/queries';
 
-function Profile() {
+function Swap() {
   // Define the useMutation hooks for deleteBook and updateBook
-  const { loading, data } = useQuery(QUERY_USER);
-  const [newQuantity, setNewQuantity] = useState(0); // Define newQuantity state
-  let user;
-
-  if (data) {
-    user = data.user;
-  }
-
+  const { loading, data } = useQuery(QUERY_ALL_SAVED_BOOKS);
+  
+  
+ 
   if (loading) {
     return <h2>LOADING...</h2>;
   }
 
-  const savedBooks = user ? user.ownedBooks : [];
-
-
+  const allSavedBooks = data.books || []
   
 
   return (
@@ -34,7 +27,7 @@ function Profile() {
       <Container className="my-5">
         <h2>Viewing Books Available For Swapping!</h2>
         <Row>
-          {savedBooks.map((book) => (
+          {allSavedBooks.map((book) => (
             <Col key={book._id} md="4">
               <Card>
                 <Card.Img src={book.image} alt={book.title} />
@@ -42,13 +35,7 @@ function Profile() {
                   <Card.Title>{book.title}</Card.Title>
                   <Card.Subtitle>{book.author}</Card.Subtitle>
                   <Card.Text>{book.description}</Card.Text>
-                  <Button
-                    as={Link}
-                    to={`/books/${book._id}`}
-                    variant="primary"
-                  >
-                    View Details
-                  </Button>
+                  <Button>Ask To Swap!</Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -59,4 +46,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Swap;

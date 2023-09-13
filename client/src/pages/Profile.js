@@ -12,11 +12,10 @@ function Profile() {
   const { loading, data } = useQuery(QUERY_USER);
   const [newQuantity, setNewQuantity] = useState(0); // Define newQuantity state
   let user;
-
   if (data) {
     user = data.user;
   }
-
+console.log(user)
   if (loading) {
     return <h2>LOADING...</h2>;
   }
