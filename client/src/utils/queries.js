@@ -103,3 +103,17 @@ export const GET_CHAT = gql`
     }
   }
 `;
+
+export const CHAT_SUBSCRIPTION = gql`
+  subscription chatMessage($chatId: ID!) {
+    chatMessage(chatId: $chatId) {
+      _id
+      sender {
+        _id
+        username
+      }
+      text
+      createdAt
+    }
+  }
+`;
