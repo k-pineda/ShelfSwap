@@ -14,7 +14,6 @@ import LoginForm from './components/Nav/LoginForm'
 import SignupForm from './components/Nav/SignupForm';
 import Navbar from './components/Nav/NavBar';
 import Swap from './pages/Swap'
-import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import Profile from './pages/Profile';
 
@@ -42,7 +41,6 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         
-          <StoreProvider>
             <Navbar />
             <Routes>
               
@@ -71,7 +69,6 @@ function App() {
                 element={<NoMatch />} 
               />
             </Routes>
-          </StoreProvider>
         
       </Router>
     </ApolloProvider>
