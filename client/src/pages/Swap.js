@@ -33,7 +33,7 @@ function Swap() {
                 <Card.Img src={book.image} alt={book.title} />
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
-                  <Card.Subtitle>{book.author}</Card.Subtitle>
+                  <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
                   <Card.Text>{book.description}</Card.Text>
                   <Button>Ask To Swap!</Button>
                 </Card.Body>
