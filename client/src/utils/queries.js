@@ -41,6 +41,27 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
+export const QUERY_ALL_SAVED_BOOKS = gql`
+{
+  books{
+    _id
+  title
+  author
+  description
+  image
+  bookId
+  category {
+    _id
+    name
+  }
+  owner {
+    _id
+    username
+  }
+}
+}
+`
+
 export const QUERY_USER = gql`
   {
     user {

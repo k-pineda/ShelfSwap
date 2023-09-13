@@ -1,108 +1,64 @@
-import React, { useEffect } from 'react';
-// import { loadStripe } from '@stripe/stripe-js';
-import { useLazyQuery } from '@apollo/client';
-import { QUERY_CHECKOUT } from '../../utils/queries';
-import { idbPromise } from '../../utils/helpers';
-import Auth from '../../utils/auth';
-import { useStoreContext } from '../../utils/GlobalState';
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+import React, { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import './style.css';
 
-// stripePromise returns a promise with the stripe object as soon as the Stripe package loads
-// const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+const stripePromise = loadStripe(
+  'pk_test_51Nns84Gbq8mRzxQQYXLeZMCWuqCtqz9x2stK1tKRobvHMf6NXqNfToq2mqc6g2Pp2NYYEeCVSfcB5I3RnsLVjIwK00vmmnQaq6'
+);
 
 const Donate = () => {
-  const [state, dispatch] = useStoreContext();
-  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+  const [paymentStatus, setPaymentStatus] = useState('');
+  const [amount, setAmount] = useState(0);
 
-  // We check to see if there is a data object that exists, if so this means that a checkout session was returned from the backend
-  // Then we should redirect to the checkout with a reference to our session id
-  // useEffect(() => {
-  //   if (data) {
-  //     stripePromise.then((res) => {
-  //       res.redirectToCheckout({ sessionId: data.checkout.session });
-  //     });
-  //   }
-  // }, [data]);
+  const handleDonateClick = async () => {
+    try {
+      const response = await fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: amount * 100,
+        }),
+      });
 
-  // If the cart's length or if the dispatch function is updated, check to see if the cart is empty.
-  // If so, invoke the getCart method and populate the cart with the existing from the session
-  useEffect(() => {
-    async function getCart() {
-      const cart = await idbPromise('cart', 'get');
-      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+      const { sessionId } = await response.json();
+
+      const stripe = await stripePromise;
+      const result = await stripe.redirectToCheckout({
+        sessionId: sessionId,
+      });
+
+      if (result.error) {
+        console.error('Error redirecting to Stripe Checkout:', result.error);
+      }
+    } catch (error) {
+      console.error('Error creating Stripe session:', error);
     }
-
-    if (!state.cart.length) {
-      getCart();
-    }
-  }, [state.cart.length, dispatch]);
-
-  function toggleCart() {
-    dispatch({ type: TOGGLE_CART });
-  }
-
-  function calculateTotal() {
-    let sum = 0;
-    state.cart.forEach((item) => {
-      sum += item.price * item.purchaseQuantity;
-    });
-    return sum.toFixed(2);
-  }
-
-  // When the submit checkout method is invoked, loop through each item in the cart
-  // Add each item id to the productIds array and then invoke the getCheckout query passing an object containing the id for all our products
-  function submitCheckout() {
-
-    getCheckout({
-      variables: { 
-        products: [...state.cart],
-      },
-    });
-  }
-
-  if (!state.cartOpen) {
-    return (
-      <div className="cart-closed" onClick={toggleCart}>
-        <span role="img" aria-label="trash">
-        🤝
-        </span>
-      </div>
-    );
-  }
+  };
 
   return (
-    <div className="cart">
-      <div className="close" onClick={toggleCart}>
-        [close]
+    <section className="donation-container">
+      <div className="donation-header">
+        <h2>Give us your money!</h2>
+        <p>We need to hire people to make this better</p>
       </div>
-      <h2>Shopping Cart</h2>
-      {state.cart.length ? (
-        <div>
-          {/* {state.cart.map((item) => (
-            <CartItem key={item._id} item={item} />
-          ))} */}
-
-          <div className="flex-row space-between">
-            <strong>Total: ${calculateTotal()}</strong>
-
-            {/* Check to see if the user is logged in. If so render a button to check out */}
-            {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
-            ) : (
-              <span>(log in to check out)</span>
-            )}
-          </div>
-        </div>
-      ) : (
-        <h3>
-          <span role="img" aria-label="shocked">
-            😱
-          </span>
-          You haven't added anything to your cart yet!
-        </h3>
-      )}
-    </div>
+      <div className="donation-form">
+        <label htmlFor="donation-amount">Enter donation amount:</label>
+        <input
+          type="number"
+          id="donation-amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Amount in USD"
+        />
+        <button onClick={handleDonateClick} className="donate-button">
+          Donate Now
+        </button>
+      </div>
+      {paymentStatus && <p className="payment-status">{paymentStatus}</p>}
+    </section>
   );
 };
 

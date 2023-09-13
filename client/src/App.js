@@ -13,7 +13,7 @@ import NoMatch from './pages/NoMatch';
 import LoginForm from './components/Nav/LoginForm'
 import SignupForm from './components/Nav/SignupForm';
 import Navbar from './components/Nav/NavBar';
-import SwapBooks from './pages/Swap'
+import Swap from './pages/Swap'
 import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import Profile from './pages/Profile';
@@ -64,7 +64,7 @@ function App() {
               />
                <Route 
                 path="/swap" 
-                element={<SwapBooks />} 
+                element={<Swap />} 
               />
               <Route 
                 path="*" 
