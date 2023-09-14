@@ -2,24 +2,22 @@
 const mongoose = require('mongoose');
 
 const chatSchema = new mongoose.Schema({
-  sender: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  receiver: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  message: {
-    type: String,
-    required: true,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
+  users: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  ],
+  messages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ChatMessage',
+    },
+  ],
 });
+
+// Ensure that each chat has exactly two users
+chatSchema.index({ users: 1 }, { unique: true, partialFilterExpression: { users: { $size: 2 } } });
 
 module.exports = mongoose.model('Chat', chatSchema);

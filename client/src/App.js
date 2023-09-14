@@ -17,6 +17,7 @@ import Swap from './pages/Swap'
 import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import Profile from './pages/Profile';
+import Chat from './pages/Chat';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -65,6 +66,10 @@ function App() {
                <Route 
                 path="/swap" 
                 element={<Swap />} 
+              />
+                <Route 
+                path="/chat/:chat_id"
+                element={<Chat />} 
               />
               <Route 
                 path="*" 

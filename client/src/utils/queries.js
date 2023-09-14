@@ -1,5 +1,4 @@
-import { gql } from '@apollo/client';
-
+import { gql } from "@apollo/client";
 
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ProductInput]) {
@@ -10,25 +9,25 @@ export const QUERY_CHECKOUT = gql`
 `;
 
 export const QUERY_USERS_BOOKS = gql`
-query getUserOwnedBooks($userId: ID!) {
-  userBooks(userId: $userId) {
-    _id
-    title
-    author
-    description
-    condition
-    image
-    bookId
-    category {
+  query getUserOwnedBooks($userId: ID!) {
+    userBooks(userId: $userId) {
       _id
-      name
-    }
-    owner {
-      _id
-      username
+      title
+      author
+      description
+      condition
+      image
+      bookId
+      category {
+        _id
+        name
+      }
+      owner {
+        _id
+        username
+      }
     }
   }
-}
 `;
 
 export const QUERY_CATEGORIES = gql`
@@ -41,33 +40,33 @@ export const QUERY_CATEGORIES = gql`
 `;
 
 export const QUERY_ALL_SAVED_BOOKS = gql`
-{
-  books{
-    _id
-  title
-  author
-  description
-  image
-  bookId
-  category {
-    _id
-    name
+  {
+    books {
+      _id
+      title
+      author
+      description
+      image
+      bookId
+      category {
+        _id
+        name
+      }
+      owner {
+        _id
+        username
+      }
+    }
   }
-  owner {
-    _id
-    username
-  }
-}
-}
-`
+`;
 
 export const QUERY_USER = gql`
   {
     user {
       _id
-    username
-    email
-    ownedBooks {
+      username
+      email
+      ownedBooks {
         _id
         title
         author
@@ -75,44 +74,41 @@ export const QUERY_USER = gql`
         image
         bookId
       }
-      }
     }
+  }
 `;
 
-export const QUERY_CHAT = gql`
-  query getChat($chatId: ID!) {
-    getChat(chatId: $chatId) {
+export const GET_CHAT_BY_ID = gql`
+  query getChatById($chatId: ID!) {
+    chat(chatId: $chatId) {
       _id
-      sender {
+      users {
         _id
         username
-      }
-      receiver {
-        _id
-        username
-      }
-      messages {
-        _id
-        sender {
-          _id
-          username
-        }
-        text
       }
     }
   }
 `;
 
-export const CHAT_SUBSCRIPTION = gql`
-  subscription chatMessage($chatId: ID!) {
-    chatMessage(chatId: $chatId) {
+export const GET_USER_CHATS = gql`
+  query getUserChats($userId: ID!) {
+    userChats(userId: $userId) {
       _id
+      users
+    }
+  }
+`;
+
+export const GET_CHAT_MESSAGES = gql`
+  query getChatMessages($chatId: ID!) {
+    chatMessages(chatId: $chatId) {
+      _id
+      text
+      timestamp
       sender {
         _id
-        username
+        email
       }
-      text
-      createdAt
     }
   }
 `;

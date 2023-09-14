@@ -41,18 +41,17 @@ const typeDefs = gql`
   }
 
   type Chat {
-    _id: ID
-    sender: User
-    receiver: User
-    message: String
-    timestamp: String
+    _id: ID!
+    users: [User!]!
+    messages: [ChatMessage!]!
   }
 
   type ChatMessage {
     _id: ID!
+    chat: Chat!
     sender: User!
     text: String!
-    createdAt: String!
+    timestamp: String!
   }
 
   type Query {
@@ -61,7 +60,9 @@ const typeDefs = gql`
     book(_id: ID!): Book
     user: User
     userBooks(userId: ID!): [Book]
-    getChat(chatId: ID!): Chat
+    chat(chatId: ID!): Chat
+    userChats(userId: ID!): [Chat!]!
+    chatMessages(chatId: ID!): [ChatMessage!]!
   }
 
   type Mutation {
@@ -71,14 +72,9 @@ const typeDefs = gql`
     updateBook(_id: ID!, quantity: Int): Book
     deleteBook(_id: ID!): String
     login(email: String!, password: String!): Auth
-    createChat(sender: ID!, receiver: ID!, message: String!): Chat
-    sendMessage(chatId: ID!, message: String!): Chat
-    Subscription: Subscription
+    createChat(users: [ID!]!): Chat
+    sendMessage(chatId: ID!, sender: ID!, text: String!): ChatMessage
   }
-
-  type Subscription {
-    chatMessage(chatId: ID!): ChatMessage!
-  }
-`;
+`
 
 module.exports = typeDefs;
