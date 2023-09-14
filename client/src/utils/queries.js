@@ -109,6 +109,7 @@ export const GET_CHAT_MESSAGES = gql`
       sender {
         _id
         email
+        username
       }
     }
   }

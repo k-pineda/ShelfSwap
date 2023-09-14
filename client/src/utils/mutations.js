@@ -103,6 +103,7 @@ export const SEND_MESSAGE = gql`
       _id
       sender {
         _id
+        username
       }
       text
       timestamp

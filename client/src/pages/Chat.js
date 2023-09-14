@@ -16,7 +16,7 @@ const Chat = () => {
   const { loading: chatLoading, data: chatData } = useQuery(GET_CHAT_BY_ID, {
     variables: { chatId: chat_id },
   });
-  const { loading: messagesLoading, data: messagesData } = useQuery(
+  const { loading: messagesLoading, data: messagesData, refetch } = useQuery(
     GET_CHAT_MESSAGES,
     {
       variables: { chatId: chat_id },
@@ -42,7 +42,7 @@ const Chat = () => {
           text: messageText,
         },
       });
-
+      refetch()
       setMessageText("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -69,7 +69,12 @@ const Chat = () => {
               message.sender === userId ? "own-message" : "other-message"
             }`}
           >
-            <p>{message.text}</p>
+            <p>
+            <span className="username">
+              {message.sender === userId ? "You" : message.sender.username}
+            </span>
+            {message.text}
+          </p>
           </div>
         ))}
       </div>
