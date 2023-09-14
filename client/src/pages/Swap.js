@@ -14,9 +14,6 @@ function Swap() {
 
   const allSavedBooks = data.books || [];
 
-  // Filter books based on the search query (title or author)
-  // Filter books based on the search query (title or author)
-// Filter books based on the search query (title or author)
 const filteredBooks = allSavedBooks.filter((book) => {
   const titleMatch = book.title.toLowerCase().includes(searchQuery.toLowerCase());
   const authorsMatch = Array.isArray(book.authors) &&
@@ -44,7 +41,7 @@ const filteredBooks = allSavedBooks.filter((book) => {
       <Container className="my-5">
         <h2>Viewing Books Available For Swapping!</h2>
         
-        {/* Add the search input */}
+       
         <input
           type="text"
           placeholder="Search by title or author..."
