@@ -118,7 +118,6 @@ const SearchBooks = () => {
           </Form>
         </Container>
       </div>
-      <Donate />
       <Container>
       <h2 className='pt-5'>
           {searchedBooks.length
@@ -137,7 +136,6 @@ const SearchBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
-                    {/* Add the Save Book button here */}
                     {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
                       <Button variant='info' disabled>
                         Book is Saved

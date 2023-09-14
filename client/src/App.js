@@ -17,6 +17,7 @@ import Swap from './pages/Swap'
 import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import Profile from './pages/Profile';
+import AsideComponent from './components/SideMenu/Sidemenu'
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -43,6 +44,7 @@ function App() {
       <Router>
         
           <StoreProvider>
+            <AsideComponent></AsideComponent>
             <Navbar />
             <Routes>
               
