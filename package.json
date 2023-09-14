@@ -17,24 +17,17 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.9",
     "@mui/styled-engine-sc": "^5.14.9",
     "@stripe/react-stripe-js": "^2.3.0",
-
     "@stripe/react-stripe-js": "^2.3.0",
     "@stripe/stripe-js": "^2.1.5",
-
     "babel-loader": "^9.1.3",
     "bootstrap": "^5.3.1",
     "dotenv": "^16.3.1",
-<<<<<<< HEAD
-    "graphql-subscriptions": "^2.0.0",
-    "jwt-decode": "^3.1.2"
-=======
+    "jwt-decode": "^3.1.2",
     "styled-components": "^5.3.11"
->>>>>>> f7ef5fe27112edf74bf595e1938b0802e7b2b6d0
   }
 }
