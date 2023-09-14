@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 // Existing mutations
 export const LOGIN = gql`
@@ -13,16 +13,8 @@ export const LOGIN = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser(
-    $username: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      username: $username
-      email: $email
-      password: $password
-    ) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
@@ -36,7 +28,7 @@ export const SAVE_BOOK = gql`
     addBook(bookInput: $bookInput) {
       _id
       title
-      author
+      authors
       description
       condition
       image
@@ -77,7 +69,7 @@ export const UPDATE_BOOK = gql`
     updateBook(_id: $_id, quantity: $quantity) {
       _id
       title
-      author
+      authors
       description
       condition
       image
@@ -89,6 +81,32 @@ export const UPDATE_BOOK = gql`
         _id
         username
       }
+    }
+  }
+`;
+
+export const CREATE_CHAT = gql`
+  mutation createChat($users: [ID!]!) {
+    createChat(users: $users) {
+      _id
+      users {
+        _id
+        username
+      }
+    }
+  }
+`;
+
+export const SEND_MESSAGE = gql`
+  mutation sendMessage($chatId: ID!, $sender: ID!, $text: String!) {
+    sendMessage(chatId: $chatId, sender: $sender, text: $text) {
+      _id
+      sender {
+        _id
+        username
+      }
+      text
+      timestamp
     }
   }
 `;
