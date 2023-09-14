@@ -28,7 +28,7 @@ export const SAVE_BOOK = gql`
     addBook(bookInput: $bookInput) {
       _id
       title
-      author
+      authors
       description
       condition
       image
@@ -69,7 +69,7 @@ export const UPDATE_BOOK = gql`
     updateBook(_id: $_id, quantity: $quantity) {
       _id
       title
-      author
+      authors
       description
       condition
       image

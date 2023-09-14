@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { Navbar, Nav, Container, Modal, Tab, NavbarCollapse } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-
+// import './styles/navbar.css';
 import Auth from '../../utils/auth';
 
 const AppNavbar = () => {
@@ -12,29 +12,34 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger">
         <Container fluid>
-          <Navbar.Brand as={Link} to='/' >
-          {/* <img
-              src='/public/src/Shelf_Swap_logo.png' // Replace with the path to your logo image
+          {/* Use the imported image */}
+          <Navbar.Brand as={Link} to='./'>
+            {/* <img
+              src={ShelfSwapLogo} // Use the imported image
               alt='Shelf-Swap_logo'
-              width='30' // Adjust the width as needed
-              height='30' // Adjust the height as needed
+              width='30'
+              height='30'
               className='d-inline-block align-top'
             /> */}
-          Shelf-Swap 
+            Shelf-Swap
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
 
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
+          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse app-navbar-content'>
             <Nav className='ml-auto d-flex'>
-            <Nav.Link as={Link} to='/swap'>
-                Books Available To Swap 
+              <Nav.Link as={Link} to='/swap'>
+                Books Available To Swap
               </Nav.Link>
+<<<<<<< HEAD
               <Nav.Link as={Link} to='/chat'>
                 Chat
               </Nav.Link>
               {/* if user is logged in show saved books and logout */}
+=======
+              {/* if the user is logged in, show saved books and logout */}
+>>>>>>> f7ef5fe27112edf74bf595e1938b0802e7b2b6d0
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>
@@ -54,17 +59,19 @@ const AppNavbar = () => {
         size='lg'
         show={showModal}
         onHide={() => setShowModal(false)}
-        aria-labelledby='signup-modal'>
+        aria-labelledby='signup-modal'
+        className="app-navbar-modal"
+      >
         {/* tab container to do either signup or login component */}
         <Tab.Container defaultActiveKey='login'>
           <Modal.Header closeButton>
             <Modal.Title id='signup-modal'>
               <Nav variant='pills'>
                 <Nav.Item>
-                  <Nav.Link eventKey='login'>Login</Nav.Link>
+                  <Nav.Link eventKey='login' className="app-navbar-label">Login</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                  <Nav.Link eventKey='signup' className="app-navbar-label">Sign Up</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Modal.Title>

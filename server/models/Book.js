@@ -9,8 +9,8 @@ const bookSchema = new Schema({
     trim: true,
     maxlength: 255,
   },
-  author: {
-    type: String
+  authors: {
+    type: [String]
   },
   description: {
     type: String
@@ -36,7 +36,7 @@ const bookSchema = new Schema({
   },
 });
 
-bookSchema.index({ title: 'text' });
+// bookSchema.index({ title: 'text' });
 
 const Book = mongoose.model('Book', bookSchema);
 

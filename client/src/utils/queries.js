@@ -9,25 +9,26 @@ export const QUERY_CHECKOUT = gql`
 `;
 
 export const QUERY_USERS_BOOKS = gql`
-  query getUserOwnedBooks($userId: ID!) {
-    userBooks(userId: $userId) {
+query getUserOwnedBooks($userId: ID!) {
+  userBooks(userId: $userId) {
+    _id
+    title
+    authors
+    description
+    condition
+    image
+    bookId
+    category {
       _id
-      title
-      author
-      description
-      condition
-      image
-      bookId
-      category {
-        _id
-        name
-      }
-      owner {
-        _id
-        username
-      }
+      name
+    }
+    owner {
+      _id
+      username
     }
   }
+}
+
 `;
 
 export const QUERY_CATEGORIES = gql`
@@ -40,25 +41,25 @@ export const QUERY_CATEGORIES = gql`
 `;
 
 export const QUERY_ALL_SAVED_BOOKS = gql`
-  {
-    books {
-      _id
-      title
-      author
-      description
-      image
-      bookId
-      category {
-        _id
-        name
-      }
-      owner {
-        _id
-        username
-      }
-    }
+{
+  books{
+    _id
+  title
+  authors
+  description
+  image
+  bookId
+  category {
+    _id
+    name
   }
-`;
+  owner {
+    _id
+    username
+  }
+}
+}
+`
 
 export const QUERY_USER = gql`
   {
@@ -69,7 +70,7 @@ export const QUERY_USER = gql`
       ownedBooks {
         _id
         title
-        author
+        authors
         description
         image
         bookId

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Col,
@@ -10,12 +9,12 @@ import {
 } from 'react-bootstrap';
 import Auth from '../utils/auth'
 import { useMutation, useQuery } from '@apollo/client';
-import CategoryMenu from "../components/CategoryMenu";
 import Donate from "../components/Donate";
 import { QUERY_USERS_BOOKS, QUERY_USER} from '../utils/queries';
 import { SAVE_BOOK } from '../utils/mutations';
 import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+
 const SearchBooks = () => {
   const { loading: loadingUserBooks, data: userBooksData } = useQuery(QUERY_USERS_BOOKS);
   // create state for holding returned google api data
@@ -27,7 +26,6 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [addBook, { error }] = useMutation(SAVE_BOOK);
-  const navigate = useNavigate();
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -96,7 +94,6 @@ const SearchBooks = () => {
       <div className="text-light bg-dark p-5">
         <Container>
           <h1>Search for Books!</h1>
-          <CategoryMenu />
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -146,7 +143,6 @@ const SearchBooks = () => {
                       <Button
                       variant='info'
                       onClick={() => handleSaveBook(book.bookId) }
-                     
                     >
                       Save Book
                     </Button>
@@ -162,10 +158,3 @@ const SearchBooks = () => {
   );
 };
 export default SearchBooks;
-
-
-
-
-
-
-
