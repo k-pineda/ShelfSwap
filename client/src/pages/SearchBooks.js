@@ -128,7 +128,6 @@ const SearchBooks = () => {
           </Form>
         </Container>
       </div>
-      <Donate />
       <Container>
       <h2 className='pt-5'>
           {searchedBooks.length
@@ -146,6 +145,9 @@ const SearchBooks = () => {
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
+
+                    <Card.Text>{book.description}</Card.Text>
+
                     <Card.Text>
                     {bookShowFullDescription[index]
                       ? book.description
@@ -158,6 +160,7 @@ const SearchBooks = () => {
                         >
                         {bookShowFullDescription[index] ? "Show Less" : "Show More"}
                     </Button>
+
                     {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
                       <Button variant='info' disabled>
                         Book is Saved
