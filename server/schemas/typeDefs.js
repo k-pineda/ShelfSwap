@@ -14,7 +14,7 @@ const typeDefs = gql`
     description: String
     condition: String
     image: String
-    bookId:String
+    bookId: String
     category: Category
     owner: User
   }
@@ -31,21 +31,27 @@ const typeDefs = gql`
     user: User
   }
 
-input BookInput {
-  bookId: String!
-  authors: [String!]!
-  title: String!
-  description: String!
-  image: String
-  category: ID
-}
+  input BookInput {
+    bookId: String!
+    authors: [String!]!
+    title: String!
+    description: String!
+    image: String
+    category: ID
+  }
 
   type Chat {
-    _id: ID
-    sender: User
-    receiver: User
-    message: String
-    timestamp: String
+    _id: ID!
+    users: [User!]!
+    messages: [ChatMessage!]!
+  }
+
+  type ChatMessage {
+    _id: ID!
+    chat: Chat!
+    sender: User!
+    text: String!
+    timestamp: String!
   }
 
   type Query {
@@ -54,6 +60,9 @@ input BookInput {
     book(_id: ID!): Book
     user: User
     userBooks(userId: ID!): [Book]
+    chat(chatId: ID!): Chat
+    userChats(userId: ID!): [Chat!]!
+    chatMessages(chatId: ID!): [ChatMessage!]!
   }
 
   type Mutation {
@@ -63,9 +72,9 @@ input BookInput {
     updateBook(_id: ID!, quantity: Int): Book
     deleteBook(_id: ID!): String
     login(email: String!, password: String!): Auth
-    createChat(sender: ID!, receiver: ID!, message: String!): Chat
-    sendMessage(chatId: ID!, message: String!): Chat
+    createChat(users: [ID!]!): Chat
+    sendMessage(chatId: ID!, sender: ID!, text: String!): ChatMessage
   }
-`;
+`
 
 module.exports = typeDefs;
