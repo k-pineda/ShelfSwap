@@ -41,11 +41,11 @@ const Donate = () => {
   return (
     <section className="donation-container">
       <div className="donation-header">
-        <h2>Give us your money!</h2>
-        <p>We need to hire people to make this better</p>
+        <h2>Contribute!</h2>
+        <p>Your donations feed our families</p>
       </div>
       <div className="donation-form">
-        <label htmlFor="donation-amount">Enter donation amount:</label>
+        <label htmlFor="donation-amount">Donation Amount:</label>
         <input
           type="number"
           id="donation-amount"

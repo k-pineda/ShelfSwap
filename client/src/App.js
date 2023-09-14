@@ -17,6 +17,7 @@ import Swap from './pages/Swap'
 import Success from './pages/Success';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
+import AsideComponent from './components/SideMenu/Sidemenu'
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -41,7 +42,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        
+      <AsideComponent></AsideComponent>
             <Navbar />
             <Routes>
               
