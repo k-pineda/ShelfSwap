@@ -69,7 +69,7 @@ export const QUERY_USER = gql`
       ownedBooks {
         _id
         title
-        author
+        authors
         description
         image
         bookId
