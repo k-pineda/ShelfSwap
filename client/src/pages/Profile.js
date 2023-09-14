@@ -63,27 +63,8 @@ console.log(user)
                 <Card.Img src={book.image} alt={book.title} />
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
-                  <Card.Subtitle>{book.author}</Card.Subtitle>
+                  <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
                   <Card.Text>{book.description}</Card.Text>
-                  <Button
-                    as={Link}
-                    to={`/books/${book._id}`}
-                    variant="primary"
-                  >
-                    View Details
-                  </Button>
-                  {/* Input field for updating the book quantity */}
-                  <input
-                    type="number"
-                    value={newQuantity}
-                    onChange={(e) => setNewQuantity(e.target.value)}
-                  />
-                  <Button
-                    variant="primary"
-                    onClick={() => handleUpdateBook(book._id)}
-                  >
-                    Update Quantity
-                  </Button>
                   <Button
                     variant="danger"
                     onClick={() => handleDeleteBook(book._id)}
