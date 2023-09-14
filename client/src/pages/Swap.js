@@ -71,7 +71,7 @@ function Swap() {
           onChange={handleSearchInputChange}
         />
         <Row>
-          {allSavedBooks.map((book) => (
+          {filteredBooks.map((book) => (
             <Col key={book._id} md="4">
               <Card>
                 <Card.Img src={book.image} alt={book.title} />
