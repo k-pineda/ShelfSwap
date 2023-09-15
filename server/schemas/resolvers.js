@@ -47,7 +47,7 @@ const resolvers = {
         throw new AuthenticationError('Not logged in');
       }
       // Find a chat by its ID if the user is a participant
-      const chat = await Chat.findOne({ _id: chatId, users: user._id });
+      const chat = await Chat.findOne({ _id: chatId, users: user._id }).populate("users");
       if (!chat) {
         throw new Error('Chat not found');
       }
@@ -66,11 +66,13 @@ const resolvers = {
         throw new AuthenticationError('Not logged in');
       }
       // Find chat messages for a specific chat if the user is a participant
-      const chat = await Chat.findOne({ _id: chatId, users: user._id });
+      const chat = await Chat.findOne({ _id: chatId });
       if (!chat) {
         throw new Error('Chat not found');
       }
-      const messages = await ChatMessage.find({ chat: chat._id });
+
+      const messages = await ChatMessage.find({ chat: chat._id }).populate('sender');
+      
       return messages;
     },
   },
@@ -151,8 +153,8 @@ const resolvers = {
       const chat = await Chat.create({ users });
       return chat;
     },
-    sendMessage: async (parent, { chatId, sender, text }, { models }) => {
-      const message = await ChatMessage.create({ chat: chatId, sender, text });
+    sendMessage: async (parent, { chatId, sender, text }, { user }) => {
+      const message = await ChatMessage.create({ chat: chatId, sender:user, text });
       return message;
     },
   },
