@@ -3,8 +3,6 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import SignupForm from './SignupForm'; // Add this import statement
-
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -17,6 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SignupForm from './SignupForm'; // Add this import statement
 
 const defaultTheme = createTheme();
 
@@ -24,8 +23,8 @@ const CombinedForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showSignupForm, setShowSignupForm] = useState(false); // Add state for showing signup form
   const [login, { error, data }] = useMutation(LOGIN);
-  const [showSignupForm, setShowSignupForm] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -79,12 +78,13 @@ const CombinedForm = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            {showSignupForm ? 'Sign up' : 'Sign in'}
+            {showSignupForm ? 'Sign Up' : 'Sign In'} {/* Dynamically change title based on showSignupForm */}
           </Typography>
-          <Box component="form" noValidate onSubmit={handleFormSubmit}>
+          <Box component="form" noValidate onSubmit={handleFormSubmit} sx={{ mt: 1 }}>
             {/* Login Form */}
-            {showSignupForm ? null : (
+            {!showSignupForm ? (
               <>
+                {/* Render the login form */}
                 <Form.Group className='mb-3'>
                   <Form.Label htmlFor='email'>Email</Form.Label>
                   <Form.Control
@@ -112,42 +112,42 @@ const CombinedForm = () => {
                   />
                   <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
                 </Form.Group>
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  className="login-form-button"
-                  disabled={!(userFormData.email && userFormData.password)}
-                >
-                  Sign In
-                </Button>
               </>
+            ) : (
+              /* Signup Form */
+              <SignupForm /> // You can replace this with your signup form component
             )}
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              className="login-form-button"
+              disabled={!(userFormData.email && userFormData.password)}
+            >
+              {showSignupForm ? 'Sign Up' : 'Sign In'} {/* Dynamically change button label */}
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2" padding={1}>
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2" onClick={toggleSignupForm} padding={3}>
+                  {showSignupForm ? 'Back to Sign In' : "Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2" onClick={toggleSignupForm} padding={3}>
-                {showSignupForm ? 'Back to Sign In' : "Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
         </Alert>
-        {showSignupForm && (
-          <SignupForm /> 
-        )};
       </Container>
     </ThemeProvider>
   );
