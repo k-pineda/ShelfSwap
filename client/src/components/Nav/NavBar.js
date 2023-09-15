@@ -13,7 +13,7 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger">
+      <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger ">
         <Container fluid>
         <Navbar.Brand  as={Link} className='offset-5' to='./'>
             <img src={shelfSwapLogo} alt='Shelf-Swap_logo' />
