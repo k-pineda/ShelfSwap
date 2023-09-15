@@ -14,12 +14,13 @@
 }
 
 .tab {
-  background-color: #007bff;
+  background-color: #F2DEBA;
   color: #fff;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   position: sticky;
+  text-align: center;
   top: 0;
 }
 
@@ -36,7 +37,7 @@
 }
 
 .aside-component.active .tab {
-  background-color: #007bff;
+  background-color: #F2DEBA;
 }
 
 .aside-component.active .content {
