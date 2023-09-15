@@ -103,12 +103,13 @@ const SearchBooks = () => {
   return (
     <>
       <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Look for Books!</h1>
+        <Container id="nav">
+          <h1 id="nav">Look for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8}>
+            <Row >
+              <Col xs={12} md={8} id="nav">
                 <Form.Control
+                
                   name="searchInput"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
@@ -117,8 +118,8 @@ const SearchBooks = () => {
                   placeholder='Book Title Goes Here'
                 />
               </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
+              <Col xs={12} md={4} id="nav">
+                <Button type='submit' id="button" size='lg'>
                   Search
                 </Button>
               </Col>
@@ -126,13 +127,13 @@ const SearchBooks = () => {
           </Form>
         </Container>
       </div>
-      <Container>
+      <Container >
         <h2 className="pt-5">
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
             : "Search for a book to add to your collection"}
         </h2>
-        <Row>
+        <Row >
           {searchedBooks.map((book, index) => {
             return (
               <Col md="4" key={book.bookId}>
@@ -144,7 +145,7 @@ const SearchBooks = () => {
                       variant="top"
                     />
                   ) : null}
-                  <Card.Body>
+                  <Card.Body id="nav">
                     <Card.Title>{book.title}</Card.Title>
                     <p className="small">Authors: {book.authors}</p>
                     <Card.Text>
@@ -162,11 +163,12 @@ const SearchBooks = () => {
                     </Button>
                     {isUserLoggedIn ? (
                       savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
-                        <Button variant='info' disabled>
+                        <Button id='button' variant='info' disabled>
                           Book is Saved
                         </Button>
                       ) : (
                         <Button
+                          id="button"
                           variant='info'
                           onClick={() => handleSaveBook(book.bookId)}
                         >

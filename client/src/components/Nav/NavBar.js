@@ -13,33 +13,29 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger ">
-        <Container fluid>
-        <Navbar.Brand  as={Link} className='offset-5' to='./'>
-            <img src={shelfSwapLogo} alt='Shelf-Swap_logo' />
+      <Navbar id='nav' expand='lg'  >
+        <Container fluid id='nav'>
+        <Navbar.Brand  as={Link}  className='offset-5' to='./'>
+            <img id='nav' src={shelfSwapLogo} alt='Shelf-Swap_logo' />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse app-navbar-content'>
-            <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/swap'>
-                Books Available To Swap
+            <Nav className='ml-auto d-flex' >
+              <Nav.Link id='nav' as={Link} to='/swap'>
+                Swap Books
               </Nav.Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/profile'>
-                    See Your Books
+                  <Nav.Link as={Link} to='/profile' id='nav'>
+                    Profile
                   </Nav.Link>
-                  <Nav.Link as={Link} to='/chat'>
-                    Chats
+                  <Nav.Link as={Link} to='/chat' id='nav'>
+                    Messages
                   </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  <Nav.Link id='nav' onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link id='nav' onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
               )}
             </Nav>
-          </Navbar.Collapse>
         </Container>
       </Navbar>
       <Modal
@@ -49,18 +45,9 @@ const AppNavbar = () => {
         aria-labelledby='signup-modal'
         className="app-navbar-modal"
       >
-        {/* tab container to do either signup or login component */}
         <Tab.Container defaultActiveKey='login'>
           <Modal.Header closeButton>
             <Modal.Title id='signup-modal'>
-              {/* <Nav variant='pills'>
-                <Nav.Item>
-                  <Nav.Link eventKey='login' className="app-navbar-label">Login</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey='signup' className="app-navbar-label">Sign Up</Nav.Link>
-                </Nav.Item>
-              </Nav> */}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
