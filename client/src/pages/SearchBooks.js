@@ -23,6 +23,7 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+  const isUserLoggedIn = Auth.loggedIn();
 
   const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user  ? data.user.ownedBooks : [];
