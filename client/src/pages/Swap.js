@@ -3,6 +3,7 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ALL_SAVED_BOOKS } from "../utils/queries";
 import { CREATE_CHAT } from "../utils/mutations";
+import Auth from '../utils/auth'
 import { useNavigate } from "react-router-dom";
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
@@ -23,6 +24,9 @@ function Swap() {
     const titleMatch = book.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
+
+      const token = Auth.loggedIn() ? Auth.getToken() : null;
+
     const authorsMatch =
       Array.isArray(book.authors) &&
       book.authors.some((author) =>
@@ -79,9 +83,11 @@ function Swap() {
                   <Card.Title>{book.title}</Card.Title>
                   <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
                   <Card.Text>{book.description}</Card.Text>
+                  {Auth.loggedIn() && (
                   <Button onClick={() => handleAskToSwap(book.owner._id)}>
                     Ask To Swap!
                   </Button>
+                  )}
                 </Card.Body>
               </Card>
             </Col>

@@ -21,6 +21,7 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+  const isUserLoggedIn = Auth.loggedIn();
 
   const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user  ? data.user.ownedBooks : [];
@@ -158,18 +159,21 @@ const SearchBooks = () => {
                         >
                         {bookShowFullDescription[index] ? "Show Less" : "Show More"}
                     </Button>
-
-                    {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
-                      <Button variant='info' disabled>
-                        Book is Saved
-                      </Button>
+                    {isUserLoggedIn ? (
+                      savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
+                        <Button variant='info' disabled>
+                          Book is Saved
+                        </Button>
+                      ) : (
+                        <Button
+                          variant='info'
+                          onClick={() => handleSaveBook(book.bookId)}
+                        >
+                          Save Book
+                        </Button>
+                      )
                     ) : (
-                      <Button
-                      variant='info'
-                      onClick={() => handleSaveBook(book.bookId) }
-                    >
-                      Save Book
-                    </Button>
+                      <h10></h10>
                     )}
                   </Card.Body>
                 </Card>
