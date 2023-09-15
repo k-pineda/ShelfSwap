@@ -30,6 +30,9 @@ const AppNavbar = () => {
                   <Nav.Link as={Link} to='/profile'>
                     See Your Books
                   </Nav.Link>
+                  <Nav.Link as={Link} to='/chat'>
+                    Chats
+                  </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
