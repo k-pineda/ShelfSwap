@@ -21,6 +21,7 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+  const isUserLoggedIn = Auth.loggedIn();
 
   const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user  ? data.user.ownedBooks : [];
@@ -102,11 +103,12 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
+  console.log(SearchBooks)
   return (
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Look for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -116,19 +118,18 @@ const SearchBooks = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a book'
+                  placeholder='Book Title Goes Here'
                 />
               </Col>
               <Col xs={12} md={4}>
                 <Button type='submit' variant='success' size='lg'>
-                  Submit Search
+                  Search
                 </Button>
               </Col>
             </Row>
           </Form>
         </Container>
       </div>
-      <Donate />
       <Container>
       <h2 className='pt-5'>
           {searchedBooks.length
@@ -147,8 +148,8 @@ const SearchBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>
-                    {bookShowFullDescription[index]
-                      ? book.description
+                    {(bookShowFullDescription [index] || !book.description )
+                      ? book.description ?? "No Description"
                       : `${book.description.slice(0, 200)}...`}
                   </Card.Text>
                     <Button
@@ -158,17 +159,21 @@ const SearchBooks = () => {
                         >
                         {bookShowFullDescription[index] ? "Show Less" : "Show More"}
                     </Button>
-                    {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
-                      <Button variant='info' disabled>
-                        Book is Saved
-                      </Button>
+                    {isUserLoggedIn ? (
+                      savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
+                        <Button variant='info' disabled>
+                          Book is Saved
+                        </Button>
+                      ) : (
+                        <Button
+                          variant='info'
+                          onClick={() => handleSaveBook(book.bookId)}
+                        >
+                          Save Book
+                        </Button>
+                      )
                     ) : (
-                      <Button
-                      variant='info'
-                      onClick={() => handleSaveBook(book.bookId) }
-                    >
-                      Save Book
-                    </Button>
+                      <h10></h10>
                     )}
                   </Card.Body>
                 </Card>

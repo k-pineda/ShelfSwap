@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-// import './styles/navbar.css';
 import Auth from '../../utils/auth';
+import shelfSwapLogo from '../../assets/Shelf_Swap_Final_Logo.png'
+import './navBar.css'
 
 const AppNavbar = () => {
   // set modal display state
@@ -14,16 +15,8 @@ const AppNavbar = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger ">
         <Container fluid>
-          {/* Use the imported image */}
-          <Navbar.Brand as={Link} to='./' className='offset-6'>
-            {/* <img
-              src={ShelfSwapLogo} // Use the imported image
-              alt='Shelf-Swap_logo'
-              width='30'
-              height='30'
-              className='d-inline-block align-top'
-            /> */}
-            Shelf-Swap
+        <Navbar.Brand  as={Link} className='offset-5' to='./'>
+            <img src={shelfSwapLogo} alt='Shelf-Swap_logo' />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
 
@@ -32,7 +25,6 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to='/swap'>
                 Books Available To Swap
               </Nav.Link>
-              {/* if the user is logged in, show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>
@@ -47,7 +39,6 @@ const AppNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* set modal data up */}
       <Modal
         size='lg'
         show={showModal}
