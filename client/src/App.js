@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-import SearchBooks from "./pages/SearchBooks";
+import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import LoginForm from "./components/Nav/LoginForm";
 import SignupForm from "./components/Nav/SignupForm";
@@ -45,7 +45,7 @@ function App() {
         <AsideComponent></AsideComponent>
         <Navbar />
         <Routes>
-          <Route path="/" element={<SearchBooks />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/profile" element={<Profile />} />
