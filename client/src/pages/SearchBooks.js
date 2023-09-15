@@ -14,6 +14,8 @@ import { QUERY_USERS_BOOKS, QUERY_USER} from '../utils/queries';
 import { SAVE_BOOK } from '../utils/mutations';
 import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import BookCard from '../components/BookCard'; 
+
 
 const SearchBooks = () => {
   const { loading: loadingUserBooks, data: userBooksData } = useQuery(QUERY_USERS_BOOKS);
@@ -137,42 +139,17 @@ const SearchBooks = () => {
         </h2>
         <Row>
           {searchedBooks.map((book, index) => {
+            const isBookSaved = savedBooks.some(
+              (savedBook) => savedBook.bookId === book.bookId
+            );
             return (
               <Col md="4" key={book.bookId}>
-                <Card border='dark'>
-                  {book.image ? (
-                    <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
-                    <Card.Text>
-                    {(bookShowFullDescription [index] || !book.description )
-                      ? book.description ?? "No Description"
-                      : `${book.description.slice(0, 200)}...`}
-                  </Card.Text>
-                    <Button
-                      variant="secondary"
-                      onClick={() =>
-                        toggleShowDescription(index)}
-                        >
-                        {bookShowFullDescription[index] ? "Show Less" : "Show More"}
-                    </Button>
-
-                    {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
-                      <Button variant='info' disabled>
-                        Book is Saved
-                      </Button>
-                    ) : (
-                      <Button
-                      variant='info'
-                      onClick={() => handleSaveBook(book.bookId) }
-                    >
-                      Save Book
-                    </Button>
-                    )}
-                  </Card.Body>
-                </Card>
+                <BookCard
+                  book={book}
+                  onToggleDescription={() => toggleShowDescription(index)}
+                  onSaveBook={(bookId) => handleSaveBook(bookId)}
+                  isBookSaved={isBookSaved}
+                />
               </Col>
             );
           })}
