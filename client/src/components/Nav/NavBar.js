@@ -51,7 +51,7 @@ const AppNavbar = () => {
       <Modal
         size='lg'
         show={showModal}
-        onHide={() => setShowModal(false)}
+        onHide={() => setShowModal(true)}
         aria-labelledby='signup-modal'
         className="app-navbar-modal"
       >
@@ -63,9 +63,9 @@ const AppNavbar = () => {
                 <Nav.Item>
                   <Nav.Link eventKey='login' className="app-navbar-label">Login</Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <Nav.Link eventKey='signup' className="app-navbar-label">Sign Up</Nav.Link>
-                </Nav.Item>
+                </Nav.Item> */}
               </Nav>
             </Modal.Title>
           </Modal.Header>
