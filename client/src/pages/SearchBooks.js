@@ -102,7 +102,6 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-  console.log(SearchBooks)
   return (
     <>
       <div className="text-light bg-dark p-5">
@@ -148,8 +147,8 @@ const SearchBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>
-                    {(bookShowFullDescription [index] || !book.description )
-                      ? book.description ?? "No Description"
+                    {bookShowFullDescription[index]
+                      ? book.description
                       : `${book.description.slice(0, 200)}...`}
                   </Card.Text>
                     <Button
