@@ -71,12 +71,7 @@ const SignupForm = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+        
           <Form noValidate validated={validated} onSubmit={handleFormSubmit} sx={{ mt: 3 }}>
             <Form.Group className='mb-3'>
               <Form.Label htmlFor='username'>Username</Form.Label>

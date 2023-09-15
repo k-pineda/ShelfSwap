@@ -51,7 +51,7 @@ const AppNavbar = () => {
       <Modal
         size='lg'
         show={showModal}
-        onHide={() => setShowModal(true)}
+        onHide={() => setShowModal(false)}
         aria-labelledby='signup-modal'
         className="app-navbar-modal"
       >
@@ -59,14 +59,14 @@ const AppNavbar = () => {
         <Tab.Container defaultActiveKey='login'>
           <Modal.Header closeButton>
             <Modal.Title id='signup-modal'>
-              <Nav variant='pills'>
+              {/* <Nav variant='pills'>
                 <Nav.Item>
                   <Nav.Link eventKey='login' className="app-navbar-label">Login</Nav.Link>
                 </Nav.Item>
-                {/* <Nav.Item>
+                <Nav.Item>
                   <Nav.Link eventKey='signup' className="app-navbar-label">Sign Up</Nav.Link>
-                </Nav.Item> */}
-              </Nav>
+                </Nav.Item>
+              </Nav> */}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -86,17 +86,3 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
-
-
- {/* <Navbar expand="lg"   bg='dark' className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>  */}
