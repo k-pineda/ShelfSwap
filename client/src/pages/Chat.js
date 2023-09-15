@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_CHAT_BY_ID, GET_CHAT_MESSAGES, GET_USER_CHATS } from "../utils/queries";
 import { SEND_MESSAGE } from "../utils/mutations";
+import ChatList from '../components/ChatList/ChatList';
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
 
@@ -26,15 +27,14 @@ const Chat = () => {
     }
   );
   const [sendMessage] = useMutation(SEND_MESSAGE);
-  console.log(chatsData)
-  const chats = chatsData.userChats
 
   useEffect(() => {
     if (messagesData && messagesData.chatMessages.length > 0) {
       const chatContainer = document.getElementById("chat-container");
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-  }, [messagesData]);
+    console.log(chatsData)
+  }, [messagesData, chatsData]);
 
   const handleSendMessage = async () => {
     if (messageText.trim() === "") return;
@@ -54,7 +54,7 @@ const Chat = () => {
     }
   };
 
-  if (chatLoading || messagesLoading) {
+  if (chatLoading || messagesLoading || chatsLoading) {
     return <p>Loading...</p>;
   }
 
@@ -63,12 +63,11 @@ const Chat = () => {
     chatMessages = messagesData.chatMessages;
   }
 
-  console.log(chatMessages)
   return (
     <div className="chat-container" id="chat-container">
       {/* Left side with ChatList */}
       <div className="chat-list-container">
-        <ChatList chats={chats} /> {/* Pass the user's chats to ChatList */}
+        <ChatList chats={chatsData?.userChats} userId={userId} />
       </div>
       <div className="chat-messages">
         {chatMessages.map((message) => (

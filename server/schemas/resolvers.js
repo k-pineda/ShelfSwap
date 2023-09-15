@@ -151,8 +151,19 @@ const resolvers = {
       return { token, user };
     },
     createChat: async (parent, { users }, { models }) => {
-      const chat = await Chat.create({ users });
-      return chat;
+      
+      const existingChat = await Chat.findOne({
+        users: { $all: users }, // Find a chat where all specified users are participants
+      });
+    
+      if (existingChat) {
+        // If an existing chat is found, return it
+        return existingChat;
+      } else {
+        // If no existing chat is found, create a new chat
+        const chat = await Chat.create({ users });
+        return chat;
+      }
     },
     sendMessage: async (parent, { chatId, sender, text }, { user }) => {
       const message = await ChatMessage.create({ chat: chatId, sender:user, text });
