@@ -21,11 +21,24 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+
   const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user  ? data.user.ownedBooks : [];
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [addBook, { error }] = useMutation(SAVE_BOOK);
+
+ // Create an array of showFullDescription states, one for each book
+  const [bookShowFullDescription, setBookShowFullDescription] = useState(
+    new Array(searchedBooks.length).fill(false)
+  );
+  // Function to toggle the showFullDescription for a specific book
+  const toggleShowDescription = (bookIndex) => {
+    const updatedShowDescription = [...bookShowFullDescription];
+    updatedShowDescription[bookIndex] = !updatedShowDescription[bookIndex];
+    setBookShowFullDescription(updatedShowDescription);
+  };
+
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -115,7 +128,6 @@ const SearchBooks = () => {
           </Form>
         </Container>
       </div>
-      <Donate />
       <Container>
       <h2 className='pt-5'>
           {searchedBooks.length
@@ -123,7 +135,7 @@ const SearchBooks = () => {
             : 'Search for a book to add to your collection'}
         </h2>
         <Row>
-          {searchedBooks.map((book) => {
+          {searchedBooks.map((book, index) => {
             return (
               <Col md="4" key={book.bookId}>
                 <Card border='dark'>
@@ -133,8 +145,22 @@ const SearchBooks = () => {
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
+
                     <Card.Text>{book.description}</Card.Text>
-                    {/* Add the Save Book button here */}
+
+                    <Card.Text>
+                    {bookShowFullDescription[index]
+                      ? book.description
+                      : `${book.description.slice(0, 200)}...`}
+                  </Card.Text>
+                    <Button
+                      variant="secondary"
+                      onClick={() =>
+                        toggleShowDescription(index)}
+                        >
+                        {bookShowFullDescription[index] ? "Show Less" : "Show More"}
+                    </Button>
+
                     {savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
                       <Button variant='info' disabled>
                         Book is Saved

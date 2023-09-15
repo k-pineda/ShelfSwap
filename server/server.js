@@ -1,10 +1,12 @@
 const express = require('express');
+require('dotenv').config();
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const stripe = require('stripe')('sk_test_51Nns84Gbq8mRzxQQus23djy4LTjp0vcDUaqSxeXAjz1hyulNka44V6FFdZNoa51Rv72sUPTrL9rusA8iNCYT5tkk00SRw6Ae2F'); 
+const secretKey = process.env.SECRETKEY;
+const stripe = require('stripe')(secretKey);
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({

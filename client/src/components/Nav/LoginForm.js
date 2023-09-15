@@ -3,6 +3,8 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import SignupForm from './SignupForm'; // Add this import statement
+
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -23,6 +25,7 @@ const CombinedForm = () => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [login, { error, data }] = useMutation(LOGIN);
+  const [showSignupForm, setShowSignupForm] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -56,6 +59,10 @@ const CombinedForm = () => {
     });
   };
 
+  const toggleSignupForm = () => {
+    setShowSignupForm(!showSignupForm);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -72,68 +79,75 @@ const CombinedForm = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {showSignupForm ? 'Sign up' : 'Sign in'}
           </Typography>
-          <Box component="form" noValidate onSubmit={handleFormSubmit} sx={{ mt: 1 }}>
-            <Form.Group className='mb-3'>
-              <Form.Label htmlFor='email'>Email</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Your email'
-                name='email'
-                onChange={handleInputChange}
-                value={userFormData.email}
-                required
-                className="login-form-input"
-              />
-              <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
-            </Form.Group>
+          <Box component="form" noValidate onSubmit={handleFormSubmit}>
+            {/* Login Form */}
+            {showSignupForm ? null : (
+              <>
+                <Form.Group className='mb-3'>
+                  <Form.Label htmlFor='email'>Email</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Your email'
+                    name='email'
+                    onChange={handleInputChange}
+                    value={userFormData.email}
+                    required
+                    className="login-form-input"
+                  />
+                  <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+                </Form.Group>
 
-            <Form.Group className='mb-3'>
-              <Form.Label htmlFor='password'>Password</Form.Label>
-              <Form.Control
-                type='password'
-                placeholder='Your password'
-                name='password'
-                onChange={handleInputChange}
-                value={userFormData.password}
-                required
-                className="login-form-input"
-              />
-              <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-            </Form.Group>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className="login-form-button"
-              disabled={!(userFormData.email && userFormData.password)}
-
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2"padding={1}>
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2" padding={3}>
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+                <Form.Group className='mb-3'>
+                  <Form.Label htmlFor='password'>Password</Form.Label>
+                  <Form.Control
+                    type='password'
+                    placeholder='Your password'
+                    name='password'
+                    onChange={handleInputChange}
+                    value={userFormData.password}
+                    required
+                    className="login-form-input"
+                  />
+                  <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+                </Form.Group>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  className="login-form-button"
+                  disabled={!(userFormData.email && userFormData.password)}
+                >
+                  Sign In
+                </Button>
+              </>
+            )}
           </Box>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="#" variant="body2" onClick={toggleSignupForm} padding={3}>
+                {showSignupForm ? 'Back to Sign In' : "Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
         </Alert>
+        {showSignupForm && (
+          <SignupForm /> 
+        )};
       </Container>
     </ThemeProvider>
   );
