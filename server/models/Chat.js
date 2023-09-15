@@ -18,6 +18,6 @@ const chatSchema = new mongoose.Schema({
 });
 
 // Ensure that each chat has exactly two users
-chatSchema.index({ users: 1 }, { unique: true, partialFilterExpression: { users: { $size: 2 } } });
+// chatSchema.index({ users: 1 }, { unique: true, partialFilterExpression: { users: { $size: 2 } } });
 
 module.exports = mongoose.model('Chat', chatSchema);
