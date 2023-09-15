@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { GET_CHAT_BY_ID, GET_CHAT_MESSAGES } from "../utils/queries";
+import { GET_CHAT_BY_ID, GET_CHAT_MESSAGES, GET_USER_CHATS } from "../utils/queries";
 import { SEND_MESSAGE } from "../utils/mutations";
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
@@ -16,6 +16,9 @@ const Chat = () => {
   const { loading: chatLoading, data: chatData } = useQuery(GET_CHAT_BY_ID, {
     variables: { chatId: chat_id },
   });
+  const { loading: chatsLoading, data: chatsData } = useQuery(GET_USER_CHATS, {
+    variables: { userId },
+  });
   const { loading: messagesLoading, data: messagesData, refetch } = useQuery(
     GET_CHAT_MESSAGES,
     {
@@ -23,6 +26,8 @@ const Chat = () => {
     }
   );
   const [sendMessage] = useMutation(SEND_MESSAGE);
+  console.log(chatsData)
+  const chats = chatsData.userChats
 
   useEffect(() => {
     if (messagesData && messagesData.chatMessages.length > 0) {
@@ -61,6 +66,10 @@ const Chat = () => {
   console.log(chatMessages)
   return (
     <div className="chat-container" id="chat-container">
+      {/* Left side with ChatList */}
+      <div className="chat-list-container">
+        <ChatList chats={chats} /> {/* Pass the user's chats to ChatList */}
+      </div>
       <div className="chat-messages">
         {chatMessages.map((message) => (
           <div

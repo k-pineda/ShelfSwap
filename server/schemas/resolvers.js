@@ -58,7 +58,8 @@ const resolvers = {
         throw new AuthenticationError('Not logged in');
       }
       // Find chats where the user is one of the participants
-      const chats = await Chat.find({ users: user._id });
+      const chats = await Chat.find({ users: user._id }).populate('users');
+      console.log(chats)
       return chats;
     },
     chatMessages: async (parent, { chatId }, { models, user }) => {
