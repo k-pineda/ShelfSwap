@@ -62,7 +62,7 @@ function Swap() {
     <>
       <div fluid="true" className="text-light bg-dark p-5">
         <Container>
-          <h1>Click "Send Message" To Initiate Book Swap With User</h1>
+          <h1>Click "Ask To Swap!" To Initiate Book Swap With User</h1>
         </Container>
       </div>
 
@@ -82,6 +82,7 @@ function Swap() {
                 <Card.Body id="nav">
                   <Card.Title>{book.title}</Card.Title>
                   <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
+                  <Card.Text>Owner: {book.owner.username}</Card.Text>
                   <Card.Text>{book.description}</Card.Text>
                   {Auth.loggedIn() && (
                   <Button id='button' onClick={() => handleAskToSwap(book.owner._id)}>
