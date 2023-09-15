@@ -12,10 +12,10 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger">
+      <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger ">
         <Container fluid>
           {/* Use the imported image */}
-          <Navbar.Brand as={Link} to='./'>
+          <Navbar.Brand as={Link} to='./' className='offset-6'>
             {/* <img
               src={ShelfSwapLogo} // Use the imported image
               alt='Shelf-Swap_logo'
