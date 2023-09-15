@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './aside.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import Donate from '../Donate/index';
 
 const AsideComponent = () => {
@@ -22,10 +22,10 @@ const AsideComponent = () => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="tab">
-        <FontAwesomeIcon icon={faBars} />
+      <FontAwesomeIcon icon={faCircleInfo} beatFade size="2xl" style={{color: "#820000",}} />
       </div>
       <div className="content">
-      <p>1. Search Books</p>
+      <p>Welcome to ShelfSwap!</p> 
 
 <p>2. Add to Owned Books</p>
 

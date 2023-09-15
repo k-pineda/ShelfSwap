@@ -98,11 +98,12 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
+  console.log(SearchBooks)
   return (
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Look for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8}>
@@ -110,14 +111,14 @@ const SearchBooks = () => {
                   name="searchInput"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  type="text"
-                  size="lg"
-                  placeholder="Search for a book"
+                  type='text'
+                  size='lg'
+                  placeholder='Book Title Goes Here'
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
+                <Button type='submit' variant='success' size='lg'>
+                  Search
                 </Button>
               </Col>
             </Row>
@@ -146,12 +147,10 @@ const SearchBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className="small">Authors: {book.authors}</p>
                     <Card.Text>
-                      {book.description?.length > 0
-                        ? bookShowFullDescription[index]
-                          ? book.description
-                          : `${book.description.slice(0, 200)}...`
-                        : null}
-                    </Card.Text>
+                    {(bookShowFullDescription [index] || !book.description )
+                      ? book.description ?? "No Description"
+                      : `${book.description.slice(0, 200)}...`}
+                  </Card.Text>
                     <Button
                       variant="secondary"
                       onClick={() => toggleShowDescription(index)}

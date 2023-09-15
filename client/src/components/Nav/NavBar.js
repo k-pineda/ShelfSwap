@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-// import './styles/navbar.css';
 import Auth from '../../utils/auth';
+import shelfSwapLogo from '../../assets/Shelf_Swap_Final_Logo.png'
+import './navBar.css'
 
 const AppNavbar = () => {
   // set modal display state
@@ -14,16 +15,8 @@ const AppNavbar = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg' className="bs-danger">
         <Container fluid>
-          {/* Use the imported image */}
-          <Navbar.Brand as={Link} to='./'>
-            {/* <img
-              src={ShelfSwapLogo} // Use the imported image
-              alt='Shelf-Swap_logo'
-              width='30'
-              height='30'
-              className='d-inline-block align-top'
-            /> */}
-            Shelf-Swap
+        <Navbar.Brand  as={Link} className='offset-5' to='./'>
+            <img src={shelfSwapLogo} alt='Shelf-Swap_logo' />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
 
@@ -32,7 +25,6 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to='/swap'>
                 Books Available To Swap
               </Nav.Link>
-              {/* if the user is logged in, show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/profile'>
@@ -47,11 +39,10 @@ const AppNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* set modal data up */}
       <Modal
         size='lg'
         show={showModal}
-        onHide={() => setShowModal(true)}
+        onHide={() => setShowModal(false)}
         aria-labelledby='signup-modal'
         className="app-navbar-modal"
       >
@@ -59,14 +50,14 @@ const AppNavbar = () => {
         <Tab.Container defaultActiveKey='login'>
           <Modal.Header closeButton>
             <Modal.Title id='signup-modal'>
-              <Nav variant='pills'>
+              {/* <Nav variant='pills'>
                 <Nav.Item>
                   <Nav.Link eventKey='login' className="app-navbar-label">Login</Nav.Link>
                 </Nav.Item>
-                {/* <Nav.Item>
+                <Nav.Item>
                   <Nav.Link eventKey='signup' className="app-navbar-label">Sign Up</Nav.Link>
-                </Nav.Item> */}
-              </Nav>
+                </Nav.Item>
+              </Nav> */}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -86,17 +77,3 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
-
-
- {/* <Navbar expand="lg"   bg='dark' className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>  */}

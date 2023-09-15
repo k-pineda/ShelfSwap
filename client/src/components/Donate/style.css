@@ -3,7 +3,7 @@ h2 {
 }
 
 .donation-container {
-  background-color: #f9f9f9;
+  background-color: #FAECD6;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
@@ -25,6 +25,7 @@ h2 {
 
 .donation-form {
   margin-top: 20px;
+  color: #000;
 }
 
 label {
@@ -42,7 +43,7 @@ label {
 }
 
 .donate-button {
-  background-color: #007bff;
+  background-color: #820000;
   color: #fff;
   padding: 10px 20px;
   border: none;
