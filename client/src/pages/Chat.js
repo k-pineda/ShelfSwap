@@ -63,6 +63,8 @@ const Chat = () => {
     chatMessages = messagesData.chatMessages;
   }
 
+  const isChatSelected = Boolean(chat_id);
+
   return (
     <div className="chat-container" id="chat-container">
       {/* Left side with ChatList */}
@@ -70,33 +72,45 @@ const Chat = () => {
         <ChatList chats={chatsData?.userChats} userId={userId} />
       </div>
       <div className="chat-messages">
-        {chatMessages.map((message) => (
-          <div
-            key={message._id}
-            className={`message ${
-              message.sender === userId ? "own-message" : "other-message"
-            }`}
-          >
-            <p>
-            <span className="username">
-              {message.sender === userId ? "You" : message.sender.username}
-            </span>
-            {message.text}
-          </p>
+        {isChatSelected ? (
+          // If chat_id is provided, render chat messages
+          chatMessages.map((message) => (
+            <div
+              key={message._id}
+              className={`message ${
+                message.sender === userId ? "own-message" : "other-message"
+              }`}
+            >
+              <p>
+                <span className="username">
+                  {message.sender === userId ? "You" : message.sender.username}
+                </span>
+                {message.text}
+              </p>
+            </div>
+          ))
+        ) : (
+          // If chat_id is not provided, render a "Select chat to start messaging" message
+          <div className="select-chat-message">
+            <p>Select a chat to start messaging</p>
           </div>
-        ))}
+        )}
       </div>
-      <div className="message-input">
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
-        />
-        <button onClick={handleSendMessage}>Send</button>
-      </div>
+      {isChatSelected && (
+        // Render input field and send button only when chat_id is provided
+        <div className="message-input">
+          <input
+            type="text"
+            placeholder="Type your message..."
+            value={messageText}
+            onChange={(e) => setMessageText(e.target.value)}
+          />
+          <button onClick={handleSendMessage}>Send</button>
+        </div>
+      )}
     </div>
   );
 };
+
 
 export default Chat;
