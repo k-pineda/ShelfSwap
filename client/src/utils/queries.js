@@ -108,7 +108,6 @@ export const GET_CHAT_MESSAGES = gql`
       timestamp
       sender {
         _id
-        email
         username
       }
     }
