@@ -1,4 +1,6 @@
-/* Existing styles for other elements in your application */
+h2 {
+  color: black;
+}
 
 .donation-container {
   background-color: #f9f9f9;
@@ -60,7 +62,6 @@ label {
   margin-top: 10px;
 }
 
-/* Media queries for responsiveness if needed */
 
 @media screen and (max-width: 768px) {
   .donation-container {

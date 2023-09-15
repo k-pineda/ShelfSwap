@@ -14,9 +14,10 @@ import LoginForm from './components/Nav/LoginForm'
 import SignupForm from './components/Nav/SignupForm';
 import Navbar from './components/Nav/NavBar';
 import Swap from './pages/Swap'
-import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import Profile from './pages/Profile';
+import Chat from './pages/Chat';
+import AsideComponent from './components/SideMenu/Sidemenu'
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -41,8 +42,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        
-          <StoreProvider>
+      <AsideComponent></AsideComponent>
             <Navbar />
             <Routes>
               
@@ -66,12 +66,15 @@ function App() {
                 path="/swap" 
                 element={<Swap />} 
               />
+                <Route 
+                path="/chat/:chat_id"
+                element={<Chat />} 
+              />
               <Route 
                 path="*" 
                 element={<NoMatch />} 
               />
             </Routes>
-          </StoreProvider>
         
       </Router>
     </ApolloProvider>

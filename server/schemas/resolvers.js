@@ -1,6 +1,9 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Book, Category, Chat } = require('../models');
+const { User, Book, Category, Chat, ChatMessage } = require('../models');
 const { signToken } = require('../utils/auth');
+// const { PubSub } = require('graphql-subscriptions');
+
+// const pubsub = new PubSub();
 
 const resolvers = {
   Query: {
@@ -38,6 +41,37 @@ const resolvers = {
     },
     userBooks: async (parent, { userId }) => {
       return await Book.find({ owner: userId });
+    },
+    chat: async (parent, { chatId }, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      // Find a chat by its ID if the user is a participant
+      const chat = await Chat.findOne({ _id: chatId, users: user._id });
+      if (!chat) {
+        throw new Error('Chat not found');
+      }
+      return chat;
+    },
+    userChats: async (parent, args, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      // Find chats where the user is one of the participants
+      const chats = await Chat.find({ users: user._id });
+      return chats;
+    },
+    chatMessages: async (parent, { chatId }, { models, user }) => {
+      if (!user) {
+        throw new AuthenticationError('Not logged in');
+      }
+      // Find chat messages for a specific chat if the user is a participant
+      const chat = await Chat.findOne({ _id: chatId, users: user._id });
+      if (!chat) {
+        throw new Error('Chat not found');
+      }
+      const messages = await ChatMessage.find({ chat: chat._id });
+      return messages;
     },
   },
   Mutation: {
@@ -113,30 +147,15 @@ const resolvers = {
 
       return { token, user };
     },
-    createChat: async (parent, { sender, receiver, message }) => {
-      const chat = await Chat.create({
-        sender,
-        receiver,
-        message,
-      });
+    createChat: async (parent, { users }, { models }) => {
+      const chat = await Chat.create({ users });
       return chat;
     },
-    sendMessage: async (parent, { chatId, message }, context) => {
-      const chat = await Chat.findByIdAndUpdate(
-        chatId,
-        {
-          $push: {
-            message: {
-              sender: context.user._id,
-              text: message,
-            },
-          },
-        },
-        { new: true }
-      );
-      return chat;
+    sendMessage: async (parent, { chatId, sender, text }, { models }) => {
+      const message = await ChatMessage.create({ chat: chatId, sender, text });
+      return message;
     },
-  }
+  },
 };
 
 module.exports = resolvers;
