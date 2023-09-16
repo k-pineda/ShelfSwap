@@ -94,13 +94,21 @@ export const GET_CHAT_BY_ID = gql`
 export const GET_USER_CHATS = gql`
   query getUserChats($userId: ID!) {
     userChats(userId: $userId) {
+    _id
+    users {
       _id
-      users {
-        _id
+      username
+    }
+    messages {
+      _id
+      sender {
         username
       }
+      text
+      timestamp
     }
   }
+}
 `;
 
 export const GET_CHAT_MESSAGES = gql`
