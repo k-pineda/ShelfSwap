@@ -65,7 +65,7 @@ const resolvers = {
         throw new AuthenticationError("Not logged in");
       }
       // Find chats where the user is one of the participants
-      const chats = await Chat.find({ users: user._id }).populate("users");
+      const chats = await Chat.find({ users: user._id }).populate("users").populate("messages");
 
       return chats;
     },
@@ -190,6 +190,9 @@ const resolvers = {
           sender: user,
           text,
         });
+
+        const updateChat = await Chat.findByIdAndUpdate( chatId , {$push:{messages:message}} , { new:true } )
+        console.log(updateChat);
         return message;
       } catch (error) {
         console.error("Error creating and saving message:", error);

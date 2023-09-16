@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { DELETE_BOOK, UPDATE_BOOK } from '../utils/mutations'; // Import the mutations
+import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 
 function Profile() {
   // Define the useMutation hooks for deleteBook and updateBook
@@ -17,7 +18,7 @@ function Profile() {
   }
 console.log(user)
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <LoadingIndicator />;
   }
 
   const savedBooks = user ? user.ownedBooks : [];
