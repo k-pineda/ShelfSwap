@@ -79,12 +79,12 @@ function Swap() {
             <Col key={book._id} md="4">
               <Card>
                 <Card.Img src={book.image} alt={book.title} />
-                <Card.Body>
+                <Card.Body id="nav">
                   <Card.Title>{book.title}</Card.Title>
                   <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
                   <Card.Text>{book.description}</Card.Text>
                   {Auth.loggedIn() && (
-                  <Button onClick={() => handleAskToSwap(book.owner._id)}>
+                  <Button id='button' onClick={() => handleAskToSwap(book.owner._id)}>
                     Ask To Swap!
                   </Button>
                   )}
