@@ -102,7 +102,7 @@ const SearchBooks = () => {
   console.log(SearchBooks)
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="text-light bg-dark ps-5 py-2">
         <Container id="nav">
           <h1 id="nav">Look for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
@@ -115,7 +115,7 @@ const SearchBooks = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Book Title Goes Here'
+                  placeholder='Search books by title'
                 />
               </Col>
               <Col xs={12} md={4} id="nav">

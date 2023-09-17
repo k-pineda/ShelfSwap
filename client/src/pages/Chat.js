@@ -128,10 +128,10 @@ const Chat = () => {
       id="chat-container"
       sx={{
         display: "flex",
-        height: "80vh",
+        height: "calc(100vh - 94.18px)",
         color: "text.primary",
         paddingLeft: "50px",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#cbbfae",
       }}
     >
       <Box
@@ -224,7 +224,7 @@ const Chat = () => {
         <Box
           sx={{
             p: 2,
-            backgroundColor: "#ffffff",
+            backgroundColor: "#e1d4c1",
             borderTop: "1px solid #858585",
           }}
         >
@@ -237,6 +237,9 @@ const Chat = () => {
                 variant="outlined"
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
+                InputProps={{
+                  style: { background: 'white' }, // Apply the custom style to the input
+                }}
               />
             </Grid>
             <Grid item xs={2}>

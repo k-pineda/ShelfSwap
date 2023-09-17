@@ -48,7 +48,9 @@ const ChatList = ({ chats, userId }) => {
       {chats.map((chat) => {
         const otherUser = chat.users.find((user) => user._id !== userId);
         const isCurrentChat = location.pathname === `/chat/${chat._id}`;
+        
         const lastMessage = chat.messages[chat.messages.length-1]
+        console.log(lastMessage)
         const preview = lastMessage ? (lastMessage.text !== null ? (lastMessage.text.length > 33 ? lastMessage.text.slice(0,33) + '...' : lastMessage.text) : ' No messages ') : ' No messages ';
 
         return (
@@ -67,7 +69,7 @@ const ChatList = ({ chats, userId }) => {
                 alignItems: "center",
                 padding: "10px",
                 borderBottom: "1px solid #858585",
-                backgroundColor: isCurrentChat ? "#f0f0f0" : "#e1d4c1",
+                backgroundColor: isCurrentChat ? "#f3eee6" : "#e1d4c1",
               }}
             >
               <Avatar

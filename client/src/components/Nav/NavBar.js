@@ -13,31 +13,34 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar id='nav' expand='lg'  >
-        <Container fluid id='nav'>
-        <Navbar.Brand  as={Link}  className='offset-5' to='./'>
-            <img id='nav' src={shelfSwapLogo} alt='Shelf-Swap_logo' />
-          </Navbar.Brand>
-            <Nav className='ml-auto d-flex' >
-              <Nav.Link id='nav' as={Link} to='/swap'>
-                Swap Books
-              </Nav.Link>
-              {Auth.loggedIn() ? (
-                <>
-                  <Nav.Link as={Link} to='/profile' id='nav'>
-                    Profile
-                  </Nav.Link>
-                  <Nav.Link as={Link} to='/chat' id='nav'>
-                    Messages
-                  </Nav.Link>
-                  <Nav.Link id='nav' onClick={Auth.logout}>Logout</Nav.Link>
-                </>
-              ) : (
-                <Nav.Link id='nav' onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
-              )}
-            </Nav>
-        </Container>
-      </Navbar>
+    <Navbar id='nav' expand='lg' className='ps-5'>
+      <Container fluid id='nav'>
+        <Navbar.Brand as={Link} to='./'>
+          <img id='nav' src={shelfSwapLogo} alt='Shelf-Swap_logo' />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" style={{backgroundColor: "white"}} />
+        <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+          <Nav className='ml-auto d-flex align-items-end'>
+            <Nav.Link id='nav' as={Link} to='/swap'>
+              Swap Books
+            </Nav.Link>
+            {Auth.loggedIn() ? (
+              <>
+                <Nav.Link as={Link} to='/profile' id='nav'>
+                  Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to='/chat' id='nav'>
+                  Messages
+                </Nav.Link>
+                <Nav.Link id='nav' onClick={Auth.logout}>Logout</Nav.Link>
+              </>
+            ) : (
+              <Nav.Link id='nav' onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
       <Modal
         size='lg'
         show={showModal}
