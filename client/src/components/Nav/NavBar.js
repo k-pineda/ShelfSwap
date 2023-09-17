@@ -22,7 +22,7 @@ const AppNavbar = () => {
         <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
           <Nav className='ml-auto d-flex align-items-end'>
             <Nav.Link id='nav' as={Link} to='/swap'>
-              Swap Books
+              Swap Books!
             </Nav.Link>
             {Auth.loggedIn() ? (
               <>
