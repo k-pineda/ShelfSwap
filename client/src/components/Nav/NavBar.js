@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_USER_BY_ID } from '../../utils/queries';
+import AuthService from "../../utils/auth";
+import jwt_decode from "jwt-decode";
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Auth from '../../utils/auth';
@@ -11,6 +15,22 @@ const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
+  const token = AuthService.getToken();
+  const decodedToken = jwt_decode(token);
+  const userId = decodedToken.data._id;
+
+  let username = ''
+
+  const { loading, data } = useQuery(QUERY_USER_BY_ID, {
+    variables: { userId },
+  });
+  
+  if (data) {
+    const user = data.userById;
+    username = user.username; 
+  }
+  
+  
   return (
     <>
     <Navbar id='nav' expand='lg' className='ps-5'>
@@ -26,7 +46,7 @@ const AppNavbar = () => {
             </Nav.Link>
             {Auth.loggedIn() ? (
               <>
-                <Nav.Link as={Link} to='/profile' id='nav'>
+                <Nav.Link as={Link} to={`/profile/${username}`} id='nav'>
                   Profile
                 </Nav.Link>
                 <Nav.Link as={Link} to='/chat' id='nav'>
