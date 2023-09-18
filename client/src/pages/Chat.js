@@ -7,7 +7,9 @@ import {
   GET_USER_CHATS,
 } from "../utils/queries";
 import { SEND_MESSAGE } from "../utils/mutations";
+import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import ChatList from "../components/ChatList/ChatList";
+
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
 import {
@@ -56,25 +58,30 @@ const Chat = () => {
   const userId = decodedToken.data._id;
 
   const getAvatarBackgroundColor = (username) => {
-    const firstLetter = username.charAt(0).toLowerCase();
+    const firstLetter = username.charAt(0) ? username.charAt(0).toLowerCase() : '';
     return letterToColorMap[firstLetter] || "#69B4F0"; // Default color
   };
-  
+
   const { chat_id } = useParams();
   const [messageText, setMessageText] = useState("");
   const { loading: chatLoading, data: chatData } = useQuery(GET_CHAT_BY_ID, {
     variables: { chatId: chat_id },
   });
-  const { loading: chatsLoading, data: chatsData } = useQuery(GET_USER_CHATS, {
+  const {
+    loading: chatsLoading,
+    data: chatsData,
+    refetch: refetchChats,
+  } = useQuery(GET_USER_CHATS, {
     variables: { userId },
   });
   const {
     loading: messagesLoading,
     data: messagesData,
-    refetch,
+    refetch: refetchMessages,
   } = useQuery(GET_CHAT_MESSAGES, {
     variables: { chatId: chat_id },
   });
+
   const [sendMessage] = useMutation(SEND_MESSAGE);
 
   useEffect(() => {
@@ -97,7 +104,8 @@ const Chat = () => {
           text: messageText,
         },
       });
-      refetch();
+      refetchMessages();
+      refetchChats();
       setMessageText("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -105,7 +113,7 @@ const Chat = () => {
   };
 
   if (chatLoading || messagesLoading || chatsLoading) {
-    return <p>Loading...</p>;
+    return <LoadingIndicator />;
   }
 
   let chatMessages = [];
@@ -114,25 +122,24 @@ const Chat = () => {
   }
 
   const isChatSelected = Boolean(chat_id);
-
-  console.log(chatMessages)
-
+  console.log(chatsData);
   return (
-    <Box 
-      id="chat-container" 
+    <Box
+      id="chat-container"
       sx={{
         display: "flex",
         height: "80vh",
         color: "text.primary",
         paddingLeft: "50px",
-        backgroundColor: "background.default",
+        backgroundColor: "#ffffff",
       }}
     >
       <Box
         sx={{
           flexBasis: "30%",
           minWidth: "300px",
-          borderRight: "1px solid #ccc",
+          borderRight: "1px solid #858585",
+          backgroundColor: "#e1d4c1",
           overflowY: "auto",
         }}
       >
@@ -178,21 +185,21 @@ const Chat = () => {
                       height: 32,
                       marginRight: "8px",
                       backgroundColor:
-                    message.sender._id === userId
-                      ? "#69B4F0" // Default color for your own messages
-                      : getAvatarBackgroundColor(message.sender.username),
+                        message.sender._id === userId
+                          ? "#69B4F0" // Default color for your own messages
+                          : getAvatarBackgroundColor(message.sender.username),
                     }}
                   >
-                    {message?.sender.username[0]}
+                    {message.sender.username ? message.sender.username[0] : ""}
                   </Avatar>
                   <Box
                     sx={{
                       backgroundColor:
-                      message.sender._id === userId ? "#69B4F0" : "#ECEFF1",
+                        message.sender._id === userId ? "#69B4F0" : "#ECEFF1",
                       padding: "10px",
                       borderRadius: "10px",
                       color: "#333",
-                      minWidth: "150px"
+                      minWidth: "150px",
                     }}
                   >
                     <Typography
@@ -211,18 +218,14 @@ const Chat = () => {
                 </Box>
               ))
           ) : (
-            // If chat_id is not provided, render a "Select chat to start messaging" message
-            <Box className="select-chat-message">
-              <Typography variant="body1">
-                Select a chat to start messaging
-              </Typography>
-            </Box>
+            <Box></Box>
           )}
         </Box>
         <Box
           sx={{
             p: 2,
-            backgroundColor: "background.default",
+            backgroundColor: "#ffffff",
+            borderTop: "1px solid #858585",
           }}
         >
           <Grid container spacing={2}>

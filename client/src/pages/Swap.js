@@ -7,6 +7,7 @@ import Auth from '../utils/auth'
 import { useNavigate } from "react-router-dom";
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
+import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 
 function Swap() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function Swap() {
   const [searchQuery, setSearchQuery] = useState("");
 
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <LoadingIndicator />;
   }
 
   const allSavedBooks = data.books || [];

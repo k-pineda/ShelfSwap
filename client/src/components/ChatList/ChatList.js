@@ -39,7 +39,7 @@ const ChatList = ({ chats, userId }) => {
 
   // Function to get the background color based on the first letter of the username
   const getAvatarBackgroundColor = (username) => {
-    const firstLetter = username.charAt(0).toLowerCase();
+    const firstLetter = username.charAt(0) ? username.charAt(0).toLowerCase() : '';
     return letterToColorMap[firstLetter] || "#69B4F0"; // Default color
   };
 
@@ -48,6 +48,8 @@ const ChatList = ({ chats, userId }) => {
       {chats.map((chat) => {
         const otherUser = chat.users.find((user) => user._id !== userId);
         const isCurrentChat = location.pathname === `/chat/${chat._id}`;
+        const lastMessage = chat.messages[chat.messages.length-1]
+        const preview = lastMessage ? (lastMessage.text !== null ? (lastMessage.text.length > 33 ? lastMessage.text.slice(0,33) + '...' : lastMessage.text) : ' No messages ') : ' No messages ';
 
         return (
           <Link
@@ -64,8 +66,8 @@ const ChatList = ({ chats, userId }) => {
                 display: "flex",
                 alignItems: "center",
                 padding: "10px",
-                borderBottom: "1px solid #ddd",
-                backgroundColor: isCurrentChat ? "#f0f0f0" : "transparent",
+                borderBottom: "1px solid #858585",
+                backgroundColor: isCurrentChat ? "#f0f0f0" : "#e1d4c1",
               }}
             >
               <Avatar
@@ -96,7 +98,7 @@ const ChatList = ({ chats, userId }) => {
                     color: "#777",
                   }}
                 >
-                  placeholder
+                  {preview}
                 </Typography>
               </Box>
             </Box>
