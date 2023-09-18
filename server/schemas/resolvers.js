@@ -32,13 +32,19 @@ const resolvers = {
     },
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate(
-          "ownedBooks"
-        );
+        const user = await User.findOne({ username: args.username }).populate("ownedBooks");
         return user;
       }
-
+    
       throw new AuthenticationError("Not logged in");
+    },
+    userById: async (_, { userId }) => {
+      try {
+        const user = await User.findById(userId).populate('ownedBooks');
+        return user;
+      } catch (error) {
+        throw new Error('User not found');
+      }
     },
     userBooks: async (parent, { userId }) => {
       return await Book.find({ owner: userId });

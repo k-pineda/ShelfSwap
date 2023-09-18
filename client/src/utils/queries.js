@@ -62,8 +62,26 @@ export const QUERY_ALL_SAVED_BOOKS = gql`
 `
 
 export const QUERY_USER = gql`
-  {
-    user {
+  query GetUser($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      ownedBooks {
+        _id
+        title
+        authors
+        description
+        image
+        bookId
+      }
+    }
+  }
+`;
+
+export const QUERY_USER_BY_ID = gql`
+  query GetUserById($userId: ID!) {
+    userById(userId: $userId) {
       _id
       username
       email

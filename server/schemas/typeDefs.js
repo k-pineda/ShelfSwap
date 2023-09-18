@@ -58,7 +58,8 @@ const typeDefs = gql`
     categories: [Category]
     books(category: ID, title: String): [Book]
     book(_id: ID!): Book
-    user: User
+    user(username: String!): User
+    userById(userId: ID!): User
     userBooks(userId: ID!): [Book]
     chat(chatId: ID!): Chat
     userChats(userId: ID!): [Chat!]!
