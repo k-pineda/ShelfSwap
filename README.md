@@ -1,7 +1,8 @@
 # ShelfSwap
 Welcome to ShelfSwap! This web application allows users to discover and swap books with other users. Share your love for reading, connect with fellow book enthusiasts, and build your personal library.
 
-![ShelfSwap Platform Screenshot](./)
+<img width="949" alt="shelfswap" src="https://github.com/k-pineda/ShelfSwap/assets/128410226/77ffbad2-3ddf-4a41-b2a0-48e2435faead">
+
 
 ## Features
 

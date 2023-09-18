@@ -34,11 +34,9 @@ const SignupForm = () => {
       setValidated(true);
     } else {
       try {
-        console.log('Submitting user data:', userFormData); 
         const { data } = await addUser({
           variables: { ...userFormData },
         });
-        console.log('Response data:', data); 
         Auth.login(data.addUser.token);
       } catch (err) {
         console.error(err);
