@@ -8,7 +8,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
 import { DELETE_BOOK, UPDATE_BOOK } from "../utils/mutations"; // Import the mutations
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
-import bookNotFound from '../assets/book_not_found.jpg'
+import bookNotFound from "../assets/bookNotFound.jpg";
 
 function Profile() {
   const { username } = useParams(); // Access username from URL params
@@ -70,25 +70,40 @@ function Profile() {
       <Container className="my-5">
         <Row>
           {savedBooks.map((book) => (
-            <Col key={book._id} md="12" className="py-2" style={{ maxHeight: '300px' }}>
-              <Card className="bg-dark" >
-                <Row noGutters> 
+            <Col
+              key={book._id}
+              md="12"
+              className="my-2"
+              style={{ maxHeight: "300px" }}
+            >
+              <Card className="bg-dark">
+                <Row noGutters>
                   <Col md={2} className="pe-0">
-                    <Card.Img className="h-100" src={book.image ? book.image : bookNotFound} alt={book.title} />
+                    <Card.Img
+                      style={{ maxHeight: "300px" }}
+                      src={book.image ? book.image : bookNotFound}
+                      alt={book.title}
+                    />
                   </Col>
                   <Col md={10}>
                     <Card.Body className="text-white ps-2 pe-2 pb-2">
-                      <Card.Title className="fs-4 fw-bold">{book.title}</Card.Title>
+                      <Card.Title className="fs-4 fw-bold">
+                        {book.title}
+                      </Card.Title>
                       <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
-                      <Card.Text className="pt-3">{book.description.length>800 ? book.description.slice(0,800)+'...' : book.description}</Card.Text>
+                      <Card.Text className="pt-3">
+                        {book.description.length > 400
+                          ? book.description.slice(0, 400) + "..."
+                          : book.description}
+                      </Card.Text>
                       {user && user._id === userId && (
                         <div className="text-end">
-                        <Button
-                          id="button"
-                          onClick={() => handleDeleteBook(book._id)}
-                        >
-                          Delete
-                        </Button>
+                          <Button
+                            id="button"
+                            onClick={() => handleDeleteBook(book._id)}
+                          >
+                            Delete
+                          </Button>
                         </div>
                       )}
                     </Card.Body>

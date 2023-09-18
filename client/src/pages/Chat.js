@@ -9,7 +9,6 @@ import {
 import { SEND_MESSAGE } from "../utils/mutations";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import ChatList from "../components/ChatList/ChatList";
-
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
 import {
@@ -22,6 +21,7 @@ import {
   Paper,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { faMound } from "@fortawesome/free-solid-svg-icons";
 
 const letterToColorMap = {
   a: "#FF5733",
