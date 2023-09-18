@@ -1,9 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Book, Category, Chat, ChatMessage } = require("../models");
 const { signToken } = require("../utils/auth");
-// const { PubSub } = require('graphql-subscriptions');
-
-// const pubsub = new PubSub();
 
 const resolvers = {
   Query: {
@@ -50,7 +47,6 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("Not logged in");
       }
-      // Find a chat by its ID if the user is a participant
       const chat = await Chat.findOne({
         _id: chatId,
         users: user._id,
@@ -64,7 +60,6 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("Not logged in");
       }
-      // Find chats where the user is one of the participants
       const chats = await Chat.find({ users: user._id }).populate("users").populate("messages");
 
       return chats;
@@ -73,7 +68,6 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("Not logged in");
       }
-      // Find chat messages for a specific chat if the user is a participant
       const chat = await Chat.findOne({ _id: chatId });
       if (!chat) {
         throw new Error("Chat not found");
@@ -171,14 +165,12 @@ const resolvers = {
     },
     createChat: async (parent, { users }, { models }) => {
       const existingChat = await Chat.findOne({
-        users: { $all: users }, // Find a chat where all specified users are participants
+        users: { $all: users }, 
       });
 
-      if (existingChat) {
-        // If an existing chat is found, return it
+      if (existingChat) {      
         return existingChat;
-      } else {
-        // If no existing chat is found, create a new chat
+      } else {        
         const chat = await Chat.create({ users });
         return chat;
       }

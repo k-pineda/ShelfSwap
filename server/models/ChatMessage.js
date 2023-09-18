@@ -1,4 +1,3 @@
-// server/models/ChatMessage.js
 const mongoose = require('mongoose');
 
 const chatMessageSchema = new mongoose.Schema({
