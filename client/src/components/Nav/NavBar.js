@@ -56,13 +56,13 @@ const AppNavbar = () => {
             id="responsive-navbar-nav"
             className="justify-content-end"
           >
-            <Nav className="ml-auto d-flex align-items-end">
-              <Nav.Link id="nav" as={Link} to="/swap">
+            <Nav className="ml-auto d-flex flex-column align-items-end">
+              <Nav.Link  id="nav" as={Link} to="/swap">
                 Swap Books!
               </Nav.Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to={`/profile/${username}`} id="nav">
+                  <Nav.Link className="nav-link" as={Link} to={`/profile/${username}`} id="nav">
                     Profile
                   </Nav.Link>
                   <Nav.Link as={Link} to="/chat" id="nav">

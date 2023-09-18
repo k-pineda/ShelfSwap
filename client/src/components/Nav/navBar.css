@@ -6,3 +6,13 @@
   .navbar-brand {
     margin-right: 10px;
   }
+
+  .ml-auto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .nav-link:hover{
+    opacity: 0.5;
+  }
