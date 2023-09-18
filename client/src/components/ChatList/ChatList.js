@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 
-// Define a mapping of letters to colors
 const letterToColorMap = {
   a: "#FF5733",
   b: "#33FF57",
@@ -36,13 +35,10 @@ const letterToColorMap = {
 
 const ChatList = ({ chats, userId }) => {
   const location = useLocation();
-
-  // Function to get the background color based on the first letter of the username
   const getAvatarBackgroundColor = (username) => {
     const firstLetter = username.charAt(0) ? username.charAt(0).toLowerCase() : '';
-    return letterToColorMap[firstLetter] || "#69B4F0"; // Default color
+    return letterToColorMap[firstLetter] || "#69B4F0"; 
   };
-
   return (
     <Box className="chat-list">
       {chats.map((chat) => {

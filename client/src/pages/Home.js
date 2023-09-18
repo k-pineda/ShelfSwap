@@ -81,11 +81,11 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-  // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
-    // Find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-    // Get token
+
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
     if (!token) {
       return false;
     }
@@ -93,21 +93,16 @@ const SearchBooks = () => {
       const { data } = await addBook({
         variables: { bookInput: { ...bookToSave } },
       });
-      // Check if the mutation was successful
       if (data && data.addBook) {
-        // Update the user's owned books data with the newly saved book
         const updatedUserBooks = userBooksData
           ? [...userBooksData.userBooks, data.addBook]
           : [data.addBook];
-        setSavedBookIds([...savedBookIds, bookToSave.bookId]); // Update savedBookIds
-        // Optionally, you can update the local state with the new data
+        setSavedBookIds([...savedBookIds, bookToSave.bookId]); 
         if (userBooksData) {
           userBooksData.userBooks = updatedUserBooks;
         }
-        // Inform the user that the book was successfully saved
+        
         console.log("Book is saved:", bookToSave.title);
-        // Change the button label and disable it after saving
-        // Use navigate to redirect to the user's profile
         refetch();
       }
     } catch (err) {
@@ -123,7 +118,7 @@ const SearchBooks = () => {
     <>
       <div className="text-light bg-dark ps-5 py-2">
         <Container id="nav">
-          <h1 id="nav">Look for Books!</h1>
+          <h1 id="nav">Search for Books to Add to Your Collection!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col xs={12} md={8} id="nav">
@@ -149,7 +144,7 @@ const SearchBooks = () => {
         <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
-            : "Search for a book to add to your collection"}
+            : ""}
         </h2>
         <Row>
           {searchedBooks.map((book, index) => (
