@@ -2,19 +2,35 @@ import React, { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { useMutation, useQuery } from "@apollo/client";
-import Donate from "../components/Donate";
+import AuthService from "../utils/auth";
+import jwt_decode from "jwt-decode";
 import { QUERY_USERS_BOOKS, QUERY_USER } from "../utils/queries";
 import { SAVE_BOOK } from "../utils/mutations";
 import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import bookNotFound from "../assets/bookNotFound.jpg";
+import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 
 const SearchBooks = () => {
+  let userId = sessionStorage.getItem("userId");
+
+  const token = AuthService.getToken();
+
+  if (!userId && token) {
+    // If userId is not in sessionStorage but there is a token, decode it and set userId
+    const decodedToken = jwt_decode(token);
+    userId = decodedToken.data._id;
+
+    // Store userId in sessionStorage to persist it across page navigations
+    sessionStorage.setItem("userId", userId);
+  }
+
   const { loading: loadingUserBooks, data: userBooksData } =
     useQuery(QUERY_USERS_BOOKS);
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const isUserLoggedIn = Auth.loggedIn();
 
   const { loading, data, refetch } = useQuery(QUERY_USER);
@@ -58,7 +74,7 @@ const SearchBooks = () => {
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || "",
       }));
-      console.log("this is a test", bookData);
+
       setSearchedBooks(bookData);
       setSearchInput("");
     } catch (err) {
@@ -67,7 +83,9 @@ const SearchBooks = () => {
   };
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+
     const token = Auth.loggedIn() ? Auth.getToken() : null;
+
     if (!token) {
       return false;
     }
@@ -91,27 +109,30 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-  console.log(SearchBooks)
+
+  if (loadingUserBooks || loading) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="text-light bg-dark ps-5 py-2">
         <Container id="nav">
           <h1 id="nav">Search for Books to Add to Your Collection!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Row >
+            <Row>
               <Col xs={12} md={8} id="nav">
                 <Form.Control
-                
                   name="searchInput"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Book Title Goes Here'
+                  type="text"
+                  size="lg"
+                  placeholder="Search books by title"
                 />
               </Col>
               <Col xs={12} md={4} id="nav">
-                <Button type='submit' id="button" size='lg'>
+                <Button type="submit" id="button" size="lg">
                   Search
                 </Button>
               </Col>
@@ -119,62 +140,69 @@ const SearchBooks = () => {
           </Form>
         </Container>
       </div>
-      <Container >
-        <h2 className="pt-5">
+      <Container className="my-5">
+        <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
             : ""}
         </h2>
-        <Row >
-          {searchedBooks.map((book, index) => {
-            return (
-              <Col md="4" key={book.bookId}>
-                <Card border="dark">
-                  {book.image ? (
+        <Row>
+          {searchedBooks.map((book, index) => (
+            <Col
+              key={book.bookId}
+              md="12"
+              className="my-2"
+              style={{ maxHeight: "300px" }}
+            >
+              <Card className="bg-dark">
+                <Row>
+                  <Col md={2} className="pe-0">
                     <Card.Img
-                      src={book.image}
-                      alt={`The cover for ${book.title}`}
-                      variant="top"
+                      style={{ maxHeight: "300px" }}
+                      src={book.image ? book.image : bookNotFound}
+                      alt={book.title}
                     />
-                  ) : null}
-                  <Card.Body id="nav">
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className="small">Authors: {book.authors}</p>
-                    <Card.Text>
-                    {(bookShowFullDescription [index] || !book.description )
-                      ? book.description ?? "No Description"
-                      : `${book.description.slice(0, 200)}...`}
-                  </Card.Text>
-                    <Button
-                      variant="secondary"
-                      onClick={() => toggleShowDescription(index)}
-                    >
-                      {bookShowFullDescription[index]
-                        ? "Show Less"
-                        : "Show More"}
-                    </Button>
-                    {isUserLoggedIn ? (
-                      savedBooks.find((savedBook) => savedBook.bookId === book.bookId) ? (
-                        <Button id='button' variant='info' disabled>
-                          Book is Saved
-                        </Button>
-                      ) : (
-                        <Button
-                          id="button"
-                          variant='info'
-                          onClick={() => handleSaveBook(book.bookId)}
-                        >
-                          Save Book
-                        </Button>
-                      )
-                    ) : (
-                      <h10></h10>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+                  </Col>
+                  <Col md={10}>
+                    <Card.Body className="text-white ps-2 pe-2 pb-2">
+                      <Card.Title className="fs-4 fw-bold">
+                        {book.title}
+                      </Card.Title>
+                      <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
+                      <Card.Text className="pt-3">
+                        {book.description
+                          ? book.description.length > 400
+                            ? book.description.slice(0, 400) + "..."
+                            : book.description
+                          : ""}
+                      </Card.Text>
+                      <div className="text-end">
+                        {isUserLoggedIn ? (
+                          savedBooks.find(
+                            (savedBook) => savedBook.bookId === book.bookId
+                          ) ? (
+                            <Button id="button" variant="info" disabled>
+                              Book is Saved
+                            </Button>
+                          ) : (
+                            <Button
+                              id="button"
+                              variant="info"
+                              onClick={() => handleSaveBook(book.bookId)}
+                            >
+                              Save Book
+                            </Button>
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </Container>
     </>

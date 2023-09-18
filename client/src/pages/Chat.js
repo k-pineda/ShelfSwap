@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   GET_CHAT_BY_ID,
   GET_CHAT_MESSAGES,
@@ -9,7 +9,6 @@ import {
 import { SEND_MESSAGE } from "../utils/mutations";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import ChatList from "../components/ChatList/ChatList";
-
 import AuthService from "../utils/auth";
 import jwt_decode from "jwt-decode";
 import {
@@ -22,6 +21,7 @@ import {
   Paper,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { faMound } from "@fortawesome/free-solid-svg-icons";
 
 const letterToColorMap = {
   a: "#FF5733",
@@ -58,8 +58,10 @@ const Chat = () => {
   const userId = decodedToken.data._id;
 
   const getAvatarBackgroundColor = (username) => {
-    const firstLetter = username.charAt(0) ? username.charAt(0).toLowerCase() : '';
-    return letterToColorMap[firstLetter] || "#69B4F0"; 
+    const firstLetter = username.charAt(0)
+      ? username.charAt(0).toLowerCase()
+      : "";
+    return letterToColorMap[firstLetter] || "#69B4F0"; // Default color
   };
 
   const { chat_id } = useParams();
@@ -128,10 +130,10 @@ const Chat = () => {
       id="chat-container"
       sx={{
         display: "flex",
-        height: "80vh",
+        height: "calc(100vh - 94.18px)",
         color: "text.primary",
         paddingLeft: "50px",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#cbbfae",
       }}
     >
       <Box
@@ -159,10 +161,11 @@ const Chat = () => {
             overflowY: "auto",
             p: 2,
             display: "flex",
-            flexDirection: "column-reverse", 
+            flexDirection: "column-reverse", // Reverse the order of messages
           }}
         >
           {isChatSelected ? (
+            // If chat_id is provided, render chat messages in reverse order
             chatMessages
               .slice()
               .reverse()
@@ -171,26 +174,37 @@ const Chat = () => {
                   key={message._id}
                   sx={{
                     display: "flex",
-                    flexDirection: "row", 
+                    flexDirection: "row", // Messages from other users always on the left
                     alignItems: "flex-start",
                     marginBottom: "10px",
                     width: "fit-content",
-                    marginLeft: message?.sender._id !== userId ? "0" : "auto", 
+                    marginLeft: message?.sender._id !== userId ? "0" : "auto", // Push your messages to the right
                   }}
                 >
-                  <Avatar
-                    sx={{
-                      width: 32,
-                      height: 32,
-                      marginRight: "8px",
-                      backgroundColor:
-                        message.sender._id === userId
-                          ? "#69B4F0" 
-                          : getAvatarBackgroundColor(message.sender.username),
+                  <Link
+                    to={`/profile/${message.sender.username}`}
+                    style={{
+                      textDecoration: "none", // Remove underline
+                      color: "inherit", // Inherit text color
+                      /* Add any other custom styles you want for the link here */
                     }}
                   >
-                    {message.sender.username ? message.sender.username[0] : ""}
-                  </Avatar>
+                    <Avatar
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        marginRight: "8px",
+                        backgroundColor:
+                          message.sender._id === userId
+                            ? "#69B4F0" // Default color for your own messages
+                            : getAvatarBackgroundColor(message.sender.username),
+                      }}
+                    >
+                      {message.sender.username
+                        ? message.sender.username[0]
+                        : ""}
+                    </Avatar>
+                  </Link>
                   <Box
                     sx={{
                       backgroundColor:
@@ -223,7 +237,7 @@ const Chat = () => {
         <Box
           sx={{
             p: 2,
-            backgroundColor: "#ffffff",
+            backgroundColor: "#e1d4c1",
             borderTop: "1px solid #858585",
           }}
         >
@@ -236,6 +250,9 @@ const Chat = () => {
                 variant="outlined"
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
+                InputProps={{
+                  style: { background: "white" }, // Apply the custom style to the input
+                }}
               />
             </Grid>
             <Grid item xs={2}>
