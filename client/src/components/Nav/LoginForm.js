@@ -112,16 +112,7 @@ const CombinedForm = () => {
                   />
                   <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
                 </Form.Group>
-              </>
-            ) : (
-              /* Signup Form */
-              <SignupForm /> // You can replace this with your signup form component
-            )}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
+                <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -131,6 +122,16 @@ const CombinedForm = () => {
             >
               {showSignupForm ? 'Sign Up' : 'Sign In'} {/* Dynamically change button label */}
             </Button>
+              </>
+            ) : (
+              /* Signup Form */
+              <SignupForm /> // You can replace this with your signup form component
+            )}
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" padding={3}/>}
+              label="Remember me"
+            />
+        
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2" padding={1}>

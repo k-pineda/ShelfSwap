@@ -123,12 +123,13 @@ const SignupForm = () => {
               </Form.Control.Feedback>
             </Form.Group>
             <Button
-              disabled={!(userFormData.username && userFormData.email && userFormData.password)}
-              type='submit'
-              variant='success'
-              className='bs-danger'
+              type="submit"
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+              className="login-form-button"
+              disabled={!(userFormData.email && userFormData.password)}
             >
-              Submit
+               Sign Up {/* Dynamically change button label */}
             </Button>
           </Form>
         </Box>
