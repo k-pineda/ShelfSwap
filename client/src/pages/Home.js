@@ -104,7 +104,7 @@ const SearchBooks = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container id="nav">
-          <h1 id="nav">Look for Books!</h1>
+          <h1 id="nav">Search for Books to Add to Your Collection!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row >
               <Col xs={12} md={8} id="nav">
@@ -131,7 +131,7 @@ const SearchBooks = () => {
         <h2 className="pt-5">
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
-            : "Search for a book to add to your collection"}
+            : ""}
         </h2>
         <Row >
           {searchedBooks.map((book, index) => {
