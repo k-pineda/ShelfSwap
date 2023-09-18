@@ -5,7 +5,6 @@ import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
@@ -78,13 +77,13 @@ const CombinedForm = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            {showSignupForm ? 'Sign Up' : 'Sign In'} {/* Dynamically change title based on showSignupForm */}
+            {showSignupForm ? 'Sign Up' : 'Sign In'}
           </Typography>
           <Box component="form" noValidate onSubmit={handleFormSubmit} sx={{ mt: 1 }}>
-            {/* Login Form */}
+           
             {!showSignupForm ? (
               <>
-                {/* Render the login form */}
+               
                 <Form.Group className='mb-3'>
                   <Form.Label htmlFor='email'>Email</Form.Label>
                   <Form.Control
@@ -111,27 +110,28 @@ const CombinedForm = () => {
                     className="login-form-input"
                   />
                   <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-                </Form.Group>
-                <Button
+               <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               className="login-form-button"
+              id='login-button'
               disabled={!(userFormData.email && userFormData.password)}
             >
-              {showSignupForm ? 'Sign Up' : 'Sign In'} {/* Dynamically change button label */}
-            </Button>
+              Sign In 
+              </Button>
+                 </Form.Group>
               </>
             ) : (
-              /* Signup Form */
-              <SignupForm /> // You can replace this with your signup form component
+              <SignupForm /> 
             )}
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" padding={3}/>}
+              control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-        
+            
+           
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2" padding={1}>

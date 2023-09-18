@@ -1,4 +1,3 @@
-
 h1,
 h2,
 h3,
@@ -10,14 +9,14 @@ h6 {
 }
 
 #button {
-  background-color: #820000;
-  border-color: #820000;
-  color: #FAECD6;
+  background-color: #820000 !important; 
+  border-color: #820000 !important;
+  color: #FAECD6 !important;
 } 
 
 #button:hover{
-  background-color: #FAECD6;
-  color:black
+  background-color: #FAECD6 !important;
+  color:black !important;
 }
 #nav{
   --bs-bg-opacity: 1;
@@ -31,3 +30,15 @@ h6 {
 body{
   background-color: #FAECD6 !important;
 }
+
+#login-button{
+  background-color: #820000 !important; 
+  border-color: #820000 !important;
+  color: #FAECD6 !important;
+  margin-top: 5% !important;
+}
+#login-button:hover{
+  background-color: #FAECD6 !important;
+  color:black !important;
+}
+

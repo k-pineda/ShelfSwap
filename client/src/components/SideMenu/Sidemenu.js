@@ -28,15 +28,10 @@ const AsideComponent = () => {
       <p>Welcome to ShelfSwap!</p> 
 
 <p>1. Login or SignUp</p>
-
 <p>2. Search For Books</p>
-
 <p>3. Add Books You Own To Your Profile</p>
-
 <p>4. Swap Page Will Show All Books Available To Swap</p>
-
 <p>5. Try Messaging Another User To Set Up A Book Swap!</p>
-
 
         <Donate></Donate>
       </div>

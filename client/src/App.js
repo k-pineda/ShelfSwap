@@ -14,7 +14,6 @@ import LoginForm from "./components/Nav/LoginForm";
 import SignupForm from "./components/Nav/SignupForm";
 import Navbar from "./components/Nav/NavBar";
 import Swap from "./pages/Swap";
-import Success from "./pages/Success";
 import Profile from "./pages/Profile";
 import Chat from "./pages/Chat";
 import AsideComponent from "./components/SideMenu/Sidemenu";

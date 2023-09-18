@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import { DELETE_BOOK, UPDATE_BOOK } from '../utils/mutations'; // Import the mutations
+import { DELETE_BOOK, UPDATE_BOOK } from '../utils/mutations'; 
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 
 function Profile() {
-  // Define the useMutation hooks for deleteBook and updateBook
   const [deleteBook] = useMutation(DELETE_BOOK);
   const [updateBook] = useMutation(UPDATE_BOOK);
   const { loading, data } = useQuery(QUERY_USER);
-  const [newQuantity, setNewQuantity] = useState(0); // Define newQuantity state
+  const [newQuantity, setNewQuantity] = useState(0); 
   let user;
   if (data) {
     user = data.user;
@@ -24,7 +22,6 @@ console.log(user)
   const savedBooks = user ? user.ownedBooks : [];
 
 
-  // Define a function to handle updating the book quantity
   const handleUpdateBook = async (_id) => {
     try {
       await updateBook({
@@ -35,7 +32,6 @@ console.log(user)
     }
   };
 
-  // Define a function to handle deleting a book
   const handleDeleteBook = async (_id) => {
     try {
       await deleteBook({
