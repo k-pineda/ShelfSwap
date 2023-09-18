@@ -65,11 +65,8 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-  // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
-    // Find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-    // Get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
       return false;
@@ -78,21 +75,16 @@ const SearchBooks = () => {
       const { data } = await addBook({
         variables: { bookInput: { ...bookToSave } },
       });
-      // Check if the mutation was successful
       if (data && data.addBook) {
-        // Update the user's owned books data with the newly saved book
         const updatedUserBooks = userBooksData
           ? [...userBooksData.userBooks, data.addBook]
           : [data.addBook];
-        setSavedBookIds([...savedBookIds, bookToSave.bookId]); // Update savedBookIds
-        // Optionally, you can update the local state with the new data
+        setSavedBookIds([...savedBookIds, bookToSave.bookId]); 
         if (userBooksData) {
           userBooksData.userBooks = updatedUserBooks;
         }
-        // Inform the user that the book was successfully saved
+        
         console.log("Book is saved:", bookToSave.title);
-        // Change the button label and disable it after saving
-        // Use navigate to redirect to the user's profile
         refetch();
       }
     } catch (err) {

@@ -59,7 +59,7 @@ const Chat = () => {
 
   const getAvatarBackgroundColor = (username) => {
     const firstLetter = username.charAt(0) ? username.charAt(0).toLowerCase() : '';
-    return letterToColorMap[firstLetter] || "#69B4F0"; // Default color
+    return letterToColorMap[firstLetter] || "#69B4F0"; 
   };
 
   const { chat_id } = useParams();
@@ -159,11 +159,10 @@ const Chat = () => {
             overflowY: "auto",
             p: 2,
             display: "flex",
-            flexDirection: "column-reverse", // Reverse the order of messages
+            flexDirection: "column-reverse", 
           }}
         >
           {isChatSelected ? (
-            // If chat_id is provided, render chat messages in reverse order
             chatMessages
               .slice()
               .reverse()
@@ -172,11 +171,11 @@ const Chat = () => {
                   key={message._id}
                   sx={{
                     display: "flex",
-                    flexDirection: "row", // Messages from other users always on the left
+                    flexDirection: "row", 
                     alignItems: "flex-start",
                     marginBottom: "10px",
                     width: "fit-content",
-                    marginLeft: message?.sender._id !== userId ? "0" : "auto", // Push your messages to the right
+                    marginLeft: message?.sender._id !== userId ? "0" : "auto", 
                   }}
                 >
                   <Avatar
@@ -186,7 +185,7 @@ const Chat = () => {
                       marginRight: "8px",
                       backgroundColor:
                         message.sender._id === userId
-                          ? "#69B4F0" // Default color for your own messages
+                          ? "#69B4F0" 
                           : getAvatarBackgroundColor(message.sender.username),
                     }}
                   >
