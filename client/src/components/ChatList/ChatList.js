@@ -46,7 +46,6 @@ const ChatList = ({ chats, userId }) => {
         const isCurrentChat = location.pathname === `/chat/${chat._id}`;
         
         const lastMessage = chat.messages[chat.messages.length-1]
-        console.log(lastMessage)
         const preview = lastMessage ? (lastMessage.text !== null ? (lastMessage.text.length > 33 ? lastMessage.text.slice(0,33) + '...' : lastMessage.text) : ' No messages ') : ' No messages ';
 
         return (

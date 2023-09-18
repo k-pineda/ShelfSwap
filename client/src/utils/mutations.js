@@ -23,24 +23,24 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_BOOK = gql`
-  mutation addBookToUserSavedBooks($bookInput: BookInput!) {
-    addBook(bookInput: $bookInput) {
+mutation addBookToUserSavedBooks($bookInput: BookInput!) {
+  addBook(bookInput: $bookInput) {
+    _id
+    title
+    authors
+    description
+    condition
+    image
+    category {
       _id
-      title
-      authors
-      description
-      condition
-      image
-      category {
-        _id
-        name
-      }
-      owner {
-        _id
-        username
-      }
+      name
+    }
+    owner {
+      _id
+      username
     }
   }
+}
 `;
 
 export const REMOVE_BOOK = gql`
@@ -62,26 +62,6 @@ export const DELETE_BOOK = gql`
   }
 `;
 
-export const UPDATE_BOOK = gql`
-  mutation updateBook($_id: ID!, $quantity: Int!) {
-    updateBook(_id: $_id, quantity: $quantity) {
-      _id
-      title
-      authors
-      description
-      condition
-      image
-      category {
-        _id
-        name
-      }
-      owner {
-        _id
-        username
-      }
-    }
-  }
-`;
 
 export const CREATE_CHAT = gql`
   mutation createChat($users: [ID!]!) {
