@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { useMutation, useQuery } from "@apollo/client";
-import AuthService from "../utils/auth";
-import jwt_decode from "jwt-decode";
 import { QUERY_USERS_BOOKS, QUERY_USER } from "../utils/queries";
 import { SAVE_BOOK } from "../utils/mutations";
 import { searchGoogleBooks } from "../utils/API";
@@ -12,21 +10,8 @@ import bookNotFound from "../assets/bookNotFound.jpg";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 
 const SearchBooks = () => {
-  let userId = sessionStorage.getItem("userId");
-
-  const token = AuthService.getToken();
-
-  if (!userId && token) {
-    // If userId is not in sessionStorage but there is a token, decode it and set userId
-    const decodedToken = jwt_decode(token);
-    userId = decodedToken.data._id;
-
-    // Store userId in sessionStorage to persist it across page navigations
-    sessionStorage.setItem("userId", userId);
-  }
-
-  const { loading: loadingUserBooks, data: userBooksData } =
-    useQuery(QUERY_USERS_BOOKS);
+  
+  const { loading: loadingUserBooks, data: userBooksData } = useQuery(QUERY_USERS_BOOKS);
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
@@ -102,7 +87,6 @@ const SearchBooks = () => {
           userBooksData.userBooks = updatedUserBooks;
         }
         
-        console.log("Book is saved:", bookToSave.title);
         refetch();
       }
     } catch (err) {

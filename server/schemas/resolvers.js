@@ -2,6 +2,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Book, Category, Chat, ChatMessage } = require("../models");
 const { signToken } = require("../utils/auth");
 
+
 const resolvers = {
   Query: {
     categories: async () => {
@@ -32,19 +33,13 @@ const resolvers = {
     },
     user: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findOne({ username: args.username }).populate("ownedBooks");
+        const user = await User.findById(context.user._id).populate(
+          "ownedBooks"
+        );
         return user;
       }
-    
+
       throw new AuthenticationError("Not logged in");
-    },
-    userById: async (_, { userId }) => {
-      try {
-        const user = await User.findById(userId).populate('ownedBooks');
-        return user;
-      } catch (error) {
-        throw new Error('User not found');
-      }
     },
     userBooks: async (parent, { userId }) => {
       return await Book.find({ owner: userId });
@@ -174,9 +169,9 @@ const resolvers = {
         users: { $all: users }, 
       });
 
-      if (existingChat) {      
+      if (existingChat) {
         return existingChat;
-      } else {        
+      } else {
         const chat = await Chat.create({ users });
         return chat;
       }
@@ -190,7 +185,6 @@ const resolvers = {
         });
 
         const updateChat = await Chat.findByIdAndUpdate( chatId , {$push:{messages:message}} , { new:true } )
-        console.log(updateChat);
         return message;
       } catch (error) {
         console.error("Error creating and saving message:", error);

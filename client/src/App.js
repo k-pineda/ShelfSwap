@@ -47,7 +47,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/swap" element={<Swap />} />
           <Route path="/chat/:chat_id" element={<Chat />} />
           <Route path="/chat" element={<Chat />} />

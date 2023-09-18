@@ -1,30 +1,18 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import AuthService from "../utils/auth";
-import jwt_decode from "jwt-decode";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
-import { DELETE_BOOK, UPDATE_BOOK } from "../utils/mutations"; // Import the mutations
+import { DELETE_BOOK } from "../utils/mutations"; // Import the mutations
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import bookNotFound from "../assets/bookNotFound.jpg";
 
 function Profile() {
-  const { username } = useParams(); // Access username from URL params
-
-  const token = AuthService.getToken();
-  const decodedToken = jwt_decode(token);
-  const userId = decodedToken.data._id;
+ 
 
   const [deleteBook] = useMutation(DELETE_BOOK);
-  const [updateBook] = useMutation(UPDATE_BOOK);
 
-  const { loading, data } = useQuery(QUERY_USER, {
-    variables: { username }, // Pass username as a variable
-  });
+  const { loading, data } = useQuery(QUERY_USER);
 
-  const [newQuantity, setNewQuantity] = useState(0);
   let user;
   if (data) {
     user = data.user;
@@ -36,16 +24,7 @@ function Profile() {
 
   const savedBooks = user ? user.ownedBooks : [];
 
-  // Define a function to handle updating the book quantity
-  const handleUpdateBook = async (_id) => {
-    try {
-      await updateBook({
-        variables: { _id, quantity: newQuantity },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+
 
   // Define a function to handle deleting a book
   const handleDeleteBook = async (_id) => {
@@ -63,7 +42,7 @@ function Profile() {
     <>
       <div fluid="true" className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing {username}'s books!</h1>
+          <h1>your Saved Books!</h1>
         </Container>
       </div>
 
@@ -96,16 +75,15 @@ function Profile() {
                           ? book.description.slice(0, 400) + "..."
                           : book.description}
                       </Card.Text>
-                      {user && user._id === userId && (
-                        <div className="text-end">
+
                           <Button
                             id="button"
                             onClick={() => handleDeleteBook(book._id)}
                           >
                             Delete
                           </Button>
-                        </div>
-                      )}
+                    
+                      
                     </Card.Body>
                   </Col>
                 </Row>
