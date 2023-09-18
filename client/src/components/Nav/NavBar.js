@@ -43,7 +43,7 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar id="nav" expand="lg" className="ps-5">
+      <Navbar id="nav" expand="lg" className="ps-5 py-0 bg-dark">
         <Container fluid id="nav">
           <Navbar.Brand as={Link} to="./">
             <img id="nav" src={shelfSwapLogo} alt="Shelf-Swap_logo" />
@@ -68,7 +68,7 @@ const AppNavbar = () => {
                   <Nav.Link as={Link} to="/chat" id="nav">
                     Messages
                   </Nav.Link>
-                  <Nav.Link id="nav" onClick={Auth.logout}>
+                  <Nav.Link id="nav" onClick={AuthService.logout}>
                     Logout
                   </Nav.Link>
                 </>

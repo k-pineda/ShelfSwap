@@ -18,13 +18,11 @@ h6 {
   background-color: #FAECD6 !important;
   color:black !important;
 }
+
 #nav{
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+  background-color: #0a0a0a;
   color: #FAECD6;
-}
-#nav:hover{
-  background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
 }
 
 body{

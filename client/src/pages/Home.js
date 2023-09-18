@@ -84,7 +84,7 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
 
     if (!token) {
       return false;
@@ -116,12 +116,12 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className="text-light bg-dark ps-5 py-2">
-        <Container id="nav">
-          <h1 id="nav">Search for Books to Add to Your Collection!</h1>
-          <Form onSubmit={handleFormSubmit}>
+      <div className="text-light ps-5 py-2 bg-dark">
+        <Container>
+          <h4>Search for books to add to your collection!</h4>
+          <Form onSubmit={handleFormSubmit} >
             <Row>
-              <Col xs={12} md={8} id="nav">
+              <Col xs={12} md={8} >
                 <Form.Control
                   name="searchInput"
                   value={searchInput}
@@ -131,7 +131,7 @@ const SearchBooks = () => {
                   placeholder="Search books by title"
                 />
               </Col>
-              <Col xs={12} md={4} id="nav">
+              <Col xs={12} md={4} >
                 <Button type="submit" id="button" size="lg">
                   Search
                 </Button>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
@@ -8,18 +7,10 @@ import jwt_decode from "jwt-decode";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
 import { DELETE_BOOK, UPDATE_BOOK } from "../utils/mutations"; // Import the mutations
-
-import React, { useState } from 'react';
-import { Container, Card, Button, Row, Col } from 'react-bootstrap';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
-import { DELETE_BOOK, UPDATE_BOOK } from '../utils/mutations'; 
-
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import bookNotFound from "../assets/bookNotFound.jpg";
 
 function Profile() {
-
   const { username } = useParams(); // Access username from URL params
 
   const token = AuthService.getToken();
@@ -34,12 +25,6 @@ function Profile() {
   });
 
   const [newQuantity, setNewQuantity] = useState(0);
-
-  const [deleteBook] = useMutation(DELETE_BOOK);
-  const [updateBook] = useMutation(UPDATE_BOOK);
-  const { loading, data } = useQuery(QUERY_USER);
-  const [newQuantity, setNewQuantity] = useState(0); 
-
   let user;
   if (data) {
     user = data.user;
@@ -51,7 +36,7 @@ function Profile() {
 
   const savedBooks = user ? user.ownedBooks : [];
 
-
+  // Define a function to handle updating the book quantity
   const handleUpdateBook = async (_id) => {
     try {
       await updateBook({
@@ -62,6 +47,7 @@ function Profile() {
     }
   };
 
+  // Define a function to handle deleting a book
   const handleDeleteBook = async (_id) => {
     try {
       await deleteBook({
@@ -75,9 +61,9 @@ function Profile() {
 
   return (
     <>
-      <div fluid="true" className="text-light bg-dark p-5">
+      <div fluid="true" className="text-light bg-dark ps-5 py-4">
         <Container>
-          <h1>Viewing {username}'s books!</h1>
+          <h3>Viewing {username}'s books!</h3>
         </Container>
       </div>
 

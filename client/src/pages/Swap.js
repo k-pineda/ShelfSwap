@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import { Container, Card, Button, Row, Col, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ALL_SAVED_BOOKS } from "../utils/queries";
 import { CREATE_CHAT } from "../utils/mutations";
@@ -62,20 +63,28 @@ function Swap() {
 
   return (
     <>
-      <div fluid="true" className="text-light bg-dark p-5">
+      <div fluid="true" className="text-light bg-dark ps-5 py-2">
         <Container>
-          <h1>Click "Ask To Swap!" To Initiate Book Swap With User</h1>
+          <h4>Click "Ask To Swap!" To Initiate Book Swap With User</h4>
+          <Form >
+            <Row>
+              <Col xs={12} md={8} >
+                <Form.Control
+                  name="searchInput"
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  type="text"
+                  size="lg"
+                  placeholder="Search books by title"
+                />
+              </Col>
+            </Row>
+          </Form>
         </Container>
       </div>
-
+      
       <Container className="my-5">
-        <h2>Viewing Books Available For Swapping!</h2>
-        <input
-          type="text"
-          placeholder="Search by title or author..."
-          value={searchQuery}
-          onChange={handleSearchInputChange}
-        />
+        
       </Container>
       <Container className="my-5">
         <Row>
@@ -101,7 +110,9 @@ function Swap() {
                         {book.title}
                       </Card.Title>
                       <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
-                      <Card.Text>Owner: {book.owner.username}</Card.Text>
+                      <Link as={Link} to={`/profile/${book.owner.username}`}>
+                        <Card.Text>Owner: {book.owner.username}</Card.Text>
+                      </Link>
                       <Card.Text className="pt-3">
                         {book.description.length > 400
                           ? book.description.slice(0, 400) + "..."
