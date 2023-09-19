@@ -68,12 +68,12 @@ const SearchBooks = () => {
   };
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
+  
+    if (!bookToSave) {
+      console.error('Could not find book to save.');
+      return;
     }
+  
     try {
       const { data } = await addBook({
         variables: { bookInput: { ...bookToSave } },
@@ -90,9 +90,10 @@ const SearchBooks = () => {
         refetch();
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error saving book:', err);
     }
   };
+  
 
   if (loadingUserBooks || loading) {
     return <LoadingIndicator />;
