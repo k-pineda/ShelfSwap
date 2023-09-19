@@ -12,6 +12,8 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import carouselfPic1 from "../assets/carouself1.jpg";
 import carouselfPic2 from "../assets/carouself2.jpg";
 import carouselfPic3 from "../assets/carouself3.jpg";
+import instructionsImage from "../assets/instructions.JPG";
+import whatIsShelfImage from "../assets/whatisshelf.JPG";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -20,7 +22,7 @@ const images = [
     imgPath: carouselfPic1,
   },
   {
-    imgPath: carouselfPic2
+    imgPath: carouselfPic2,
   },
   {
     imgPath: carouselfPic3,
@@ -45,7 +47,7 @@ function SwipeableTextMobileStepper() {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+    <Box className='col-12' sx={{ flexGrow: 1 }}>
       <Paper
         square
         elevation={0}
@@ -115,22 +117,29 @@ function SwipeableTextMobileStepper() {
       />
       
       {/* "How It Works" Section */}
-      <Box mt={4}>
-        <Typography variant="h4" gutterBottom>
-          How It Works
-        </Typography>
-        <Typography variant="body1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-          semper erat, eget bibendum libero. Integer semper sollicitudin libero,
-          a fringilla urna vehicula a. Nunc auctor est nec dolor vestibulum, nec
-          pellentesque felis iaculis. Nulla facilisi.
-        </Typography>
-        <Typography variant="body1">
-          Vivamus non congue ex, eget suscipit nisi. Sed non nisl et arcu
-          tincidunt ultricies. Vestibulum vestibulum risus urna, at rutrum ex
-          bibendum in. Aenean sit amet tristique ipsum, eget venenatis odio.
-        </Typography>
-        {/* Add more content as needed */}
+      <Box mt={4} display="flex" flexDirection="column" alignItems="center">
+        {/* Image Slots */}
+        <Box mt={2} position="">
+          <img
+            src={whatIsShelfImage}
+            alt="Image 2"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "30%",
+              height: "auto",
+              zIndex: 1,
+            }}
+          />
+          <img
+            src={instructionsImage}
+            alt="Image 1"
+            style={{ width: "100%", height: "auto", marginTop:'300px' }}
+          />
+          {/* Add a third image here using the same pattern */}
+        </Box>
       </Box>
     </Box>
   );
