@@ -17,6 +17,7 @@ import Swap from "./pages/Swap";
 import Profile from "./pages/Profile";
 import Chat from "./pages/Chat";
 import AsideComponent from "./components/SideMenu/Sidemenu";
+import Landing from "./pages/Landing"
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -44,10 +45,11 @@ function App() {
         <AsideComponent></AsideComponent>
         <Navbar />
         <Routes>
+          <Route path="/landing" element={<Landing />}/>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/swap" element={<Swap />} />
           <Route path="/chat/:chat_id" element={<Chat />} />
           <Route path="/chat" element={<Chat />} />

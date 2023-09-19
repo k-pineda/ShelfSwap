@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import './style.css';
 
 const stripePromise = loadStripe(
-  'pk_test_51Nns84Gbq8mRzxQQYXLeZMCWuqCtqz9x2stK1tKRobvHMf6NXqNfToq2mqc6g2Pp2NYYEeCVSfcB5I3RnsLVjIwK00vmmnQaq6'
+  'pk_live_51Nns84Gbq8mRzxQQzvVnHoGJ8ELj925EFztYDZ7nN4spr5hjpMGGwlq44t5CSdV3SSTKreAI6jIpJws7FNFbjVSh002dZdLAiF'
 );
 
 const Donate = () => {

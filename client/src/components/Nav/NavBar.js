@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_USER_BY_ID } from "../../utils/queries";
-import AuthService from "../../utils/auth";
-import jwt_decode from "jwt-decode";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Auth from "../../utils/auth";
@@ -15,31 +11,7 @@ const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
-  let userId = sessionStorage.getItem("userId");
-
-  // Initialize username
-  let username = "";
-
-  const token = AuthService.getToken();
-
-  if (!userId && token) {
-    // If userId is not in sessionStorage but there is a token, decode it and set userId
-    const decodedToken = jwt_decode(token);
-    userId = decodedToken.data._id;
-
-    // Store userId in sessionStorage to persist it across page navigations
-    sessionStorage.setItem("userId", userId);
-  }
-
-  const { loading, data } = useQuery(QUERY_USER_BY_ID, {
-    variables: { userId },
-    skip: !token,
-  });
-
-  if (data) {
-    const user = data.userById;
-    username = user.username;
-  }
+ 
 
   return (
     <>
@@ -56,13 +28,13 @@ const AppNavbar = () => {
             id="responsive-navbar-nav"
             className="justify-content-end"
           >
-            <Nav className="ml-auto d-flex align-items-end">
-              <Nav.Link id="nav" as={Link} to="/swap">
+            <Nav className="ml-auto d-flex flex-column align-items-end">
+              <Nav.Link  id="nav" as={Link} to="/swap">
                 Swap Books!
               </Nav.Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to={`/profile/${username}`} id="nav">
+                  <Nav.Link className="nav-link" as={Link} to={`/profile`} id="nav">
                     Profile
                   </Nav.Link>
                   <Nav.Link as={Link} to="/chat" id="nav">

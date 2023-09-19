@@ -124,7 +124,6 @@ const Chat = () => {
   }
 
   const isChatSelected = Boolean(chat_id);
-  console.log(chatsData);
   return (
     <Box
       id="chat-container"
