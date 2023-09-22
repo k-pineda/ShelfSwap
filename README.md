@@ -82,8 +82,7 @@ We welcome contributions from the community! If you have ideas for improvements 
 
 https://github.com/k-pineda/ShelfSwap
 
-https://shelf-swap-425acc537cee.
-herokuapp.com/
+https://shelf-swap-425acc537cee.herokuapp.com/
 
 
 ## Acknowledgments
