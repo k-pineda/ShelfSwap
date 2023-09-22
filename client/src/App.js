@@ -16,7 +16,8 @@ import Navbar from "./components/Nav/NavBar";
 import Swap from "./pages/Swap";
 import Profile from "./pages/Profile";
 import Chat from "./pages/Chat";
-import AsideComponent from "./components/SideMenu/Sidemenu";
+import Footer from "./components/Footer";
+import Landing from "./pages/Landing"
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -41,9 +42,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <AsideComponent></AsideComponent>
         <Navbar />
         <Routes>
+          <Route path="/landing" element={<Landing />}/>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
@@ -53,6 +54,7 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
+        <Footer />
       </Router>
     </ApolloProvider>
   );

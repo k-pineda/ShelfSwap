@@ -78,6 +78,14 @@ Welcome to ShelfSwap! This web application allows users to discover and swap boo
 
 We welcome contributions from the community! If you have ideas for improvements or encounter any issues, please open a GitHub issue or submit a pull request.
 
+## Links 
+
+https://github.com/k-pineda/ShelfSwap
+
+https://shelf-swap-425acc537cee.
+herokuapp.com/
+
+
 ## Acknowledgments
 
 - Special thanks to the open-source community and the developers behind the technologies used in this project. 

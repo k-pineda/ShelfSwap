@@ -8,6 +8,8 @@ import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 import bookNotFound from "../assets/bookNotFound.jpg";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
+import Pagination from '@mui/material/Pagination';
+
 
 const SearchBooks = () => {
   
@@ -28,6 +30,21 @@ const SearchBooks = () => {
   const [bookShowFullDescription, setBookShowFullDescription] = useState(
     new Array(searchedBooks.length).fill(false)
   );
+
+   // Pagination state
+   const [currentPage, setCurrentPage] = useState(1);
+   const booksPerPage = 5; // Number of books to display per page
+
+  // Calculate the index of the first and last book to display
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBooks = searchedBooks.slice(indexOfFirstBook, indexOfLastBook);
+
+  // Function to handle page change
+  const handlePageChange = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
   // Function to toggle the showFullDescription for a specific book
   const toggleShowDescription = (bookIndex) => {
     const updatedShowDescription = [...bookShowFullDescription];
@@ -68,12 +85,12 @@ const SearchBooks = () => {
   };
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
+  
+    if (!bookToSave) {
+      console.error('Could not find book to save.');
+      return;
     }
+  
     try {
       const { data } = await addBook({
         variables: { bookInput: { ...bookToSave } },
@@ -90,9 +107,10 @@ const SearchBooks = () => {
         refetch();
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error saving book:', err);
     }
   };
+  
 
   if (loadingUserBooks || loading) {
     return <LoadingIndicator />;
@@ -126,12 +144,12 @@ const SearchBooks = () => {
       </div>
       <Container className="my-5">
         <h2>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
+          {currentBooks.length
+            ? `Viewing ${currentBooks.length} results:`
             : ""}
         </h2>
         <Row>
-          {searchedBooks.map((book, index) => (
+          {currentBooks.map((book, index) => (
             <Col
               key={book.bookId}
               md="12"
@@ -188,6 +206,12 @@ const SearchBooks = () => {
             </Col>
           ))}
         </Row>
+        <Pagination
+          count={Math.ceil(searchedBooks.length / booksPerPage)}
+          color="primary"
+          page={currentPage}
+          onChange={handlePageChange}
+        />
       </Container>
     </>
   );
