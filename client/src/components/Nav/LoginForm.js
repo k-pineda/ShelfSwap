@@ -133,11 +133,11 @@ const CombinedForm = () => {
             
            
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="#" variant="body2" padding={1}>
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link href="#" variant="body2" onClick={toggleSignupForm} padding={3}>
                   {showSignupForm ? 'Back to Sign In' : "Don't have an account? Sign Up"}
