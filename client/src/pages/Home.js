@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Button, Card, Col, Row, CardGroup } from "react-bootstrap";
+import { Container, Form, Button, Card, CardGroup } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_USERS_BOOKS, QUERY_USER } from "../utils/queries";
