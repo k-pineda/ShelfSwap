@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
+import { Container, Form, Button, Card, Col, Row, CardGroup } from "react-bootstrap";
 import Auth from "../utils/auth";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_USERS_BOOKS, QUERY_USER } from "../utils/queries";
@@ -10,54 +10,39 @@ import bookNotFound from "../assets/bookNotFound.jpg";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import Pagination from '@mui/material/Pagination';
 
-
 const SearchBooks = () => {
-  
   const { loading: loadingUserBooks, data: userBooksData } = useQuery(QUERY_USERS_BOOKS);
-  // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
-  // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
   const isUserLoggedIn = Auth.loggedIn();
 
   const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user ? data.user.ownedBooks : [];
-  // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [addBook, { error }] = useMutation(SAVE_BOOK);
 
-  // Create an array of showFullDescription states, one for each book
-  const [bookShowFullDescription, setBookShowFullDescription] = useState(
-    new Array(searchedBooks.length).fill(false)
-  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const booksPerPage = 5;
 
-   // Pagination state
-   const [currentPage, setCurrentPage] = useState(1);
-   const booksPerPage = 5; // Number of books to display per page
-
-  // Calculate the index of the first and last book to display
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = searchedBooks.slice(indexOfFirstBook, indexOfLastBook);
 
-  // Function to handle page change
-  const handlePageChange = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
+    // Function to handle page change
+    const handlePageChange = (event, newPage) => {
+      setCurrentPage(newPage);
+    };
 
-  // Function to toggle the showFullDescription for a specific book
   const toggleShowDescription = (bookIndex) => {
-    const updatedShowDescription = [...bookShowFullDescription];
-    updatedShowDescription[bookIndex] = !updatedShowDescription[bookIndex];
-    setBookShowFullDescription(updatedShowDescription);
+    const updatedBooks = [...searchedBooks];
+    updatedBooks[bookIndex].showDescription = !updatedBooks[bookIndex].showDescription;
+    setSearchedBooks(updatedBooks);
   };
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   }, [savedBookIds]);
-  // create method to search for books and set state on form submit
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     if (!searchInput) {
@@ -66,7 +51,7 @@ const SearchBooks = () => {
     try {
       const response = await searchGoogleBooks(searchInput);
       if (!response.ok) {
-        throw new Error("something went wrong!");
+        throw new Error("Something went wrong!");
       }
       const { items } = await response.json();
       const bookData = items.map((book) => ({
@@ -75,6 +60,7 @@ const SearchBooks = () => {
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || "",
+        showDescription: false, // Initialize showDescription as false
       }));
 
       setSearchedBooks(bookData);
@@ -83,14 +69,15 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
+
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-  
+
     if (!bookToSave) {
       console.error('Could not find book to save.');
       return;
     }
-  
+
     try {
       const { data } = await addBook({
         variables: { bookInput: { ...bookToSave } },
@@ -99,18 +86,17 @@ const SearchBooks = () => {
         const updatedUserBooks = userBooksData
           ? [...userBooksData.userBooks, data.addBook]
           : [data.addBook];
-        setSavedBookIds([...savedBookIds, bookToSave.bookId]); 
+        setSavedBookIds([...savedBookIds, bookToSave.bookId]);
         if (userBooksData) {
           userBooksData.userBooks = updatedUserBooks;
         }
-        
+
         refetch();
       }
     } catch (err) {
       console.error('Error saving book:', err);
     }
   };
-  
 
   if (loadingUserBooks || loading) {
     return <LoadingIndicator />;
@@ -122,23 +108,19 @@ const SearchBooks = () => {
         <Container id="nav">
           <h1 id="nav">Search for Books to Add to Your Collection!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8} id="nav">
-                <Form.Control
-                  name="searchInput"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type="text"
-                  size="lg"
-                  placeholder="Search books by title"
-                />
-              </Col>
-              <Col xs={12} md={4} id="nav">
-                <Button type="submit" id="button" size="lg">
-                  Search
-                </Button>
-              </Col>
-            </Row>
+            <div className="d-flex">
+              <Form.Control
+                name="searchInput"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                type="text"
+                size="lg"
+                placeholder="Search books by title"
+              />
+              <Button type="submit" id="button" size="lg" className="ms-2">
+                Search
+              </Button>
+            </div>
           </Form>
         </Container>
       </div>
@@ -148,64 +130,62 @@ const SearchBooks = () => {
             ? `Viewing ${currentBooks.length} results:`
             : ""}
         </h2>
-        <Row>
+        <CardGroup>
           {currentBooks.map((book, index) => (
-            <Col
-              key={book.bookId}
-              md="12"
-              className="my-2"
-              style={{ maxHeight: "300px" }}
-            >
-              <Card className="bg-dark">
-                <Row>
-                  <Col md={2} className="pe-0">
-                    <Card.Img
-                      style={{ maxHeight: "300px" }}
-                      src={book.image ? book.image : bookNotFound}
-                      alt={book.title}
-                    />
-                  </Col>
-                  <Col md={10}>
-                    <Card.Body className="text-white ps-2 pe-2 pb-2">
-                      <Card.Title className="fs-4 fw-bold">
-                        {book.title}
-                      </Card.Title>
-                      <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
-                      <Card.Text className="pt-3">
-                        {book.description
-                          ? book.description.length > 400
-                            ? book.description.slice(0, 400) + "..."
-                            : book.description
-                          : ""}
-                      </Card.Text>
-                      <div className="text-end">
-                        {isUserLoggedIn ? (
-                          savedBooks.find(
-                            (savedBook) => savedBook.bookId === book.bookId
-                          ) ? (
-                            <Button id="button" variant="info" disabled>
-                              Book is Saved
-                            </Button>
-                          ) : (
-                            <Button
-                              id="button"
-                              variant="info"
-                              onClick={() => handleSaveBook(book.bookId)}
-                            >
-                              Save Book
-                            </Button>
-                          )
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </Card.Body>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
+            <Card key={book.bookId} className="bg-dark">
+              <Card.Body className="text-white">
+                <Card.Img
+                  style={{ maxHeight: "300px" }}
+                  src={book.image ? book.image : bookNotFound}
+                  alt={book.title}
+                />
+                <Card.Title className="fs-4 fw-bold">
+                  {book.title}
+                </Card.Title>
+                <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
+                <Card.Text className="pt-3">
+                  {book.showDescription
+                    ? book.description
+                    : book.description
+                    ? book.description.length > 0
+                    ? book.description.slice(0, 0) 
+                    : book.description
+                    : ""}
+                </Card.Text>
+                <div className="text-end">
+                  {isUserLoggedIn ? (
+                    savedBooks.find(
+                      (savedBook) => savedBook.bookId === book.bookId
+                    ) ? (
+                      <Button id="button" variant="info" disabled>
+                        Book is Saved
+                      </Button>
+                    ) : (
+                      <>
+                        <Button
+                          id="button"
+                          variant="info"
+                          onClick={() => handleSaveBook(book.bookId)}
+                        >
+                          Save Book
+                        </Button>
+                        <Button
+                          id="button"
+                          variant="primary"
+                          onClick={() => toggleShowDescription(index)}
+                        >
+                          {book.showDescription ? "Show Less" : "Show More"}
+                        </Button>
+                      </>
+                    )
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </Card.Body>
+            </Card>
           ))}
-        </Row>
+        </CardGroup>
         <Pagination
           count={Math.ceil(searchedBooks.length / booksPerPage)}
           color="primary"
@@ -216,4 +196,6 @@ const SearchBooks = () => {
     </>
   );
 };
+
+
 export default SearchBooks;
