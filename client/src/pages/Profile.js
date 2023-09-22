@@ -42,7 +42,7 @@ function Profile() {
     <>
       <div fluid="true" className="text-light bg-dark p-5">
         <Container>
-          <h1>your Saved Books!</h1>
+          <h1>Your Saved Books!</h1>
         </Container>
       </div>
 
