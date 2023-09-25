@@ -8,6 +8,65 @@ h6 {
 
 }
 
+/* --------------------------------------------------------- Landing Page ----------------------------------------------------------- */
+
+.homepage {
+  background-image: url('../src/assets/shelf-swap-landing.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  min-height: 100vh; 
+}
+
+.home {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #FFF4F4;
+  text-align: center;
+}
+
+.home-title {
+  font-weight: 900;
+  font-size: 35px;
+}
+
+.home-text {
+  font-size: 20px;
+}
+
+.home-btn,
+.submit-btn {
+  border: none;
+  outline: none;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F7E6C4;
+  font-weight: 800;
+}
+
+.btn.btn-warning {
+  background-color: #FFF4F4;
+}
+
+.home-btn:hover,
+.btn.btn-warning:hover,
+.submit-btn:hover {
+  background-color: #F1C376;
+}
+
+
+
+
+
+
+
+
+
+
 #button {
   background-color: #820000 !important; 
   border-color: #820000 !important;

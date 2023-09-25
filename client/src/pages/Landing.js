@@ -16,7 +16,7 @@ export default function Landing() {
         </p>
         {loggedIn ?
           (<button className="home-btn" onClick={() => navigate("/exercise")}>Add Exercise</button>) :
-          (<button className="home-btn" onClick={() => navigate("/signup")}>Get Started</button>)}
+          (<button className="home-btn" onClick={() => navigate("/signup")}>Sign Up Here</button>)}
       </Container> }
     </div>
   );
