@@ -16,8 +16,8 @@ import Navbar from "./components/Nav/NavBar";
 import Swap from "./pages/Swap";
 import Profile from "./pages/Profile";
 import Chat from "./pages/Chat";
-import Footer from "./components/Footer";
-import Landing from "./pages/Landing"
+// import Footer from "./components/Footer";
+import Landing from "./components/Landing"
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -44,8 +44,9 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/landing" element={<Landing />}/>
-          <Route path="/" element={<Home />} />
+          {/* Added landing page as the first page of the path -Jose */}
+          <Route path="/" element={<Landing />}/>
+          <Route path="/Home" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/profile" element={<Profile />} />
