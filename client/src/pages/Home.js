@@ -16,6 +16,7 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const isUserLoggedIn = Auth.loggedIn();
+  const [showPagination, setShowPagination] = useState(false);
 
   const { loading, data, refetch } = useQuery(QUERY_USER);
   const savedBooks = data?.user ? data.user.ownedBooks : [];
@@ -63,7 +64,7 @@ const SearchBooks = () => {
         image: book.volumeInfo.imageLinks?.thumbnail || "",
         showDescription: false, // Initialize showDescription as false
       }));
-
+      setShowPagination(true);
       setSearchedBooks(bookData);
       setSearchInput("");
     } catch (err) {
@@ -190,12 +191,15 @@ const SearchBooks = () => {
             </Card>
           ))}
         </CardGroup>
+        {showPagination && (
         <Pagination
           count={Math.ceil(searchedBooks.length / booksPerPage)}
           color="primary"
           page={currentPage}
           onChange={handlePageChange}
+          id="arrows"
         />
+      )}
       </Container>
     </>
   );
