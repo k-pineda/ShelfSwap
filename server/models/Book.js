@@ -15,6 +15,9 @@ const bookSchema = new Schema({
   description: {
     type: String
   },
+  showDescription:{
+    type: Boolean
+  },
   condition: {
     type: String
   },
