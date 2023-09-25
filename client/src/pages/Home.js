@@ -9,6 +9,7 @@ import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 import bookNotFound from "../assets/bookNotFound.jpg";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
 import Pagination from '@mui/material/Pagination';
+import { maxHeight } from "@mui/system";
 
 const SearchBooks = () => {
   const { loading: loadingUserBooks, data: userBooksData } = useQuery(QUERY_USERS_BOOKS);
@@ -124,18 +125,19 @@ const SearchBooks = () => {
           </Form>
         </Container>
       </div>
-      <Container className="my-5">
+      <Container className="my-5" >
         <h2>
           {currentBooks.length
             ? `Viewing ${currentBooks.length} results:`
             : ""}
         </h2>
-        <CardGroup>
+        <CardGroup id="card-group">
           {currentBooks.map((book, index) => (
-            <Card key={book.bookId} className="bg-dark">
+            <Card key={book.bookId}   className="bg-dark card-spacing ">
               <Card.Body className="text-white">
                 <Card.Img
-                  style={{ maxHeight: "300px" }}
+                  style={{maxHeight:"400px",
+                          maxWidth:'300px'}}
                   src={book.image ? book.image : bookNotFound}
                   alt={book.title}
                 />
@@ -157,7 +159,7 @@ const SearchBooks = () => {
                     savedBooks.find(
                       (savedBook) => savedBook.bookId === book.bookId
                     ) ? (
-                      <Button id="button" variant="info" disabled>
+                      <Button id="button" variant="info" disabled >
                         Book is Saved
                       </Button>
                     ) : (
@@ -166,6 +168,7 @@ const SearchBooks = () => {
                           id="button"
                           variant="info"
                           onClick={() => handleSaveBook(book.bookId)}
+                          
                         >
                           Save Book
                         </Button>
@@ -173,6 +176,7 @@ const SearchBooks = () => {
                           id="button"
                           variant="primary"
                           onClick={() => toggleShowDescription(index)}
+                          
                         >
                           {book.showDescription ? "Show Less" : "Show More"}
                         </Button>
