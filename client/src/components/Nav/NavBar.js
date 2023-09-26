@@ -9,12 +9,12 @@ const AppNavbar = () => {
   return (
     <>
       <Navbar collapseOnSelect expand="sm">
-          <Navbar.Brand as={Link} to="./" className="brand brand-logged">
+          <Navbar.Brand as={Link} to="./" className="brand brand-logged p-3">
             ShelfSwap
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
           <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
-            <Nav>
+            <Nav className="p-3">
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to={`/profile`}>
