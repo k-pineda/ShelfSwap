@@ -5,21 +5,17 @@ import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Auth from "../../utils/auth";
-import shelfSwapLogo from "../../assets/Shelf_Swap_Final_Logo.png";
-import "./navBar.css";
 
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
-
- 
 
   return (
     <>
       <Navbar id="nav" expand="lg" className="ps-5">
         <Container fluid id="nav">
           <Navbar.Brand as={Link} to="./">
-            <img id="nav" src={shelfSwapLogo} alt="Shelf-Swap_logo" />
+          
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="responsive-navbar-nav"

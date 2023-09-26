@@ -13,11 +13,10 @@ export default function Landing() {
         <h1 className="home-title">Your Digital Bookshelf: Books at Your Fingertips</h1>
         <p className="home-text">
         List, Swap, and Discover New Books!
-        </p>
-        {loggedIn ?
-          (<button className="home-btn" onClick={() => navigate("/exercise")}>Add Exercise</button>) :
-          (<button className="home-btn" onClick={() => navigate("/signup")}>Sign Up Here</button>)}
-      </Container> }
+        </p> 
+          <button className="home-btn" onClick={() => navigate("/signup")}>Sign Up Here</button>
+      </Container> 
+      }
     </div>
   );
 }
