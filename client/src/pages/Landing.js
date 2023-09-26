@@ -1,6 +1,4 @@
 import React, { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom';
-import Auth from '../utils/auth';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal'; 
 import Tab from 'react-bootstrap/Tab'; 
@@ -8,8 +6,6 @@ import LoginForm from '../components/Nav/LoginForm';
 import SignUpForm from '../components/Nav/SignupForm'; 
 
 export default function Landing() {
-  const navigate = useNavigate();
-  const loggedIn = Auth.loggedIn();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -26,13 +22,13 @@ export default function Landing() {
             List, Swap, and Discover New Books!
           </p>
           <button className="home-btn" onClick={openModal}>
-            Sign Up Here
+            Get Started 
           </button>
         </Container>
       </div>
 
       {/* Modal Feature */}
-      <Modal size="lg" show={showModal} onHide={() => setShowModal(false)} aria-labelledby="signup-modal" className="app-navbar-modal">
+      <Modal size="md" show={showModal} onHide={() => setShowModal(false)} aria-labelledby="signup-modal" className="app-navbar-modal">
         <Tab.Container defaultActiveKey="login">
           <Modal.Header closeButton>
             <Modal.Title id="signup-modal">Sign Up / Log In</Modal.Title>

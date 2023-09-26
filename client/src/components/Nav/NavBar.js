@@ -15,18 +15,18 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
           <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
             <Nav>
-              <Nav.Link  id="nav" as={Link} to="/swap">
-                Swap Books!
-              </Nav.Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link className="nav-link" as={Link} to={`/profile`} id="nav">
+                  <Nav.Link as={Link} to={`/profile`}>
                     Profile
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/chat" id="nav">
+                  <Nav.Link as={Link} to="/swap">
+                    Swap Books
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/chat">
                     Messages
                   </Nav.Link>
-                  <Nav.Link id="nav" onClick={Auth.logout}>
+                  <Nav.Link onClick={Auth.logout}>
                     Logout
                   </Nav.Link>
                 </>

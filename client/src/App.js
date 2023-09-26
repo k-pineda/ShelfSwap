@@ -16,7 +16,7 @@ import Navbar from "./components/Nav/NavBar";
 import Swap from "./pages/Swap";
 import Profile from "./pages/Profile";
 import Chat from "./pages/Chat";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import Landing from "./pages/Landing"
 
 const httpLink = createHttpLink({
@@ -54,7 +54,7 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </ApolloProvider>
   );
