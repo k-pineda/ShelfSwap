@@ -26,7 +26,7 @@ export default function Landing() {
           </button>
         </Container>
       </div>
-
+    
       {/* Modal Feature */}
       <Modal size="md" show={showModal} onHide={() => setShowModal(false)} aria-labelledby="signup-modal" className="app-navbar-modal">
         <Tab.Container defaultActiveKey="login">
