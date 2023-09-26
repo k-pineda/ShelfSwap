@@ -5,12 +5,9 @@ h4,
 h5,
 h6 {
   font-family: 'Rubik', sans-serif;
-
 }
 
-/* --------------------------------------------------------- Landing Page ----------------------------------------------------------- */
-
-.homepage {
+body {
   background-image: url('../src/assets/shelf-swap-landing.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -18,6 +15,8 @@ h6 {
   background-position: center center;
   min-height: 100vh; 
 }
+
+/* --------------------------------------------------------- Landing Page ----------------------------------------------------------- */
 
 .home {
   position: absolute;
@@ -60,7 +59,11 @@ h6 {
 
 /* ----------------------------------------------------------- NavBar ---------------------------------------------------------------- */ 
 
-
+.brand.brand-logged {
+  font-size: 40px; 
+  color: #FFF4F4; 
+  font-weight: bold; 
+}
 
 
 
