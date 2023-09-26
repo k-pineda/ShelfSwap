@@ -5,32 +5,123 @@ h4,
 h5,
 h6 {
   font-family: 'Rubik', sans-serif;
-
 }
 
-#button {
+body {
+  background-image: url('../src/assets/shelf-swap-landing.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  min-height: 100vh; 
+}
+
+/* --------------------------------------------------------- Landing Page ----------------------------------------------------------- */
+
+.home {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #FFF4F4;
+  text-align: center;
+}
+
+.home-title {
+  font-weight: 900;
+  font-size: 35px;
+}
+
+.home-text {
+  font-size: 20px;
+}
+
+.home-btn,
+.submit-btn {
+  border: none;
+  outline: none;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F7E6C4;
+  font-weight: 800;
+}
+
+.btn.btn-warning {
+  background-color: #FFF4F4;
+}
+
+.home-btn:hover,
+.btn.btn-warning:hover,
+.submit-btn:hover {
+  background-color: #F1C376;
+}
+
+/* ----------------------------------------------------------- NavBar ---------------------------------------------------------------- */ 
+
+.brand.brand-logged {
+  font-size: 40px; 
+  color: #FFF4F4; 
+  font-weight: bold; 
+}
+
+.brand {
+  font-family: 'Chau Philomene One', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.brand-logged {
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+.nav-link {
+  text-align: center;
+  margin-right: 1%;
+  margin-left: 5px; 
+  font-weight: 500;
+  color: #FFF4F4;
+  font-size: 25px;
+  text-decoration: none; 
+  outline: none; 
+}
+
+.navbar-brand {
+  text-decoration: none; 
+  outline: none; 
+}
+
+.nav-link:hover {
+  color: #F1C376;
+}
+
+
+
+
+/* #button {
   background-color: #820000 !important; 
   border-color: #820000 !important;
   color: #FAECD6 !important;
 margin: 5px;
 display: flex;
 flex: row;
-}
+} */
 
-#button:hover{
+/* #button:hover{
   background-color: #FAECD6 !important;
   color:black !important;
-}
-#nav{
+} */
+/* #nav{
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
   color: #FAECD6;
-}
-#nav:hover{
+} */
+/* #nav:hover{
   background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
-}
+} */
 
-body{
+/* body{
   background-color: #FAECD6 !important;
 }
 
@@ -43,8 +134,8 @@ body{
 #login-button:hover{
   background-color: #FAECD6 !important;
   color:black !important;
-}
-
+} */
+/* 
 .card-spacing {
   margin: 20px; 
   border-radius: 5px !important;
@@ -55,4 +146,4 @@ body{
 
 #card-group{
   min-width: 100% !important;
-}
+} */
