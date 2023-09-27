@@ -21,6 +21,7 @@ export default function Landing() {
           <p className="home-text">
             List, Swap, and Discover New Books!
           </p>
+          {/* ADD LOGIC FOR ./HOME AFTER USER SIGNS UP OR LOGS IN */}
           <button className="home-btn" onClick={openModal}>
             Get Started 
           </button>
