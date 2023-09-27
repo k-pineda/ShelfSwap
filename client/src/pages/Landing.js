@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -9,27 +9,29 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import carouselfPic1 from "../assets/carouself1.jpg";
-import carouselfPic2 from "../assets/carouself2.jpg";
-import carouselfPic3 from "../assets/carouself3.jpg";
-import instructionsImage from "../assets/instructions.JPG";
-import whatIsShelfImage from "../assets/whatisshelf.JPG";
+import carouselfPic1 from '../assets/carouself1.jpg';
+import carouselfPic2 from '../assets/carouself2.jpg';
+import carouselfPic3 from '../assets/carouself3.jpg';
+import instructionsImage from '../assets/instructions.JPG';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
     imgPath: carouselfPic1,
+    label: 'Image 1',
   },
   {
     imgPath: carouselfPic2,
+    label: 'Image 2',
   },
   {
     imgPath: carouselfPic3,
+    label: 'Image 3',
   },
 ];
 
-function SwipeableTextMobileStepper() {
+const SwipeableTextMobileStepper = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -47,7 +49,7 @@ function SwipeableTextMobileStepper() {
   };
 
   return (
-    <Box className='col-12' sx={{ flexGrow: 1 }}>
+    <Box className="col-12" sx={{ flexGrow: 1 }}>
       <Paper
         square
         elevation={0}
@@ -56,7 +58,7 @@ function SwipeableTextMobileStepper() {
           alignItems: 'center',
           height: 50,
           pl: 2,
-          bgcolor: 'background.default',
+          bgcolor: theme.palette.background.default,
         }}
       >
         <Typography>{images[activeStep].label}</Typography>
@@ -73,11 +75,9 @@ function SwipeableTextMobileStepper() {
               <Box
                 component="img"
                 sx={{
-                  height: 255,
+                  height: 400,
                   display: 'block',
-                  maxWidth: 400,
-                  overflow: 'hidden',
-                  width: '100%',
+                  maxWidth: '100%',
                 }}
                 src={step.imgPath}
                 alt={step.label}
@@ -105,7 +105,11 @@ function SwipeableTextMobileStepper() {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button
+            size="small"
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
             {theme.direction === 'rtl' ? (
               <KeyboardArrowRight />
             ) : (
@@ -115,34 +119,35 @@ function SwipeableTextMobileStepper() {
           </Button>
         }
       />
-      
+
       {/* "How It Works" Section */}
-      <Box mt={4} display="flex" flexDirection="column" alignItems="center">
+      <Box
+        mt={4}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        textAlign="center"
+      >
         {/* Image Slots */}
-        <Box mt={2} position="">
-          <img
-            src={whatIsShelfImage}
-            alt="Image 2"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "30%",
-              height: "auto",
-              zIndex: 1,
-            }}
-          />
+        <Box mt={2} position="relative">
           <img
             src={instructionsImage}
             alt="Image 1"
-            style={{ width: "100%", height: "auto", marginTop:'300px' }}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 1,
+            }}
           />
           {/* Add a third image here using the same pattern */}
         </Box>
       </Box>
     </Box>
   );
-}
+};
 
 export default SwipeableTextMobileStepper;
