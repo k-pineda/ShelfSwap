@@ -29,23 +29,24 @@ export default function Landing() {
       </div>
     
       {/* Modal Feature */}
-      <Modal size="md" show={showModal} onHide={() => setShowModal(false)} aria-labelledby="signup-modal" className="app-navbar-modal">
-        <Tab.Container defaultActiveKey="login">
-          <Modal.Header closeButton>
-            <Modal.Title id="signup-modal">Sign Up / Log In</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+<Modal size="md" show={showModal} onHide={() => setShowModal(false)} aria-labelledby="signup-modal" className="app-navbar-modal">
+  <Tab.Container defaultActiveKey="login">
+    <Modal.Header closeButton>
+      <Modal.Title id="signup-modal">Welcome to ShelfSwap!</Modal.Title>
+        </Modal.Header>
+          <Modal.Body style={{ textAlign: 'center' }}>
             <Tab.Content>
-              <Tab.Pane eventKey="login">
-                <LoginForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="signup">
-                <SignUpForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-            </Tab.Content>
-          </Modal.Body>
-        </Tab.Container>
-      </Modal>
+            <Tab.Pane eventKey="login">
+            <LoginForm handleModalClose={() => setShowModal(false)} />
+            </Tab.Pane>
+            <Tab.Pane eventKey="signup">
+          <SignUpForm handleModalClose={() => setShowModal(false)} />
+        </Tab.Pane>
+      </Tab.Content>
+    </Modal.Body>
+  </Tab.Container>
+</Modal>
+
     </>
   );
 }
