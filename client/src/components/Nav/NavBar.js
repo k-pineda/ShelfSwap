@@ -1,81 +1,39 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
-import SignUpForm from "./SignupForm";
-import LoginForm from "./LoginForm";
+// import { useLocation } from "react-router-dom";
+import { Navbar, Nav, Modal, Tab } from "react-bootstrap";
 import Auth from "../../utils/auth";
-import shelfSwapLogo from "../../assets/Shelf_Swap_Final_Logo.png";
-import "./navBar.css";
 
 const AppNavbar = () => {
-  // set modal display state
-  const [showModal, setShowModal] = useState(false);
-
- 
 
   return (
     <>
-      <Navbar id="nav" expand="lg" className="ps-5">
-        <Container fluid id="nav">
-          <Navbar.Brand as={Link} to="./">
-            <img id="nav" src={shelfSwapLogo} alt="Shelf-Swap_logo" />
+      <Navbar collapseOnSelect expand="sm">
+          <Navbar.Brand as={Link} to="./" className="brand brand-logged p-3">
+            ShelfSwap
           </Navbar.Brand>
-          <Navbar.Toggle
-            aria-controls="responsive-navbar-nav"
-            style={{ backgroundColor: "white" }}
-          />
-          <Navbar.Collapse
-            id="responsive-navbar-nav"
-            className="justify-content-end"
-          >
-            <Nav className="ml-auto d-flex flex-column align-items-end">
-              <Nav.Link  id="nav" as={Link} to="/swap">
-                Swap Books!
-              </Nav.Link>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+          <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+            <Nav className="p-3">
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link className="nav-link" as={Link} to={`/profile`} id="nav">
+                  <Nav.Link as={Link} to={`/profile`}>
                     Profile
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/chat" id="nav">
+                  <Nav.Link as={Link} to="/swap">
+                    Swap Books
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/chat">
                     Messages
                   </Nav.Link>
-                  <Nav.Link id="nav" onClick={Auth.logout}>
+                  <Nav.Link onClick={Auth.logout}>
                     Logout
                   </Nav.Link>
                 </>
-              ) : (
-                <Nav.Link id="nav" onClick={() => setShowModal(true)}>
-                  Login/Sign Up
-                </Nav.Link>
-              )}
+              ) : null}
             </Nav>
           </Navbar.Collapse>
-        </Container>
       </Navbar>
-      <Modal
-        size="lg"
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        aria-labelledby="signup-modal"
-        className="app-navbar-modal"
-      >
-        <Tab.Container defaultActiveKey="login">
-          <Modal.Header closeButton>
-            <Modal.Title id="signup-modal"></Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Tab.Content>
-              <Tab.Pane eventKey="login">
-                <LoginForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="signup">
-                <SignUpForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-            </Tab.Content>
-          </Modal.Body>
-        </Tab.Container>
-      </Modal>
     </>
   );
 };

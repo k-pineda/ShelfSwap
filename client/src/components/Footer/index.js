@@ -1,44 +1,24 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import './index.css';
 
 const Footer = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+
+  const footerStyle = {
+    position: 'relative',
+    bottom: 0,
+    width: '100%',
+    height: '170px', 
+    color: '#FFF4F4',
+    marginTop:'30%',
+  };
+
   return (
-    <footer className="w-100 mt-auto bg-secondary p-1">
-      <div className="container text-center mb-5">
-        {location.pathname !== '/' && (
-          <button
-            className="btn btn-dark mb-3"
-            onClick={() => navigate(-1)}
-          >
-            &larr; Go Back
-          </button>
-        )}
-        <h4>
-        Designed &amp; coded{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by the Ranch Trio team.
-          <div><a href="https://github.com/k-pineda" target="_blank" class="hover">Karen</a></div>
-          <div><a href="https://github.com/Josiahr4321" target="_blank" class="hover">Josiah</a></div>
-          <div><a href="https://github.com/Anthony-D99" target="_blank" class="hover">Anthony</a></div>
-        </h4>
+    <div style={footerStyle}>
+      <div className="main-footer__lower">
+        &copy; 2023 ShelfSwap 
       </div>
-    </footer>
+    </div>  
   );
 };
 
 export default Footer;
-
-
-
-
-
-

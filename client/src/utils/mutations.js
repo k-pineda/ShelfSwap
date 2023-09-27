@@ -31,6 +31,7 @@ mutation addBookToUserSavedBooks($bookInput: BookInput!) {
     description
     condition
     image
+    showDescription
     category {
       _id
       name
