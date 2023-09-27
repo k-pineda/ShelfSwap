@@ -127,3 +127,48 @@ background-color: #F1C376;
   background-color: transparent !important;
   border: none !important;
 }
+
+#button-card {
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  background-color: #F7E6C4;
+  color: black;
+}
+
+#button-card:hover {
+  background-color: #C8AE7D;
+  }
+
+#button-more {
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  background-color: #F1C376;
+  color: black;
+}
+  
+#button-more:hover {
+  background-color: #C8AE7D;
+}
+
+
+#custom-pagination .MuiPaginationItem-page.Mui-selected {
+  color: #F1C376; /* Change the color of selected page number */
+}
+
+#custom-pagination .MuiPaginationItem-page:hover {
+  color: #F1C376; /* Change the color of page number on hover */
+}
+
+#custom-pagination .MuiPaginationItem-page {
+  color: #FFF4F4; /* Default color of page numbers */
+}
+
+#custom-pagination .MuiPaginationItem-ellipsis {
+  color: #FFF4F4; /* Default color of ellipsis */
+}
+
+#custom-pagination .MuiSvgIcon-root {
+  fill: #FFF4F4; /* Change the color of arrows */
+}

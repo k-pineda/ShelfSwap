@@ -163,21 +163,21 @@ const SearchBooks = () => {
                     savedBooks.find(
                       (savedBook) => savedBook.bookId === book.bookId
                     ) ? (
-                      <Button id="button" variant="info" disabled >
+                      <Button id="button-card" variant="info" disabled >
                         Book is Saved
                       </Button>
                     ) : (
                       <>
                         <Button
-                          id="button"
+                          id="button-card"
                           variant="info"
                           onClick={() => handleSaveBook(book.bookId)}
-                          
+                          style={{ marginRight: '10px' }}
                         >
                           Save Book
                         </Button>
                         <Button
-                          id="button"
+                          id="button-more"
                           variant="primary"
                           onClick={() => toggleShowDescription(index)}
                           
@@ -197,10 +197,9 @@ const SearchBooks = () => {
         {showPagination && (
         <Pagination
           count={Math.ceil(searchedBooks.length / booksPerPage)}
-          color="primary"
           page={currentPage}
           onChange={handlePageChange}
-          id="arrows"
+          id="custom-pagination"
         />
       )}
       </Container>
