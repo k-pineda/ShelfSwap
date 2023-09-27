@@ -60,9 +60,9 @@ function Profile() {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="search-text p-5">
         <Container>
-          <h1>Your Saved Books!</h1>
+          <h1 className="text-center">Your Saved Books!</h1>
         </Container>
       </div>
 
@@ -71,10 +71,10 @@ function Profile() {
           {savedBooks.map((book) => (
             <Card
               key={book._id}
-              className="bg-dark mb-4"
+              className= "card-spacing mb-4"
               style={{ maxWidth: "300px" }}
             >
-              <Card.Body className="text-white">
+              <Card.Body className="text-center" style={{ color: '#FFF4F4' }}>
                 <Card.Img
                   style={{
                     maxHeight: "300px",
@@ -84,17 +84,17 @@ function Profile() {
                   alt={book.title}
                 />
                 <Card.Title className="fs-4 fw-bold">{book.title}</Card.Title>
-                <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
+                <Card.Subtitle>Author: {book.authors}</Card.Subtitle>
                 <Card.Text className="pt-3">
                   {book.description && (
                     <>
                       {showDescriptions[book._id]
                         ? book.description
                         : book.description.length > 0
-                        ? book.description.slice(0, 0) + "..."
+                        ? book.description.slice(0, 0)
                         : book.description}
                       <Button
-                        id="button"
+                        id="button-card"
                         variant="primary"
                         onClick={() => {
                           setShowDescriptions((prevDescriptions) => ({
@@ -109,7 +109,7 @@ function Profile() {
                   )}
                 </Card.Text>
 
-                <Button id="button" onClick={() => handleDeleteBook(book._id)}>
+                <Button id="button-more" onClick={() => handleDeleteBook(book._id)}>
                   Delete
                 </Button>
               </Card.Body>
@@ -118,9 +118,9 @@ function Profile() {
         </CardGroup>
         <Pagination
           count={Math.ceil(savedBooks.length / booksPerPage)}
-          color="primary"
           page={currentPage}
           onChange={handlePageChange}
+          id="custom-pagination"
         />
       </Container>
     </>
