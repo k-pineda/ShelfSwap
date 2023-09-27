@@ -99,13 +99,13 @@ function Swap() {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="search-text text-center p-5">
         <Container>
-          <h1>Click "Ask To Swap!" To Initiate Book Swap With User</h1>
+          <h1>Ready to Swap Books? Click 'Ask To Swap!'</h1>
         </Container>
       </div>
 
-      <Container className="my-5">
+      <Container className="search-text my-5">
         <h2>Viewing Books Available For Swapping!</h2>
         <Form>
           <Form.Group>
