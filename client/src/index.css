@@ -92,6 +92,11 @@ body {
   outline: none; 
 }
 
+.navbar-brand img {
+  width: 80px;
+  height: auto; 
+}
+
 .nav-link:hover {
   color: #F1C376;
 }
