@@ -156,7 +156,7 @@ function Swap() {
                   )}
                 </Card.Text>
 
-                <div className="text-end">
+                <div>
                   <Button
                     id="button-more"
                     onClick={() => handleAskToSwap(book.owner._id)}
