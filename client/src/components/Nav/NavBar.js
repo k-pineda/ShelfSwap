@@ -9,7 +9,7 @@ const AppNavbar = () => {
   return (
     <>
       <Navbar collapseOnSelect expand="sm">
-          <Navbar.Brand as={Link} to="./" className="brand brand-logged p-3">
+          <Navbar.Brand id="nav" as={Link} to="./" className="brand brand-logged p-3">
             ShelfSwap
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
@@ -17,16 +17,16 @@ const AppNavbar = () => {
             <Nav className="p-3">
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to={`/profile`}>
+                  <Nav.Link id="nav" as={Link} to={`/profile`}>
                     Profile
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/swap">
-                    Swap Books
+                  <Nav.Link id="nav" as={Link} to="/swap">
+                    Swap 
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/chat">
+                  <Nav.Link id="nav" as={Link} to="/chat">
                     Messages
                   </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>
+                  <Nav.Link id="nav" onClick={Auth.logout}>
                     Logout
                   </Nav.Link>
                 </>
