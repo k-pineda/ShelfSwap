@@ -106,20 +106,23 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className="text-light bg-dark ps-5 py-2">
-        <Container id="nav">
-          <h1 id="nav">Search for Books to Add to Your Collection!</h1>
+      <div className="search-text ps-5 py-2">
+        <Container>
+          <h1 className="text-center">
+            Search for Books to Add to Your Collection!
+          </h1>
           <Form onSubmit={handleFormSubmit}>
-            <div className="d-flex">
+            <div className="d-flex justify-content-center">
               <Form.Control
                 name="searchInput"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 type="text"
                 size="lg"
+                style={{ width: '700px' }}
                 placeholder="Search books by title"
               />
-              <Button type="submit" id="button" size="lg" className="ms-2">
+              <Button type="submit" id="button-form" size="md" className="ms-2">
                 Search
               </Button>
             </div>
@@ -127,15 +130,15 @@ const SearchBooks = () => {
         </Container>
       </div>
       <Container className="my-5" >
-        <h2>
+        <h2 style={{ color: '#FFF4F4' }}>
           {currentBooks.length
             ? `Viewing ${currentBooks.length} results:`
             : ""}
         </h2>
         <CardGroup id="card-group">
           {currentBooks.map((book, index) => (
-            <Card key={book.bookId}   className="bg-dark card-spacing ">
-              <Card.Body className="text-white">
+            <Card key={book.bookId}   className= "card-spacing custom-card">
+              <Card.Body className="text-center" style={{ color: '#FFF4F4' }}>
                 <Card.Img
                   style={{maxHeight:"400px",
                           maxWidth:'300px'}}
@@ -145,7 +148,7 @@ const SearchBooks = () => {
                 <Card.Title className="fs-4 fw-bold">
                   {book.title}
                 </Card.Title>
-                <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
+                <Card.Subtitle>Author: {book.authors}</Card.Subtitle>
                 <Card.Text className="pt-3">
                   {book.showDescription
                     ? book.description
