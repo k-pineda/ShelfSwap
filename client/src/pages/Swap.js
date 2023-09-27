@@ -111,7 +111,7 @@ function Swap() {
           <Form.Group>
             <Form.Control
               type="text"
-              placeholder="Search by title or author..."
+              placeholder="Search by Title or Author"
               value={searchQuery}
               onChange={handleSearchInputChange}
             />
@@ -124,10 +124,10 @@ function Swap() {
           {currentBooks.map((book, index) => (
             <Card
               key={book._id}
-              className="bg-dark"
+              className="card-spacing"
               style={{ maxWidth: "300px" }}
             >
-              <Card.Body className="text-white">
+              <Card.Body className="text-center" style={{ color: '#FFF4F4' }}>
                 <Card.Img
                   style={{ maxHeight: "300px" }}
                   src={book.image ? book.image : bookNotFound}
@@ -136,17 +136,17 @@ function Swap() {
                 <Card.Title className="fs-4 fw-bold">
                   {book.title}
                 </Card.Title>
-                <Card.Subtitle>Authors: {book.authors}</Card.Subtitle>
+                <Card.Subtitle>Author: {book.authors}</Card.Subtitle>
                 <Card.Text className="pt-3">
                   {book.description && (
                     <>
                       {showDescriptions[book._id]
                         ? book.description
                         : book.description.length > 0
-                        ? book.description.slice(0, 0) + "..."
+                        ? book.description.slice(0, 0) 
                         : book.description}
                       <Button
-                        id="button"
+                        id="button-card"
                         variant="primary"
                         onClick={() => toggleShowDescription(book._id)}
                       >
@@ -158,7 +158,7 @@ function Swap() {
 
                 <div className="text-end">
                   <Button
-                    id="button"
+                    id="button-more"
                     onClick={() => handleAskToSwap(book.owner._id)}
                   >
                     Ask to Swap!
@@ -170,9 +170,9 @@ function Swap() {
         </CardGroup>
         <Pagination
           count={Math.ceil(filteredBooks.length / booksPerPage)}
-          color="primary"
           page={currentPage}
           onChange={handlePageChange}
+          id="custom-pagination"
         />
       </Container>
     </>
