@@ -97,6 +97,33 @@ body {
   height: auto; 
 }
 
-.nav-link:hover {
+#nav:hover {
   color: #F1C376;
+}
+
+/* ----------------------------------------------------------- Home Page ----------------------------------------------------------------- */
+
+.search-text {
+  color: #FFF4F4;
+}
+
+#button-form {
+  border: none;
+  outline: none;
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #F7E6C4;
+  color: black;
+  font-weight: 800;
+}
+
+#button-form:hover {
+background-color: #F1C376;
+}
+
+.card-spacing {
+  background-color: rgba(0, 0, 0, 2) !important; 
+  background-color: transparent !important;
+  border: none !important;
 }
