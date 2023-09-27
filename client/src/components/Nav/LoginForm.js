@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { redirect   } from 'react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../utils/mutations';
@@ -20,15 +21,15 @@ const defaultTheme = createTheme();
 
 const CombinedForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false); // Add state for showing signup form
-  const [login, { error, data }] = useMutation(LOGIN);
+  const [login] = useMutation(LOGIN);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -45,6 +46,10 @@ const CombinedForm = () => {
       });
 
       Auth.login(data.login.token);
+
+      console.log('Successful login');
+      redirect("/home");
+
     } catch (err) {
       console.error(err);
       setShowAlert(true);

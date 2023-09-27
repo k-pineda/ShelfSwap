@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Form, Alert } from 'react-bootstrap';
+import { useNavigate  } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
@@ -12,14 +13,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
   const [validated, setValidated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
 
   const formRef = useRef(null);
 
@@ -27,6 +28,7 @@ const SignupForm = () => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
+
 
   const handleSignup = async () => {
     const form = formRef.current;
@@ -38,9 +40,11 @@ const SignupForm = () => {
           variables: { ...userFormData },
         });
         Auth.login(data.addUser.token);
+
+        navigate('/home');
+
       } catch (err) {
         console.error(err);
-        setShowAlert(true);
       }
       setUserFormData({
         username: '',
