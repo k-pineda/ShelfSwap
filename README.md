@@ -1,8 +1,9 @@
 # ShelfSwap
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Description
 Welcome to ShelfSwap! This web application allows users to discover and swap books with other users. Share your love for reading, connect with fellow book enthusiasts, and build your personal library.
-
-<img width="949" alt="shelfswap" src="https://github.com/k-pineda/ShelfSwap/assets/128410226/77ffbad2-3ddf-4a41-b2a0-48e2435faead">
-
 
 ## Features
 
@@ -10,15 +11,22 @@ Welcome to ShelfSwap! This web application allows users to discover and swap boo
 - **Swap Requests**: Send and receive swap requests to exchange books.
 - **Messaging**: Communicate with other users in via the built-in messaging system.
 - **Profile Management**: Manage your profile, update book listings, and view your swap history.
-- **Donations**: Support the platform by making monetary donations. The donation button appears when hovering over the "i" icon.
 
 ## Technologies Used
 
 - **Frontend**: React, Apollo Client, React-Bootstrap, Material UI
 - **Backend**: Node.js, Express.js, Apollo Server, GraphQL, MongoDB (Mongoose)
 - **Authentication**: JWT (JSON Web Tokens)
-- **Payment Integration**: Stripe (Donations)
 - **Deployment**: Heroku (Backend)
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
+- [How to Contribute](#contribution)
+- [Questions](#questions)
 
 ## Installation
 
@@ -74,22 +82,62 @@ Welcome to ShelfSwap! This web application allows users to discover and swap boo
 5. **Profile**: Manage your profile, update book listings, and keep track of your swap history.
 6. **Donations**: Support the platform by making monetary donations. Hover over the "i" icon to reveal the donate button.
 
-## Contributing
+To experience the application, visit the deployed Heroku website: [ShelfSwap](https://shelf-swap-425acc537cee.herokuapp.com/)
 
-We welcome contributions from the community! If you have ideas for improvements or encounter any issues, please open a GitHub issue or submit a pull request.
+ShelfSwap walkthrough video: 
 
-## Links 
+[![ShelfSwap](https://img.youtube.com/vi/tG68AySIsoo/0.jpg)](https://youtu.be/tG68AySIsoo)
 
-https://github.com/k-pineda/ShelfSwap
+## Credits
 
-https://shelf-swap-425acc537cee.herokuapp.com/
+   Collaborators for ShelfSwap Application:
 
+   Karen Pineda - https://github.com/k-pineda
 
-## Acknowledgments
+   Anthony DiSerafino - https://github.com/Anthony-D99
 
-- Special thanks to the open-source community and the developers behind the technologies used in this project. 
+   Josiah Rivera - https://github.com/Josiahr4321
 
-https://github.com/Anthony-D99
-https://github.com/Josiahr4321
-https://github.com/spereira15
-https://github.com/mybaditssam
+   Jose Alzuri - https://github.com/Jalzu1007
+
+## License
+
+This project is licensed under MIT, for more information please visit: [MIT](https://opensource.org/licenses/MIT)
+
+MIT License
+
+  Copyright (c) 2023 ShelfSwap
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+## How to Contribute
+
+We welcome any ideas and contributions to this repository. If you are interested in contributing, feel free to open an issue or submit a pull request.
+
+## Questions
+
+If you have any questions about the repository or the application, please open an issue, and we will respond as soon as possible. You can also explore more of our projects on 
+
+- https://github.com/k-pineda
+
+- https://github.com/Anthony-D99
+
+- https://github.com/Josiahr4321
+
+- https://github.com/Jalzu1007
